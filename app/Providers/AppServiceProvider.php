@@ -30,8 +30,7 @@ class AppServiceProvider extends ServiceProvider {
             View::share(compact('logo', 'favicon'));
         }
     }*/
-    public function boot(): void
-    {
+    public function boot(): void {
         if (Schema::hasTable('admin_panel_settings')) {
             $company_code = get_user_data()?->company_id;
 

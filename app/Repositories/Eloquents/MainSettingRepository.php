@@ -28,7 +28,10 @@ class MainSettingRepository implements MainSettingRepositoryInterface
 
     public function save(MainSettingRequest $request) {
         try {
-            $setting = AdminPanelSetting::firstOrNew([]);
+            $companyId = get_user_data()?->company_id;
+            $setting = AdminPanelSetting::firstOrNew([
+                'company_id' => $companyId,
+            ]);
             $data = $request->only([
                 'system_status',
                 'company_name',
