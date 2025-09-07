@@ -18,6 +18,8 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
+    public const ADMIN_DASHBOARD = 'admin/dashboard';
+    public const COMPANY_DASHBOARD = 'company/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -33,8 +35,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            Route::middleware('web')->group(base_path('routes/web.php'));
+            Route::middleware('web')->group(base_path('routes/dashboard/admin.php'));
+            Route::middleware('web')->group(base_path('routes/dashboard/company.php'));
         });
     }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Enums\Admin;
 
-enum AdminStatus: string
-{
+enum AdminStatus: string {
     case ACTIVE = 'active';
     case IN_ACTIVE = 'inactive';
     case BLOCKED = "blocked";

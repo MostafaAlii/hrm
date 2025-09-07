@@ -7,6 +7,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enums\Admin\{AdminType,AdminStatus};
 use Illuminate\Database\Eloquent\Relations\HasOne;
+
 class Admin extends Authenticatable {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $table = 'admins';
@@ -42,11 +43,12 @@ class Admin extends Authenticatable {
         return $this->whereStatus('active')->get();
     }
 
-    /*public function company() {
+    public function company() {
         return $this->belongsTo(Company::class);
     }
 
-    public function branch() {
+    /*public function branch() {
         return $this->belongsTo(Branch::class);
     }*/
+    
 }

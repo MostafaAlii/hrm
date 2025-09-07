@@ -16,5 +16,7 @@ return [
     'close'                             =>                      'اغلاق',
     'yes'                               =>                      'نعم',
     'no'                                =>                      'لا',
-
+    'owner'                             =>                      'المالك',
+    'company_admin'                     =>                      'مدير شركه',
+    'branch_admin'                      =>                      'مدير فرع',
 ];
