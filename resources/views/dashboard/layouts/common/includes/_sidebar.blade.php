@@ -18,6 +18,7 @@
 
                     </a>
                 </li>
+                <!-- Start AdminPanelSetting -->
                 <li class="nav-item nav-hasmenu {{ is_open(['admin.mainSettings.index']) }}">
                     <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-layout-2"></i></span><span
                             class="nav-text">{{ trans('dashboard/sidebar.admin_main_settings_sidebar_title') }}</span><span class="nav-arrow"><i
@@ -28,7 +29,21 @@
                         </li>
                     </ul>
                 </li>
-
+                <!-- End AdminPanelSetting -->
+                <!-- Start FinancialYear-->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.financialYears.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-briefcase"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_financialYearMonths_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.financialYears.index') }}"
+                                href="{{route('admin.financialYears.index')}}">{{ trans('dashboard/sidebar.financialYears_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End FinancialYear -->
             </ul>
         </div>
     </div>
