@@ -6,4 +6,8 @@ return [
     'admin_financialYearMonths_sidebar_title' => 'السنوات / الشهور الماليه',
     'financialYears_sidebar_title' => 'السنوات الماليه',
     'financialYears_page_title' => 'اعدادات السنوات الماليه',
+
+    'admin_branch_sidebar_title' => ' الفروع',
+    'branch_sidebar_title' => 'الفروع',
+    'branch_page_title' => 'بيانات الفروع',
 ];

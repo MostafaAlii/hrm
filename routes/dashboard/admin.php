@@ -27,7 +27,9 @@ Route::group(
                 Route::post('store', 'store')->name('store');
             });
             Route::resource('financialYears', Dashboard\FinancialYearController::class);
+            Route::resource('branchs', Dashboard\BranchController::class);
             Route::get('financialYears/{financialYear}/months', [Dashboard\FinancialYearController::class, 'months'])->name('financialYears.months');
+            Route::resource('branchs', Dashboard\BranchController::class);
         });
         require __DIR__ . '../../auth.php';
     }

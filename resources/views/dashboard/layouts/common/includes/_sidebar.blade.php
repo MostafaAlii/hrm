@@ -44,6 +44,21 @@
                     </ul>
                 </li>
                 <!-- End FinancialYear -->
+                <!-- Start Branch -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.branchs.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-award"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_branch_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.branchs.index') }}"
+                                href="{{route('admin.branchs.index')}}">{{
+                                trans('dashboard/sidebar.branch_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Branch -->
             </ul>
         </div>
     </div>

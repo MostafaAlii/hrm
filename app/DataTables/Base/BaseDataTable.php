@@ -61,6 +61,9 @@ abstract class BaseDataTable extends DataTable
                 ]*/
             ],
             'language' => datatable_lang(),
+            'columnDefs' => [
+                ['className' => 'text-center', 'targets' => '_all'],
+            ],
         ];
     }
 
