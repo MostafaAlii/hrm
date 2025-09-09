@@ -10,4 +10,8 @@ return [
     'admin_branch_sidebar_title' => ' الفروع',
     'branch_sidebar_title' => 'الفروع',
     'branch_page_title' => 'بيانات الفروع',
+
+    'admin_shift_type_sidebar_title' => ' الشيفتات',
+    'shift_type_sidebar_title' => 'الشيفتات',
+    'shift_type_page_title' => 'بيانات الشيفتات',
 ];

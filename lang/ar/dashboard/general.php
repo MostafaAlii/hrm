@@ -33,6 +33,6 @@ return [
     'not_added' => 'غير مضاف',
     'not_updated' => 'غير معدل',
     'not_available' => 'غير متوفر',
-
+    'not_type_assigned' => 'لم يتم تحديد نوع',
 
 ];

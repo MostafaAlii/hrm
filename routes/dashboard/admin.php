@@ -30,6 +30,7 @@ Route::group(
             Route::resource('branchs', Dashboard\BranchController::class);
             Route::get('financialYears/{financialYear}/months', [Dashboard\FinancialYearController::class, 'months'])->name('financialYears.months');
             Route::resource('branchs', Dashboard\BranchController::class);
+            Route::resource('shift-types', Dashboard\ShiftTypeController::class);
         });
         require __DIR__ . '../../auth.php';
     }

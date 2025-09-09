@@ -51,6 +51,7 @@ class BranchDataTable extends BaseDataTable
             ['name' => 'id', 'data' => 'id', 'title' => '#'],
             ['name' => 'name', 'data' => 'name', 'title' => trans('dashboard/branch.name')],
             ['name' => 'is_active', 'data' => 'is_active_label', 'title' => trans('dashboard/financial_year.is_active')],
+            ['name' => 'phone', 'data' => 'phone', 'title' => trans('dashboard/branch.phone')],
             ['name' => 'responsible', 'data' => 'responsible', 'title' => trans('dashboard/financial_year.responsible')],
             ['name' => 'created_at', 'data' => 'created_at', 'title' => trans('dashboard/general.created_at')],
             ['name' => 'updated_at', 'data' => 'updated_at', 'title' => trans('dashboard/general.updated_at')],

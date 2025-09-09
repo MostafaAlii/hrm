@@ -59,6 +59,20 @@
                     </ul>
                 </li>
                 <!-- End Branch -->
+                <!-- Start ShiftTypes -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.shift-types.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-award"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_shift_type_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.branchs.index') }}" href="{{route('admin.shift-types.index')}}">{{
+                                trans('dashboard/sidebar.shift_type_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End ShiftTypes -->
             </ul>
         </div>
     </div>
