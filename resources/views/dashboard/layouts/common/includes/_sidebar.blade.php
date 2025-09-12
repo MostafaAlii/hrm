@@ -117,6 +117,21 @@
                     </ul>
                 </li>
                 <!-- End Qualifications -->
+                <!-- Start Occasions -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.occasions.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="" data-feather="zap"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_occasion_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.occasions.index') }}"
+                                href="{{route('admin.occasions.index')}}">{{
+                                trans('dashboard/sidebar.occasion_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Occasions -->
             </ul>
         </div>
     </div>

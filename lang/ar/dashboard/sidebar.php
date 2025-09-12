@@ -26,4 +26,8 @@ return [
     'admin_qualification_sidebar_title' => ' الموهلات',
     'qualification_sidebar_title' => 'الموهلات الدراسيه',
     'qualification_page_title' => 'بيانات الموهلات',
+
+    'admin_occasion_sidebar_title' => ' المناسبات',
+    'occasion_sidebar_title' => 'المناسبات الرسميه',
+    'occasion_page_title' => 'بيانات المناسبات',
 ];
