@@ -16,6 +16,12 @@ class ShiftTypeDataTable extends BaseDataTable
         $this->request = $request;
     }
 
+    protected function getParameters() {
+        $params = parent::getParameters();
+        $params['searching'] = false;
+        return $params;
+    }
+    
     public function dataTable($query): EloquentDataTable
     {
         $types = ShiftTypeEnum::cases();
