@@ -60,8 +60,6 @@ class ShiftType extends BaseModel {
         if (!$this->from_time) {
             return null;
         }
-
-        // هنا خلاص from_time Carbon instance
         $formatted = $this->from_time->format('h:i A');
 
         return str_replace(

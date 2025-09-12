@@ -73,6 +73,20 @@
                     </ul>
                 </li>
                 <!-- End ShiftTypes -->
+                <!-- Start Department -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.departments.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-ad-2"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_department_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.departments.index') }}" href="{{route('admin.departments.index')}}">{{
+                                trans('dashboard/sidebar.department_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Department -->
             </ul>
         </div>
     </div>

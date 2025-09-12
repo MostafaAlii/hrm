@@ -14,4 +14,8 @@ return [
     'admin_shift_type_sidebar_title' => ' الشيفتات',
     'shift_type_sidebar_title' => 'الشيفتات',
     'shift_type_page_title' => 'بيانات الشيفتات',
+
+    'admin_department_sidebar_title' => ' الادارات',
+    'department_sidebar_title' => 'الادارات',
+    'department_page_title' => 'بيانات الاداره',
 ];
