@@ -1,7 +1,7 @@
 <?php
 
 namespace  App\Repositories\Eloquents;
-
+use Carbon\Carbon;
 use App\Models\ShiftType;
 use App\Repositories\Contracts\ShiftTypeRepositoryInterface;
 use Illuminate\Http\Request;
@@ -26,12 +26,11 @@ class ShiftTypeRepository implements ShiftTypeRepositoryInterface
         return view('dashboard.admin.shiftType.btn.create', ['types' => $types,'title' => 'إضافة فرع']);
     }
 
-    public function store(Request $request)
-    {
+    /*public function store(Request $request) {
         $validated = $request->validate([
             'type'       => 'required|in:' . implode(',', array_column(ShiftTypeEnum::cases(), 'value')),
-            'from_time'  => 'nullable|date_format:H:i',
-            'to_time'    => 'nullable|date_format:H:i',
+            'from_time'  => 'nullable|date_format:H:i A',
+            'to_time'    => 'nullable|date_format:H:i A',
             'total_hour' => 'nullable|date_format:H:i',
             'is_active'  => 'boolean',
         ]);
@@ -45,7 +44,44 @@ class ShiftTypeRepository implements ShiftTypeRepositoryInterface
         ]);
 
         return redirect()->route('admin.shift-types.index')->with('success', 'تم إنشاء الشيفت بنجاح');
+    }*/
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+
+        // احسب الساعات تلقائي لو النوع morning أو evening
+        if (
+            in_array($data['type'] ?? '', ['morning', 'evening'])
+            && !empty($data['from_time'])
+            && !empty($data['to_time'])
+        ) {
+            // خد بالك: الفورم بيرجع H:i مش h:i A
+            $from = \Carbon\Carbon::createFromFormat('H:i', $data['from_time']);
+            $to   = \Carbon\Carbon::createFromFormat('H:i', $data['to_time']);
+
+            // احسب فرق الساعات والدقايق
+            $diffInMinutes = $to->diffInMinutes($from);
+            $hours = floor($diffInMinutes / 60);
+            $minutes = $diffInMinutes % 60;
+
+            // رجع بصيغة time للـ DB H:i:s
+            $data['total_hour'] = sprintf('%02d:%02d:00', $hours, $minutes);
+        }
+
+        ShiftType::create([
+            'type'       => $data['type'] ?? null,
+            'from_time'  => $data['from_time'] ?? null,
+            'to_time'    => $data['to_time'] ?? null,
+            'total_hour' => $data['total_hour'] ?? null,
+            'is_active'  => $request->boolean('is_active'),
+        ]);
+
+        return redirect()->route('admin.shift-types.index')
+            ->with('success', 'تم إنشاء الشيفت بنجاح');
     }
+
+
 
     public function edit($id) {
         $shiftType = ShiftType::findOrFail($id);

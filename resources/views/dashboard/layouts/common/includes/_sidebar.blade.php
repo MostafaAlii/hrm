@@ -61,7 +61,7 @@
                 <!-- End Branch -->
                 <!-- Start ShiftTypes -->
                 <li class="nav-item nav-hasmenu {{ is_open(['admin.shift-types.index']) }}">
-                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-award"></i></span><span class="nav-text">{{
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-alarm"></i></span><span class="nav-text">{{
                             trans('dashboard/sidebar.admin_shift_type_sidebar_title') }}</span><span class="nav-arrow"><i
                                 data-feather="chevron-right"></i></span></a>
                     <ul class="nav-submenu">

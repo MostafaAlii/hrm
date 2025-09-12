@@ -36,13 +36,13 @@ class ShiftTypeDataTable extends BaseDataTable
                 return $shiftType->type_badge;
             })
             ->editColumn('from_time', function (ShiftType $shiftType) {
-                return $shiftType->from_time?->format('H:i') ?? '-';
+                return $shiftType->from_time_formatted ?? '-';
             })
             ->editColumn('to_time', function (ShiftType $shiftType) {
-                return $shiftType->to_time?->format('H:i') ?? '-';
+                return $shiftType->to_time_formatted ?? '-';
             })
             ->editColumn('total_hour', function (ShiftType $shiftType) {
-                return $shiftType->total_hour?->format('H:i') ?? '-';
+                return $shiftType->total_hour_formatted ?? '-';
             })
             ->addColumn('responsible', function (ShiftType $shiftType) {
                 $addedBy   = $shiftType->addedBy?->name ? "✍️ " . $shiftType->addedBy->name : null;
@@ -55,7 +55,20 @@ class ShiftTypeDataTable extends BaseDataTable
     public function query(): QueryBuilder
     {
         $user = get_user_data()?->company_id;
-        return ShiftType::where('company_id', $user)->latest();
+        $query = ShiftType::query()->where('company_id', $user);
+        if (request()->filled('type')) {
+            $query->where('type', request('type'));
+        }
+
+        if (request()->filled('from_time')) {
+            $query->where('from_time', '>=', request('from_time'));
+        }
+
+        if (request()->filled('to_time')) {
+            $query->where('to_time', '<=', request('to_time'));
+        }
+
+        return $query->latest();
     }
 
     public function getColumns(): array

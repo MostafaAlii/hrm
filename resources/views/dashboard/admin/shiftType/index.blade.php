@@ -36,9 +36,9 @@
             <div class="card">
                 <div class="card-header">
                     <span class="nav-icon">
-                        <i class="ti ti-award"></i>
+                        <i class="ti ti-time"></i>
                     </span>
-                    {{ trans('dashboard/sidebar.branch_sidebar_title') }}
+                    {{ trans('dashboard/sidebar.shift_type_sidebar_title') }}
                     <button data-pc-animate="3d-sign" type="button" class="btn btn-sm btn-light btn-active-primary"
                         data-bs-toggle="modal" data-bs-target="#createShiftTypeModal">
                         <i class="fa fa-plus"></i>
@@ -47,6 +47,32 @@
                     @include('dashboard.admin.shiftType.btn.create')
                 </div>
                 <div class="card-body">
+                    <!-- Start Filter -->
+                    <x-dashboard.datatable-filters tableId="shift_types_datatable" :filters="[
+                            [
+                                'type' => 'select',
+                                'name' => 'type',
+                                'label' => __('dashboard/shift_types.type'),
+                                'placeholder' => __('dashboard/shift_types.type_select'),
+                                'options' => [
+                                    'morning' => __('dashboard/shift_types.morning'),
+                                    'evening' => __('dashboard/shift_types.evening')
+                                ]
+                            ],
+                            [
+                                'type' => 'time',
+                                'name' => 'from_time',
+                                'label' => __('dashboard/shift_types.from_time'),
+                                'placeholder' => __('dashboard/shift_types.from_time_select')
+                            ],
+                            [
+                                'type' => 'time',
+                                'name' => 'to_time',
+                                'label' => __('dashboard/shift_types.to_time'),
+                                'placeholder' => __('dashboard/shift_types.to_time_select')
+                            ]
+                        ]" />
+                    <!-- End Filter -->
                     <!--begin::Table container-->
                     <div class="table-responsive">
                         <!--begin::Table-->
@@ -122,5 +148,24 @@
         select.off('change.shiftToggle');
     });
 });
+</script>
+<script>
+    $(document).ready(function () {
+        let table = $('#shift_types_datatable').DataTable();
+        $('#datatableFiltersForm_shift_types_datatable').on('submit', function (e) {
+            e.preventDefault();
+            table.ajax.reload();
+        });
+        $.fn.dataTable.ext.errMode = 'throw';
+
+        $('#shift_types_datatable').on('preXhr.dt', function (e, settings, data) {
+            let formData = $('#datatableFiltersForm_shift_types_datatable').serializeArray();
+            formData.forEach(function (item) {
+                data[item.name] = item.value;
+            });
+
+            console.log("🔍 DataTables Request Params:", data);
+        });
+    });
 </script>
 @endpush
