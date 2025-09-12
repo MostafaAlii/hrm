@@ -147,6 +147,37 @@
                     </ul>
                 </li>
                 <!-- End TerminationTypes -->
+                <!-- Start Nationality -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.nationality.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-world"></i></span><span
+                            class="nav-text">{{
+                            trans('dashboard/sidebar.admin_nationality_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.nationality.index') }}"
+                                href="{{route('admin.nationality.index')}}">{{
+                                trans('dashboard/sidebar.nationality_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Nationality -->
+                <!-- Start Religin -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.religion.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-vocabulary"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_religion_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.religion.index') }}"
+                                href="{{route('admin.religion.index')}}">{{
+                                trans('dashboard/sidebar.religion_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Religin -->
             </ul>
         </div>
     </div>

@@ -85,3 +85,30 @@ if (!function_exists('is_open')) {
         return in_array(Route::currentRouteName(), $routes) ? $output : '';
     }
 }
+
+if (!function_exists('is_tree_open')) {
+    /**
+     * Check if dropdown (including nested) should be open
+     *
+     * @param array $routes
+     * @param string $output
+     * @return string
+     */
+    function is_tree_open($routes, $output = "nav-provoke")
+    {
+        $current = Route::currentRouteName();
+
+        foreach ($routes as $route) {
+            // لو array جوا array (nested)
+            if (is_array($route) && in_array($current, $route)) {
+                return $output;
+            }
+
+            if ($current === $route) {
+                return $output;
+            }
+        }
+
+        return '';
+    }
+}

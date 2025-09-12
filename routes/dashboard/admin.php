@@ -36,6 +36,8 @@ Route::group(
             Route::resource('qualifications', Dashboard\QualificationController::class);
             Route::resource('occasions', Dashboard\OccasionController::class);
             Route::resource('terminationTypes', Dashboard\TerminationTypeController::class);
+            Route::resource('nationality', Dashboard\NationalityController::class);
+            Route::resource('religion', Dashboard\ReligionController::class);
         });
         require __DIR__ . '../../auth.php';
     }

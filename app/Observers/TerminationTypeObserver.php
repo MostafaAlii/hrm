@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\TerminationType;
-
 class TerminationTypeObserver
 {
     public function creating(TerminationType $terminationType)

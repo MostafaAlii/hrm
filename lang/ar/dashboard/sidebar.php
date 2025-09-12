@@ -34,4 +34,12 @@ return [
     'admin_terminationType_sidebar_title' => ' ترك العمل',
     'terminationType_sidebar_title' => 'انواع ترك العمل',
     'terminationType_page_title' => 'انواع ترك العمل',
+
+    'admin_nationality_sidebar_title' => 'الجنسيات',
+    'nationality_sidebar_title' => 'الجنسيات',
+    'nationality_page_title' => 'الجنسيات',
+
+    'admin_religion_sidebar_title' => 'الديانات',
+    'religion_sidebar_title' => 'الديانات',
+    'religion_page_title' => 'الديانات',
 ];
