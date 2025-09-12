@@ -35,6 +35,7 @@ Route::group(
             Route::resource('jobCategories', Dashboard\JobCategoryController::class);
             Route::resource('qualifications', Dashboard\QualificationController::class);
             Route::resource('occasions', Dashboard\OccasionController::class);
+            Route::resource('terminationTypes', Dashboard\TerminationTypeController::class);
         });
         require __DIR__ . '../../auth.php';
     }

@@ -30,4 +30,8 @@ return [
     'admin_occasion_sidebar_title' => ' المناسبات',
     'occasion_sidebar_title' => 'المناسبات الرسميه',
     'occasion_page_title' => 'بيانات المناسبات',
+
+    'admin_terminationType_sidebar_title' => ' ترك العمل',
+    'terminationType_sidebar_title' => 'انواع ترك العمل',
+    'terminationType_page_title' => 'انواع ترك العمل',
 ];

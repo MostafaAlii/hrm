@@ -132,6 +132,21 @@
                     </ul>
                 </li>
                 <!-- End Occasions -->
+                <!-- Start TerminationTypes -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.terminationTypes.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-accessible"></i></span><span
+                            class="nav-text">{{
+                            trans('dashboard/sidebar.admin_terminationType_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.terminationTypes.index') }}" href="{{route('admin.terminationTypes.index')}}">{{
+                                trans('dashboard/sidebar.terminationType_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End TerminationTypes -->
             </ul>
         </div>
     </div>
