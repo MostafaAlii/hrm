@@ -17,5 +17,13 @@ return [
 
     'admin_department_sidebar_title' => ' الادارات',
     'department_sidebar_title' => 'الادارات',
-    'department_page_title' => 'بيانات الاداره',
+    'department_page_title' => 'بيانات الادارات',
+
+    'admin_jobCategory_sidebar_title' => ' الوظائف',
+    'jobCategory_sidebar_title' => 'الوظائف',
+    'jobCategory_page_title' => 'بيانات الوظائف',
+
+    'admin_qualification_sidebar_title' => ' الموهلات',
+    'qualification_sidebar_title' => 'الموهلات الدراسيه',
+    'qualification_page_title' => 'بيانات الموهلات',
 ];

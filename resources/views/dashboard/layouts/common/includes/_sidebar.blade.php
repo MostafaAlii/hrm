@@ -87,6 +87,36 @@
                     </ul>
                 </li>
                 <!-- End Department -->
+                <!-- Start JobCategory -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.jobCategories.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-tornado"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_jobCategory_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.jobCategories.index') }}"
+                                href="{{route('admin.jobCategories.index')}}">{{
+                                trans('dashboard/sidebar.jobCategory_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End JobCategory -->
+                <!-- Start Qualifications -->
+                <li class="nav-item nav-hasmenu {{ is_open(['admin.qualifications.index']) }}">
+                    <a href="#!" class="nav-link"><span class="nav-icon"><i class="ti ti-trophy"></i></span><span class="nav-text">{{
+                            trans('dashboard/sidebar.admin_qualification_sidebar_title') }}</span><span class="nav-arrow"><i
+                                data-feather="chevron-right"></i></span></a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.qualifications.index') }}"
+                                href="{{route('admin.qualifications.index')}}">{{
+                                trans('dashboard/sidebar.qualification_sidebar_title')
+                                }}</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Qualifications -->
             </ul>
         </div>
     </div>

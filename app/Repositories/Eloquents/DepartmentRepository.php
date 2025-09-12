@@ -9,9 +9,9 @@ use App\DataTables\Dashboard\Admin\DepartmentDataTable;
 
 class DepartmentRepository implements DepartmentRepositoryInterface
 {
-    public function index(DepartmentDataTable $branchDataTable)
+    public function index(DepartmentDataTable $departmentDataTable)
     {
-        return $branchDataTable->render('dashboard.admin.departments.index', ['title' => 'الادارات']);
+        return $departmentDataTable->render('dashboard.admin.departments.index', ['title' => 'الادارات']);
     }
 
     public function create()
