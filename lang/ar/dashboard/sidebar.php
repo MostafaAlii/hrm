@@ -1,0 +1,53 @@
+<?php
+return [
+    'admin_main_settings_sidebar_title' => 'الاعدادات العامه',
+    'main_settings_sidebar_title' => 'الضبط العام',
+    'main_settings_page_title' => 'اعدادات الظبط العام',
+    'admin_financialYearMonths_sidebar_title' => 'السنوات الماليه',
+    'financialYears_sidebar_title' => 'السنوات الماليه',
+    'financialYears_page_title' => 'اعدادات السنوات الماليه',
+
+    'admin_branch_sidebar_title' => ' الفروع',
+    'branch_sidebar_title' => 'الفروع',
+    'branch_page_title' => 'بيانات الفروع',
+
+    'admin_shift_type_sidebar_title' => ' الشيفتات',
+    'shift_type_sidebar_title' => 'الشيفتات',
+    'shift_type_page_title' => 'بيانات الشيفتات',
+
+    'admin_department_sidebar_title' => ' الادارات',
+    'department_sidebar_title' => 'الادارات',
+    'department_page_title' => 'بيانات الادارات',
+
+    'admin_section_sidebar_title' => ' الاقسام',
+    'section_sidebar_title' => 'الاقسام',
+    'section_page_title' => 'بيانات الاقسام',
+
+    'admin_jobCategory_sidebar_title' => ' الوظائف',
+    'jobCategory_sidebar_title' => 'الوظائف',
+    'jobCategory_page_title' => 'بيانات الوظائف',
+
+    'admin_level_sidebar_title' => ' المستوى',
+    'level_sidebar_title' => 'المستوى',
+    'level_page_title' => 'بيانات المستوى',
+
+    'admin_qualification_sidebar_title' => ' الموهلات',
+    'qualification_sidebar_title' => 'الموهلات الدراسيه',
+    'qualification_page_title' => 'بيانات الموهلات',
+
+    'admin_occasion_sidebar_title' => ' المناسبات',
+    'occasion_sidebar_title' => 'المناسبات الرسميه',
+    'occasion_page_title' => 'بيانات المناسبات',
+
+    'admin_terminationType_sidebar_title' => 'الحالات',
+    'terminationType_sidebar_title' => 'الحالات',
+    'terminationType_page_title' => 'الحالات',
+
+    'admin_nationality_sidebar_title' => 'الجنسيات',
+    'nationality_sidebar_title' => 'الجنسيات',
+    'nationality_page_title' => 'الجنسيات',
+
+    'admin_religion_sidebar_title' => 'الديانات',
+    'religion_sidebar_title' => 'الديانات',
+    'religion_page_title' => 'الديانات',
+];
