@@ -1,14 +1,12 @@
 <?php
 namespace App\Models;
-class JobCategory extends BaseModel {
-    protected $table = "job_categories";
+class Level extends BaseModel {
+    protected $table = "levels";
     protected $fillable = [
         'uuid',
         'name',
         'is_active',
         'company_id',
-        'section_id',
-        'department_id',
         'added_by_id',
         'updated_by_id',
     ];
@@ -33,15 +31,5 @@ class JobCategory extends BaseModel {
     public function updatedBy()
     {
         return $this->belongsTo(Admin::class, 'updated_by_id');
-    }
-
-    public function section()
-    {
-        return $this->belongsTo(Section::class, 'section_id');
-    }
-
-    public function department()
-    {
-        return $this->belongsTo(Department::class, 'department_id');
     }
 }

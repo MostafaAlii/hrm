@@ -33,12 +33,14 @@ Route::group(
             Route::resource('shift-types', Dashboard\ShiftTypeController::class);
             Route::resource('departments', Dashboard\DepartmentController::class);
             Route::resource('section', Dashboard\SectionController::class);
+            Route::get('departments/{id}/sections', [Dashboard\SectionController::class, 'getByDepartment'])->name('departments.sections');
             Route::resource('jobCategories', Dashboard\JobCategoryController::class);
             Route::resource('qualifications', Dashboard\QualificationController::class);
             Route::resource('occasions', Dashboard\OccasionController::class);
             Route::resource('terminationTypes', Dashboard\TerminationTypeController::class);
             Route::resource('nationality', Dashboard\NationalityController::class);
             Route::resource('religion', Dashboard\ReligionController::class);
+            Route::resource('level', Dashboard\LevelController::class);
         });
         require __DIR__ . '../../auth.php';
     }

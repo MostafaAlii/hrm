@@ -2,7 +2,7 @@
 
 namespace  App\Repositories\Eloquents;
 
-use App\Models\JobCategory;
+use App\Models\{JobCategory,Department};
 use App\Repositories\Contracts\JobCategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use App\DataTables\Dashboard\Admin\JobCategoryDataTable;
@@ -11,7 +11,8 @@ class JobCategoryRepository implements JobCategoryRepositoryInterface
 {
     public function index(JobCategoryDataTable $branchDataTable)
     {
-        return $branchDataTable->render('dashboard.admin.jobCategories.index', ['title' => 'الوظائف']);
+        $departments = Department::active()->get();
+        return $branchDataTable->render('dashboard.admin.jobCategories.index', ['departments' => $departments, 'title' => 'الوظائف']);
     }
 
     public function create()
@@ -24,9 +25,13 @@ class JobCategoryRepository implements JobCategoryRepositoryInterface
         $request->validate([
             'name' => 'required|string|max:255',
             'is_active' => 'nullable|boolean',
+            'department_id' => 'required|exists:departments,id',
+            'section_id'    => 'required|exists:sections,id',
         ]);
         JobCategory::create([
             'name' => $request->name,
+            'department_id' => $request->department_id,
+            'section_id'    => $request->section_id,
             'is_active' => $request->has('is_active'),
         ]);
         return redirect()->route('admin.jobCategories.index')->with('success', 'تم حفظ الوظيفه بنجاح!');
@@ -43,11 +48,15 @@ class JobCategoryRepository implements JobCategoryRepositoryInterface
         $request->validate([
             'name' => 'required|string|max:255',
             'is_active' => 'nullable|boolean',
+            'department_id' => 'required|exists:departments,id',
+            'section_id' => 'required|exists:sections,id',
         ]);
 
         $jobCategory = JobCategory::findOrFail($id);
         $jobCategory->update([
             'name' => $request->name,
+            'department_id' => $request->department_id,
+            'section_id' => $request->section_id,
             'is_active' => $request->has('is_active') ? 1 : 0,
         ]);
         return redirect()->route('admin.jobCategories.index')->with('success', 'تم تحديث الاداره بنجاح!');

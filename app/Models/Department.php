@@ -35,4 +35,14 @@ class Department extends BaseModel {
     public function scopeActive($query) {
         return $query->where('company_id', get_user_data()->company_id)->where('is_active', true);
     }
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class, 'department_id');
+    }
+
+    public function jobCategories()
+    {
+        return $this->hasMany(JobCategory::class, 'department_id');
+    }
 }

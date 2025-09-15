@@ -66,4 +66,118 @@
 
 @push('js')
 {!! $dataTable->scripts() !!}
+<script>
+    document.getElementById('department_id').addEventListener('change', function() {
+        let departmentId = this.value;
+        let sectionSelect = document.getElementById('section_id');
+        sectionSelect.innerHTML = '<option value="">-- اختر القسم --</option>';
+        if (departmentId) {
+            let url = "{{ route('admin.departments.sections', ':id') }}";
+            url = url.replace(':id', departmentId);
+    
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(section => {
+                        let option = document.createElement('option');
+                        option.value = section.id;
+                        option.textContent = section.name;
+                        sectionSelect.appendChild(option);
+                    });
+                });
+        }
+    });
+</script>
+{{--<script>
+    document.getElementById('department_id_edit{{ $jobCategory->id }}').addEventListener('change', function() {
+    let departmentId = this.value;
+    let sectionSelect = document.getElementById('section_id_edit{{ $jobCategory->id }}');
+    sectionSelect.innerHTML = '<option value="">-- اختر القسم --</option>';
+
+    if (departmentId) {
+        let url = "{{ route('admin.departments.sections', ':id') }}";
+        url = url.replace(':id', departmentId);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(section => {
+                    let option = document.createElement('option');
+                    option.value = section.id;
+                    option.textContent = section.name;
+                    sectionSelect.appendChild(option);
+                });
+            });
+    }
+});
+</script>--}}
+<script>
+    (function() {
+  // قالب الـ route ونستبدل :id ديناميكياً
+  const sectionsUrlTemplate = "{{ route('admin.departments.sections', ':id') }}";
+
+  // عندما يتغير selector لأي department
+  document.addEventListener('change', function(e) {
+    if (!e.target.classList.contains('department-select')) return;
+
+    const departmentId = e.target.value;
+    const jobId = e.target.dataset.jobId;
+    const sectionSelect = document.querySelector(`#section_id_edit${jobId}`);
+    if (!sectionSelect) return;
+
+    sectionSelect.innerHTML = '<option value="">-- اختر القسم --</option>';
+
+    if (!departmentId) return;
+
+    const url = sectionsUrlTemplate.replace(':id', departmentId);
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(section => {
+          const option = document.createElement('option');
+          option.value = section.id;
+          option.textContent = section.name;
+          sectionSelect.appendChild(option);
+        });
+      })
+      .catch(err => console.error('Failed to fetch sections:', err));
+  });
+
+  // عند فتح الـ modal (Bootstrap event) — نحمّل الأقسام الحالية ونعلّم القسم المختار
+  document.addEventListener('shown.bs.modal', function(event) {
+    const modal = event.target;
+    // ابحث داخل المودال عن department-select و section-select
+    const dept = modal.querySelector('.department-select');
+    if (!dept) return;
+
+    const jobId = dept.dataset.jobId;
+    const sectionSelect = modal.querySelector(`#section_id_edit${jobId}`);
+    if (!sectionSelect) return;
+
+    const selectedSectionId = sectionSelect.dataset.selected || '';
+    const departmentId = dept.value;
+    if (!departmentId) return; // لو ما فيش إدارة مختارة، لا نفعل fetch
+
+    const url = sectionsUrlTemplate.replace(':id', departmentId);
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        sectionSelect.innerHTML = '<option value="">-- اختر القسم --</option>';
+        data.forEach(section => {
+          const option = document.createElement('option');
+          option.value = section.id;
+          option.textContent = section.name;
+          if (selectedSectionId && String(section.id) === String(selectedSectionId)) {
+            option.selected = true;
+          }
+          sectionSelect.appendChild(option);
+        });
+      })
+      .catch(err => console.error('Failed to fetch sections on modal show:', err));
+  });
+
+})();
+</script>
 @endpush

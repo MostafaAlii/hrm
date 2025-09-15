@@ -24,6 +24,10 @@ class Section extends BaseModel {
         return $this->belongsTo(Department::class);
     }
 
+    public function jobCategories() {
+        return $this->hasMany(JobCategory::class, 'section_id');
+    }
+
     public function company() {
         return $this->belongsTo(Company::class);
     }
@@ -38,5 +42,9 @@ class Section extends BaseModel {
 
     public function updatedBy() {
         return $this->belongsTo(Admin::class, 'updated_by_id');
+    }
+
+    public function scopeActive($query) {
+        return $query->where('company_id', get_user_data()->company_id)->where('is_active', true);
     }
 }

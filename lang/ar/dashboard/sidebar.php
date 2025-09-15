@@ -27,6 +27,10 @@ return [
     'jobCategory_sidebar_title' => 'الوظائف',
     'jobCategory_page_title' => 'بيانات الوظائف',
 
+    'admin_level_sidebar_title' => ' المستوى',
+    'level_sidebar_title' => 'المستوى',
+    'level_page_title' => 'بيانات المستوى',
+
     'admin_qualification_sidebar_title' => ' الموهلات',
     'qualification_sidebar_title' => 'الموهلات الدراسيه',
     'qualification_page_title' => 'بيانات الموهلات',

@@ -18,11 +18,32 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
                     </div>
                     <div class="modal-body">
-
                         <div class="mb-3">
                             <label class="form-label">اسم الوظيفه</label>
                             <input type="text" name="name" class="form-control" value="{{ $jobCategory->name }}"
                                 required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">الإدارة</label>
+                            <select name="department_id" id="department_id_edit{{ $jobCategory->id }}" class="form-select department-select"
+                            data-job-id="{{ $jobCategory->id }}" required>
+                                <option value="">-- اختر الإدارة --</option>
+                                @foreach($departments as $department)
+                                <option value="{{ $department->id }}" {{ $jobCategory->department_id == $department->id ? 'selected' : '' }}>
+                                    {{ $department->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">القسم</label>
+                            <select name="section_id" id="section_id_edit{{ $jobCategory->id }}" class="form-select section-select"
+                                data-selected="{{ $jobCategory->section_id }}" required>
+                                <option value="">-- اختر القسم --</option>
+                                <!-- الأقسام هتيجي بالـ AJAX -->
+                            </select>
                         </div>
 
                         <div class="form-check mb-3">

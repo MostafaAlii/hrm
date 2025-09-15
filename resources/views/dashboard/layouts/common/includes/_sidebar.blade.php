@@ -23,7 +23,7 @@
                     {{ is_open([
                                 'admin.mainSettings.index', 'admin.financialYears.index', 'admin.branchs.index', 'admin.shift-types.index',
                                 'admin.departments.index', 'admin.jobCategories.index', 'admin.qualifications.index', 'admin.occasions.index',
-                                'admin.terminationTypes.index', 'admin.nationality.index', 'admin.religion.index', 'admin.section.index'
+                                'admin.terminationTypes.index', 'admin.nationality.index', 'admin.religion.index', 'admin.section.index', 'admin.level.index'
                             ]) }}
                 ">
                     <a href="#!" class="nav-link">
@@ -128,6 +128,21 @@
                             </ul>
                         </li>
                         <!-- End JobCategory -->
+                        <!-- Start Levels-->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.level.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_level_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                            </a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.level.index') }}"
+                                        href="{{route('admin.level.index')}}">{{
+                                        trans('dashboard/sidebar.level_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Levels -->
                         <!-- Start Qualifications -->
                         <li class="nav-item nav-hasmenu {{ is_open(['admin.qualifications.index']) }}">
                             <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_qualification_sidebar_title') }}

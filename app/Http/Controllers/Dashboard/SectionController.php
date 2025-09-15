@@ -45,4 +45,9 @@ class SectionController extends Controller
     {
         return $this->sectionInterface->destroy($section);
     }
+
+    public function getByDepartment($id) {
+        $sections = Section::where('department_id', $id)->active()->get();
+        return response()->json($sections);
+    }
 }
