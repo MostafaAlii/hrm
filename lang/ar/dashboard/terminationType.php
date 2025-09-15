@@ -1,5 +1,5 @@
 <?php
 return [
-    'add_new_terminationType' => 'اضافه نوع جديد',
-    'name' => 'النوع',
+    'add_new_terminationType' => 'اضافه حاله جديد',
+    'name' => 'الاسم',
 ];

@@ -3,7 +3,7 @@ return [
     'admin_main_settings_sidebar_title' => 'الاعدادات العامه',
     'main_settings_sidebar_title' => 'الضبط العام',
     'main_settings_page_title' => 'اعدادات الظبط العام',
-    'admin_financialYearMonths_sidebar_title' => 'السنوات / الشهور الماليه',
+    'admin_financialYearMonths_sidebar_title' => 'السنوات الماليه',
     'financialYears_sidebar_title' => 'السنوات الماليه',
     'financialYears_page_title' => 'اعدادات السنوات الماليه',
 
@@ -19,6 +19,10 @@ return [
     'department_sidebar_title' => 'الادارات',
     'department_page_title' => 'بيانات الادارات',
 
+    'admin_section_sidebar_title' => ' الاقسام',
+    'section_sidebar_title' => 'الاقسام',
+    'section_page_title' => 'بيانات الاقسام',
+
     'admin_jobCategory_sidebar_title' => ' الوظائف',
     'jobCategory_sidebar_title' => 'الوظائف',
     'jobCategory_page_title' => 'بيانات الوظائف',
@@ -31,9 +35,9 @@ return [
     'occasion_sidebar_title' => 'المناسبات الرسميه',
     'occasion_page_title' => 'بيانات المناسبات',
 
-    'admin_terminationType_sidebar_title' => ' ترك العمل',
-    'terminationType_sidebar_title' => 'انواع ترك العمل',
-    'terminationType_page_title' => 'انواع ترك العمل',
+    'admin_terminationType_sidebar_title' => 'الحالات',
+    'terminationType_sidebar_title' => 'الحالات',
+    'terminationType_page_title' => 'الحالات',
 
     'admin_nationality_sidebar_title' => 'الجنسيات',
     'nationality_sidebar_title' => 'الجنسيات',

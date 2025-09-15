@@ -32,6 +32,7 @@ Route::group(
             Route::resource('branchs', Dashboard\BranchController::class);
             Route::resource('shift-types', Dashboard\ShiftTypeController::class);
             Route::resource('departments', Dashboard\DepartmentController::class);
+            Route::resource('section', Dashboard\SectionController::class);
             Route::resource('jobCategories', Dashboard\JobCategoryController::class);
             Route::resource('qualifications', Dashboard\QualificationController::class);
             Route::resource('occasions', Dashboard\OccasionController::class);

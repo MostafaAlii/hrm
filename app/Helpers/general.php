@@ -108,7 +108,15 @@ if (!function_exists('is_tree_open')) {
                 return $output;
             }
         }
-
         return '';
     }
+
+
+    if (!function_exists('chevron_direction')) {
+        function chevron_direction()
+        {
+            return app()->getLocale() === 'ar' ? 'chevron-left' : 'chevron-right';
+        }
+    }
+
 }
