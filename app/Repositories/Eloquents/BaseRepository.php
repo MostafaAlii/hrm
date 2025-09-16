@@ -17,14 +17,25 @@ abstract class BaseRepository {
         $this->model = $model;
     }
 
+    protected function extraData(string $context): array
+    {
+        return [];
+    }
+
     public function index($dataTable, $view, $title)
     {
-        return $dataTable->render($view, ['title' => $title]);
+        return $dataTable->render($view, array_merge(
+            ['title' => $title],
+            $this->extraData('index')
+        ));
     }
 
     public function create($view, $title)
     {
-        return view($view, ['title' => $title]);
+        return view($view, array_merge(
+            ['title' => $title],
+            $this->extraData('create')
+        ));
     }
 
     protected function extraStoreFields(Request $request): array {
@@ -53,7 +64,10 @@ abstract class BaseRepository {
     public function edit($id, $view, $title)
     {
         $record = $this->model->findOrFail($id);
-        return view($view, ['title' => $title, 'record' => $record]);
+        return view($view, array_merge(
+            ['title' => $title, 'record' => $record],
+            $this->extraData('edit')
+        ));
     }
 
     public function update(Request $request, $id)

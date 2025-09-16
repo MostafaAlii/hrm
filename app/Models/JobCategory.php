@@ -44,4 +44,9 @@ class JobCategory extends BaseModel {
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('company_id', get_user_data()->company_id)->where('is_active', true);
+    }
 }
