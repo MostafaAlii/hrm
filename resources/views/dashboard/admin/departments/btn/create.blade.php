@@ -16,6 +16,16 @@
                     </div>
 
                     <div class="mb-3">
+                        <label class="form-label">جهه العمل</label>
+                        <select name="branch_id" class="form-select" required>
+                            <option value="">-- اختر جهه العمل --</option>
+                            @foreach($branches as $branch)
+                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
                         <label class="form-label">ملاحظات</label>
                         <textarea name="note" class="form-control"></textarea>
                     </div>

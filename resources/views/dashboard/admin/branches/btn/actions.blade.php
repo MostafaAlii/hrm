@@ -14,13 +14,13 @@
                 @method('PUT')
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editBranchLabel{{ $branch->id }}">تعديل الفرع</h5>
+                        <h5 class="modal-title" id="editBranchLabel{{ $branch->id }}">تعديل جهه العمل</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
                     </div>
                     <div class="modal-body">
     
                         <div class="mb-3">
-                            <label class="form-label">اسم الفرع</label>
+                            <label class="form-label">اسم جهه العمل</label>
                             <input type="text" name="name" class="form-control" value="{{ $branch->name }}" required>
                         </div>
     
