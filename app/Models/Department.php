@@ -9,6 +9,7 @@ class Department extends BaseModel {
         'note',
         'is_active',
         'company_id',
+        'branch_id',
         'added_by_id',
         'updated_by_id',
     ];
@@ -44,5 +45,10 @@ class Department extends BaseModel {
     public function jobCategories()
     {
         return $this->hasMany(JobCategory::class, 'department_id');
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 }

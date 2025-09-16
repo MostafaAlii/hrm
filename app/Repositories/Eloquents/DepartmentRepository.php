@@ -1,17 +1,16 @@
 <?php
 
 namespace  App\Repositories\Eloquents;
-
-use App\Models\Department;
+use App\Models\{Department, Branch};
 use App\Repositories\Contracts\DepartmentRepositoryInterface;
 use Illuminate\Http\Request;
 use App\DataTables\Dashboard\Admin\DepartmentDataTable;
-
 class DepartmentRepository implements DepartmentRepositoryInterface
 {
     public function index(DepartmentDataTable $departmentDataTable)
     {
-        return $departmentDataTable->render('dashboard.admin.departments.index', ['title' => 'الادارات']);
+        $branches = Branch::active()->get();
+        return $departmentDataTable->render('dashboard.admin.departments.index', ['branches' => $branches, 'title' => 'الادارات']);
     }
 
     public function create()
@@ -19,19 +18,20 @@ class DepartmentRepository implements DepartmentRepositoryInterface
         return view('dashboard.admin.departments.btn.create', ['title' => 'إضافة اداره']);
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
             'note' => 'nullable|string',
             'phone' => 'nullable|string',
             'is_active' => 'nullable|boolean',
+            'branch_id' => 'required|exists:branches,id',
         ]);
         Department::create([
             'name' => $request->name,
             'note' => $request->note,
             'phone' => $request->phone,
             'is_active' => $request->has('is_active'),
+            'branch_id' => $request->branch_id,
         ]);
         return redirect()->route('admin.departments.index')->with('success', 'تم حفظ الاداره بنجاح!');
     }
@@ -42,13 +42,13 @@ class DepartmentRepository implements DepartmentRepositoryInterface
         return view('dashboard.admin.departments.btn.edit', ['department' => $department, 'title' => 'تعديل اداره']);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $request->validate([
             'name' => 'required|string|max:255',
             'note' => 'nullable|string',
             'phone' => 'nullable|string',
             'is_active' => 'nullable|boolean',
+            'branch_id' => 'required|exists:branches,id',
         ]);
 
         $department = Department::findOrFail($id);
@@ -57,6 +57,7 @@ class DepartmentRepository implements DepartmentRepositoryInterface
             'note' => $request->note,
             'phone' => $request->phone,
             'is_active' => $request->has('is_active') ? 1 : 0,
+            'branch_id' => $request->branch_id,
         ]);
         return redirect()->route('admin.departments.index')->with('success', 'تم تحديث الاداره بنجاح!');
     }

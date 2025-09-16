@@ -3,7 +3,7 @@
 namespace App\DataTables\Dashboard\Admin;
 
 use App\DataTables\Base\BaseDataTable;
-use App\Models\{JobCategory,Department};
+use App\Models\{JobCategory, Department};
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Utilities\Request as DataTableRequest;
@@ -16,7 +16,8 @@ class JobCategoryDataTable extends BaseDataTable
         $this->request = $request;
     }
 
-    public function dataTable($query): EloquentDataTable {
+    public function dataTable($query): EloquentDataTable
+    {
         $departments = Department::active()->get();
         return (new EloquentDataTable($query))
             ->addColumn('action', function (JobCategory $jobCategory) use ($departments) {
@@ -55,7 +56,7 @@ class JobCategoryDataTable extends BaseDataTable
     {
         return [
             ['name' => 'id', 'data' => 'id', 'title' => '#'],
-            ['name' => 'name', 'data' => 'name', 'title' => trans('dashboard/branch.name')],
+            ['name' => 'name', 'data' => 'name', 'title' => trans('dashboard/jobCategory.name')],
             ['name' => 'is_active', 'data' => 'is_active_label', 'title' => trans('dashboard/financial_year.is_active'), 'orderable' => false, 'searchable' => false],
             ['name' => 'responsible', 'data' => 'responsible', 'title' => trans('dashboard/financial_year.responsible'), 'orderable' => false, 'searchable' => false],
             ['name' => 'department_id', 'data' => 'department_id', 'title' => 'الاداره', 'orderable' => false, 'searchable' => false],

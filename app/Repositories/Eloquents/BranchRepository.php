@@ -11,12 +11,12 @@ class BranchRepository implements BranchRepositoryInterface
 {
     public function index(BranchDataTable $branchDataTable)
     {
-        return $branchDataTable->render('dashboard.admin.branches.index', ['title' => 'الفروع']);
+        return $branchDataTable->render('dashboard.admin.branches.index', ['title' => 'جهه العمل']);
     }
 
     public function create()
     {
-        return view('dashboard.admin.branches.btn.create', ['title' => 'إضافة فرع']);
+        return view('dashboard.admin.branches.btn.create', ['title' => 'إضافة جهه العمل']);
     }
 
     public function store(Request $request)
@@ -33,13 +33,13 @@ class BranchRepository implements BranchRepositoryInterface
             'phone' => $request->phone,
             'is_active' => $request->has('is_active'),
         ]);
-        return redirect()->route('admin.branchs.index')->with('success', 'تم حفظ الفرع بنجاح!');
+        return redirect()->route('admin.branchs.index')->with('success', 'تم حفظ جهه العمل بنجاح!');
     }
 
     public function edit($id)
     {
         $branch = Branch::findOrFail($id);
-        return view('dashboard.admin.branchs.btn.edit', ['branch' => $branch, 'title' => 'تعديل الفرع']);
+        return view('dashboard.admin.branchs.btn.edit', ['branch' => $branch, 'title' => 'تعديل جهه العمل']);
     }
 
     public function update(Request $request, $id)
@@ -56,9 +56,9 @@ class BranchRepository implements BranchRepositoryInterface
             'name' => $request->name,
             'address' => $request->address,
             'phone' => $request->phone,
-            'is_active' => $request->has('is_active') ? 1 : 0, // نفس الفكرة زي الـ store
+            'is_active' => $request->has('is_active') ? 1 : 0,
         ]);
-        return redirect()->route('admin.branchs.index')->with('success', 'تم تحديث الفرع بنجاح!');
+        return redirect()->route('admin.branchs.index')->with('success', 'تم تحديث جهه العمل بنجاح!');
     }
 
     public function destroy(Branch $branch)

@@ -7,9 +7,9 @@ return [
     'financialYears_sidebar_title' => 'السنوات الماليه',
     'financialYears_page_title' => 'اعدادات السنوات الماليه',
 
-    'admin_branch_sidebar_title' => ' الفروع',
-    'branch_sidebar_title' => 'الفروع',
-    'branch_page_title' => 'بيانات الفروع',
+    'admin_branch_sidebar_title' => ' جهه العمل',
+    'branch_sidebar_title' => 'جهه العمل',
+    'branch_page_title' => 'بيانات جهه العمل',
 
     'admin_shift_type_sidebar_title' => ' الشيفتات',
     'shift_type_sidebar_title' => 'الشيفتات',
