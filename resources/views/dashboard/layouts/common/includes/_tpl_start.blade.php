@@ -55,7 +55,69 @@
         .dt-button {
             font-family: 'Cairo', sans-serif;
         }
+        /* لو الصفحة RTL (العربية) */
+        html[dir="rtl"] .navbar-content {
+        direction: rtl; /* تخلي النصوص والقوائم لليمين */
+        scrollbar-gutter: stable both-edges; /* يمنع overlap مع المحتوى */
+        }
+
+        html[dir="rtl"] .navbar-content::-webkit-scrollbar {
+        width: 6px;
+        }
+
+        html[dir="rtl"] .navbar-content::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 10px;
+        }
+
+        html[dir="rtl"] .navbar-content::-webkit-scrollbar-thumb:hover {
+        background: #a0a0a0;
+        }
+
+        /* أهم حاجة: إجبار الـ scrollbar يكون على الشمال في RTL */
+        html[dir="rtl"] .navbar-content {
+        scrollbar-color: #c1c1c1 transparent;
+        scrollbar-width: thin;
+        direction: rtl;
+        }
+        /* خلي الـ sidebar كـ flex column */
+        .app-sidebar {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* نخلي التحكم في الـ scroll جوّه navbar-content */
+        }
+
+        /* الحاوية اللي فيها اللوجو والقوائم */
+        .app-navbar-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 0; /* مهم جداً للسماح للأطفال بالتمدد والـ overflow بالعمل */
+        }
+
+        /* اللوجو/الهيدر فوق يفضل ثابت */
+        .brand-link {
+        flex: 0 0 auto;
+        }
+
+        /* الجزء اللي فيه القوائم — ده اللي هيعمل scroll */
+        .navbar-content {
+        flex: 1 1 auto; /* ياخد المساحة الباقية */
+        min-height: 0; /* <--- أهم سطر */ overflow-y: auto; /* يظهر scrollbar بس عند الحاجة */ overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* smoother on mobile */ } /* شكل scrollbar (اختياري) */
+            .navbar-content::-webkit-scrollbar { width: 6px; } .navbar-content::-webkit-scrollbar-thumb { background: #c1c1c1;
+            border-radius: 10px; } .navbar-content::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
     </style>
+    <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const brand = document.querySelector('.brand-link');
+                const nav = document.querySelector('.navbar-content');
+                if (brand && nav) {
+                nav.style.height = `calc(100vh - ${brand.getBoundingClientRect().height}px)`;
+                nav.style.overflowY = 'auto';
+                }
+                });
+        </script>
     @stack('css')
 </head>
 
