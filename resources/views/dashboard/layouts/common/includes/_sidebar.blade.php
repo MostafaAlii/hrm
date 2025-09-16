@@ -23,7 +23,9 @@
                     {{ is_open([
                                 'admin.mainSettings.index', 'admin.financialYears.index', 'admin.branchs.index', 'admin.shift-types.index',
                                 'admin.departments.index', 'admin.jobCategories.index', 'admin.qualifications.index', 'admin.occasions.index',
-                                'admin.terminationTypes.index', 'admin.nationality.index', 'admin.religion.index', 'admin.section.index', 'admin.level.index'
+                                'admin.terminationTypes.index', 'admin.nationality.index', 'admin.religion.index', 'admin.section.index', 'admin.level.index',
+                                'admin.benefitVariable.index', 'admin.bankVariable.index','admin.bloodType.index', 'admin.country.index', 'admin.governorate.index',
+                                'admin.city.index',
                             ]) }}
                 ">
                     <a href="#!" class="nav-link">
@@ -214,6 +216,87 @@
                             </ul>
                         </li>
                         <!-- End Religin -->
+                        <!-- Start BenefitVariable -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.benefitVariable.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_benefitVariable_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.benefitVariable.index') }}" href="{{route('admin.benefitVariable.index')}}">{{
+                                        trans('dashboard/sidebar.benefitVariable_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End BenefitVariable -->
+                        <!-- Start BankVariable -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.bankVariable.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_bankVariable_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.bankVariable.index') }}"
+                                        href="{{route('admin.bankVariable.index')}}">{{
+                                        trans('dashboard/sidebar.bankVariable_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End BankVariable -->
+                        <!-- Start bloodType -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.bloodType.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_blood_type_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.bloodType.index') }}"
+                                        href="{{route('admin.bloodType.index')}}">{{
+                                        trans('dashboard/sidebar.blood_type_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End bloodType -->
+                        <!-- Start Country -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.country.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_country_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.country.index') }}" href="{{route('admin.country.index')}}">{{
+                                        trans('dashboard/sidebar.country_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Country -->
+                        <!-- Start governorate -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.governorate.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_governorate_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.governorate.index') }}" href="{{route('admin.governorate.index')}}">{{
+                                        trans('dashboard/sidebar.governorate_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End governorate -->
+                        <!-- Start City -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.city.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_city_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.city.index') }}"
+                                        href="{{route('admin.city.index')}}">{{
+                                        trans('dashboard/sidebar.city_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End City -->
                     </ul>
                 </li>
                 <!-- End AdminPanelSetting -->

@@ -50,4 +50,28 @@ return [
     'admin_religion_sidebar_title' => 'الديانات',
     'religion_sidebar_title' => 'الديانات',
     'religion_page_title' => 'الديانات',
+
+    'admin_benefitVariable_sidebar_title' => 'متغيرات المزايا',
+    'benefitVariable_sidebar_title' => 'متغيرات المزايا',
+    'benefitVariable_page_title' => 'متغيرات المزايا',
+
+    'admin_bankVariable_sidebar_title' => 'متغيرات البنوك',
+    'bankVariable_sidebar_title' => 'متغيرات البنوك',
+    'bankVariable_page_title' => 'متغيرات البنوك',
+
+    'admin_blood_type_sidebar_title' => 'متغيرات فصائل الدم',
+    'blood_type_sidebar_title' => 'متغيرات فصائل الدم',
+    'blood_type_page_title' => 'متغيرات فصائل الدم',
+
+    'admin_country_sidebar_title' => 'متغيرات الدول ',
+    'country_sidebar_title' => 'متغيرات الدول ',
+    'country_page_title' => 'متغيرات الدول ',
+
+    'admin_governorate_sidebar_title' => 'متغيرات المحافظات ',
+    'governorate_sidebar_title' => 'متغيرات المحافظات ',
+    'governorate_page_title' => 'متغيرات المحافظات ',
+
+    'admin_city_sidebar_title' => 'متغيرات المدن ',
+    'city_sidebar_title' => 'متغيرات المدن ',
+    'city_page_title' => 'متغيرات المدن ',
 ];

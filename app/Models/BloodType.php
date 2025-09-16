@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-class Nationality extends BaseModel
+use Illuminate\Database\Eloquent\Relations\{BelongsTo};
+class BloodType extends BaseModel
 {
-    protected $table = "nationalities";
+    protected $table = 'blood_types';
     protected $fillable = [
-        'uuid',
-        'name',
+        'name_ar',
+        'name_en',
         'is_active',
         'company_id',
+        'uuid',
         'added_by_id',
-        'updated_by_id',
+        'updated_by_id'
     ];
-
     public function getIsActiveLabelAttribute(): string
     {
         return $this->is_active
@@ -21,23 +22,18 @@ class Nationality extends BaseModel
             : trans('dashboard/general.in_active');
     }
 
-    public function company()
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function addedBy()
+    public function addedBy(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'added_by_id');
     }
 
-    public function updatedBy()
+    public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'updated_by_id');
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->where('company_id', get_user_data()->company_id)->where('is_active', true);
     }
 }

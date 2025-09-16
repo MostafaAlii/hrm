@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Repositories\Eloquents;
+
+use App\Models\{Employee,Gender,Nationality,Level,Branch,Department,Section,JobCategory,SalaryPlace};
+use App\Repositories\Contracts\EmployeeRepositoryInterface;
+use Illuminate\Http\Request;
+
+class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInterface
+{
+    public function __construct(Employee $model)
+    {
+        parent::__construct($model);
+    }
+
+    protected function extraData(string $context): array
+    {
+        $data = [];
+
+        // هتظهر فى create و edit
+        if (in_array($context, ['create', 'edit'])) {
+            $data['genders']      = Gender::active()->get();
+            $data['nationalities'] = Nationality::active()->get();
+            $data['levels']       = Level::active()->get();
+            $data['branches']     = Branch::active()->get();
+            $data['departments']  = Department::active()->get();
+            $data['sections']     = Section::active()->get();
+            $data['jobCategories'] = JobCategory::active()->get();
+            $data['salaryPlaces']  = SalaryPlace::active()->get();
+        }
+        return $data;
+    }
+
+    protected function extraStoreFields(Request $request): array
+    {
+        return [
+            'code'   => $request->code,
+            'barcode'   => $request->barcode,
+            'email'   => $request->email,
+            'password'   => bcrypt($request->password),
+            'gender_id'   => $request->gender_id,
+            'nationality_id'   => $request->nationality_id,
+            'level_id'   => $request->level_id,
+            'branch_id'   => $request->branch_id,
+            'department_id'   => $request->department_id,
+            'section_id'   => $request->section_id,
+            'job_category_id'   => $request->job_category_id,
+            'salary_place_id'   => $request->salary_place_id,
+        ];
+    }
+
+    protected function extraUpdateFields(Request $request, $id): array
+    {
+        return [
+            'code'   => $request->code,
+            'barcode'   => $request->barcode,
+            'email'   => $request->email,
+            'password'   => bcrypt($request->password),
+            'gender_id'   => $request->gender_id,
+            'nationality_id'   => $request->nationality_id,
+            'level_id'   => $request->level_id,
+            'branch_id'   => $request->branch_id,
+            'department_id'   => $request->department_id,
+            'section_id'   => $request->section_id,
+            'job_category_id'   => $request->job_category_id,
+            'salary_place_id'   => $request->salary_place_id,
+        ];
+    }
+}

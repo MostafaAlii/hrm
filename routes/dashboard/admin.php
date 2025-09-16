@@ -41,6 +41,12 @@ Route::group(
             Route::resource('nationality', Dashboard\NationalityController::class);
             Route::resource('religion', Dashboard\ReligionController::class);
             Route::resource('level', Dashboard\LevelController::class);
+            Route::resource('benefitVariable', Dashboard\BenefitVariableController::class);
+            Route::resource('bankVariable', Dashboard\BankVariableController::class);
+            Route::resource('bloodType', Dashboard\BloodTypeController::class);
+            Route::resource('country', Dashboard\CountryController::class);
+            Route::resource('governorate', Dashboard\GovernorateController::class);
+            Route::resource('city', Dashboard\CityController::class);
         });
         require __DIR__ . '../../auth.php';
     }
