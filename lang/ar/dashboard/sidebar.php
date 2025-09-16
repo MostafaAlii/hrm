@@ -74,4 +74,8 @@ return [
     'admin_city_sidebar_title' => 'متغيرات المدن ',
     'city_sidebar_title' => 'متغيرات المدن ',
     'city_page_title' => 'متغيرات المدن ',
+
+    'admin_employee_sidebar_title' => 'شئون العاملين',
+    'employee_sidebar_title' => 'بيانات العاملين',
+    'employee_page_title' => 'بيانات العاملين',
 ];

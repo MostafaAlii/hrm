@@ -300,6 +300,28 @@
                     </ul>
                 </li>
                 <!-- End AdminPanelSetting -->
+                <!-- Start Employees Departments -->
+                <li class="nav-item nav-hasmenu
+                                    {{ is_open([
+                                                'admin.employee.index'
+                                            ]) }}
+                                ">
+                    <a href="#!" class="nav-link">
+                        <span class="nav-icon"><i class="ti ti-layout-2"></i></span>
+                        <span class="nav-text">{{ trans('dashboard/sidebar.admin_employee_sidebar_title') }}</span>
+                        <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                    </a>
+                    <ul class="nav-submenu">
+                        <!-- Start Employee -->
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.employee.index') }}" href="{{ route('admin.employee.index') }}">
+                                {{ trans('dashboard/sidebar.employee_sidebar_title') }}
+                            </a>
+                        </li>
+                        <!-- End Employee -->
+                    </ul>
+                </li>
+                <!-- End Employees Departments -->
 
 
 

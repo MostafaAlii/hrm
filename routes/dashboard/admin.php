@@ -47,6 +47,7 @@ Route::group(
             Route::resource('country', Dashboard\CountryController::class);
             Route::resource('governorate', Dashboard\GovernorateController::class);
             Route::resource('city', Dashboard\CityController::class);
+            Route::resource('employee', Dashboard\EmployeeController::class);
         });
         require __DIR__ . '../../auth.php';
     }
