@@ -8,7 +8,7 @@ abstract class BaseRepository {
     protected $model;
     protected $rules = [
         'name_ar'   => 'required|string|max:255',
-        'name_en'   => 'required|string|max:255',
+        'name_en'   => 'nullable|string|max:255',
         'is_active' => 'nullable|boolean',
     ];
 

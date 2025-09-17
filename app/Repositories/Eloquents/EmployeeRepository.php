@@ -16,9 +16,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
     protected function extraData(string $context): array
     {
         $data = [];
-
-        // هتظهر فى create و edit
-        if (in_array($context, ['create', 'edit'])) {
+        if (in_array($context, ['create', 'edit', 'index'])) {
             $data['genders']      = Gender::active()->get();
             $data['nationalities'] = Nationality::active()->get();
             $data['levels']       = Level::active()->get();
@@ -31,8 +29,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
         return $data;
     }
 
-    protected function extraStoreFields(Request $request): array
-    {
+    protected function extraStoreFields(Request $request): array {
         return [
             'code'   => $request->code,
             'barcode'   => $request->barcode,
@@ -46,11 +43,13 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             'section_id'   => $request->section_id,
             'job_category_id'   => $request->job_category_id,
             'salary_place_id'   => $request->salary_place_id,
+            'hiring_date'       => $request->hiring_date,
+            'birthday_date'       => $request->birthday_date,
+            'identity_number'       => $request->identity_number,
         ];
     }
 
-    protected function extraUpdateFields(Request $request, $id): array
-    {
+    protected function extraUpdateFields(Request $request, $id): array {
         return [
             'code'   => $request->code,
             'barcode'   => $request->barcode,
@@ -64,6 +63,9 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             'section_id'   => $request->section_id,
             'job_category_id'   => $request->job_category_id,
             'salary_place_id'   => $request->salary_place_id,
+            'hiring_date'       => $request->hiring_date,
+            'birthday_date'       => $request->birthday_date,
+            'identity_number'       => $request->identity_number,
         ];
     }
 }
