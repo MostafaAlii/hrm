@@ -11,7 +11,6 @@ class DatabaseSeeder extends Seeder {
             AdminTableSeeder::class,
             SalaryPlaceSeeder::class,
             GenderSeeder::class,
-            
         ]);
     }
 }

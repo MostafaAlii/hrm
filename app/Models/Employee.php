@@ -19,6 +19,8 @@ class Employee extends Authenticatable {
         'email',
         'password',
         'hiring_date',
+        'birthday_date',
+        'identity_number',
         'gender_id',
         'nationality_id',
         'level_id',
@@ -39,6 +41,7 @@ class Employee extends Authenticatable {
     ];
     protected $casts = [
         'hiring_date' => 'date',
+        'birthday_date' => 'date',
         'is_active' => 'boolean',
         'password' => 'hashed',
     ];

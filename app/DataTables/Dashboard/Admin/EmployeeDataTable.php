@@ -68,7 +68,7 @@ class EmployeeDataTable extends BaseDataTable {
     {
         return [
             ['name' => 'id', 'data' => 'id', 'title' => '#'],
-            ['name' => 'name', 'data' => 'name', 'title' => 'الاسم'],
+            ['name' => 'name_ar', 'data' => 'name_ar', 'title' => 'الاسم'],
             ['name' => 'level', 'data' => 'level', 'title' => 'المستوى', 'orderable' => false, 'searchable' => false],
             ['name' => 'branch', 'data' => 'branch', 'title' => 'جهه العمل', 'orderable' => false, 'searchable' => false],
             ['name' => 'department', 'data' => 'department', 'title' => 'الاداره', 'orderable' => false, 'searchable' => false],

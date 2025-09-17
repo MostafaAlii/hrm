@@ -1,5 +1,6 @@
 @extends('dashboard.layouts.master')
 @section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <style>
     #departments_datatable tbody td,
     #departments_datatable thead th {
@@ -66,4 +67,7 @@
 
 @push('js')
 {!! $dataTable->scripts() !!}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+
 @endpush
