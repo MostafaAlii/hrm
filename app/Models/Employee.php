@@ -7,10 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Concerns\HasUuid;
+use App\Enums\Employee\WorkingStatus;
+use App\Models\Concerns\UploadMedia;
 class Employee extends Authenticatable {
-    use HasUuid,HasApiTokens, HasFactory, Notifiable;
+    use HasUuid, HasApiTokens, HasFactory, Notifiable, UploadMedia;
     protected $table = 'employees';
-
     protected $fillable = [
         'code',
         'barcode',
@@ -33,18 +34,27 @@ class Employee extends Authenticatable {
         'company_id',
         'uuid',
         'added_by_id',
-        'updated_by_id'
+        'updated_by_id',
+        'working_status'
     ];
     protected $hidden = [
         'password',
         'remember_token',
     ];
     protected $casts = [
-        'hiring_date' => 'date',
-        'birthday_date' => 'date',
+        'hiring_date' => 'date:Y-m-d',
+        'birthday_date' => 'date:Y-m-d',
         'is_active' => 'boolean',
         'password' => 'hashed',
+        'working_status' => WorkingStatus::class,
     ];
+
+    public function getIsActiveLabelAttribute(): string
+    {
+        return $this->is_active
+            ? trans('dashboard/general.active')
+            : trans('dashboard/general.in_active');
+    }
 
     public function gender()
     {
@@ -91,15 +101,28 @@ class Employee extends Authenticatable {
         return $this->belongsTo(Company::class);
     }
 
-    public function addedBy() {
+    public function addedBy()
+    {
         return $this->belongsTo(Admin::class, 'added_by_id');
     }
 
-    public function updatedBy() {
+    public function updatedBy()
+    {
         return $this->belongsTo(Admin::class, 'updated_by_id');
     }
 
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('company_id', get_user_data()->company_id)->where('is_active', true);
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(EmployeeProfile::class);
+    }
+
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
     }
 }

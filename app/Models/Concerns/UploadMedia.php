@@ -7,8 +7,7 @@ namespace App\Models\Concerns;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 
-trait UploadMedia
-{
+trait UploadMedia {
     public function uploadSingleMedia(
         $baseFolder,
         UploadedFile $file,

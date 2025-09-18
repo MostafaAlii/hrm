@@ -39,6 +39,15 @@ class EmployeeController extends Controller
         return $this->repository->store($request);
     }
 
+    public function show($id)
+    {
+        return $this->repository->show(
+            $id,
+            'dashboard.admin.employees.btn.show',
+            'تفاصيل الموظف'
+        );
+    }
+
     public function edit($id)
     {
         return $this->repository->edit(
