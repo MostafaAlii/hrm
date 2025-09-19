@@ -398,12 +398,16 @@
                                                     <div class="col-md-6">
                                                         <div class="p-3 mb-3 text-center border rounded">
                                                             <label for="image" class="form-label fw-bold">الصوره</label>
-                                                            <input class="form-control" type="file" name="employeeMilitaryCertificate" id="employeeMilitaryCertificateInput" accept="image/*">
-                                                            <div class="mt-2">
-                                                                <img id="employeeMilitaryCertificatePreview"
-                                                                    src="{{ $record->getMediaUrl('employeeMilitaryCertificate', $record, null, 'media', 'employeeMilitaryCertificate', true) }}" alt=""
-                                                                    width="100" style="cursor: pointer;" onclick="openImageModal(this.src, 'الصوره')">
-                                                            </div>
+                                                            <input class="form-control" type="file" name="employeeMilitaryCertificate"
+                                                                id="employeeMilitaryCertificateInput" accept="image/*">
+
+                                                            @if($record->militaryService)
+                                                                <div class="mt-2">
+                                                                    <img id="employeeMilitaryCertificatePreview"
+                                                                        src="{{ $record->militaryService->getMediaUrl('employeeMilitaryCertificates', $record->militaryService, null, 'media', 'employeeMilitaryCertificate') }}"
+                                                                        alt="صورة" width="100" style="cursor: pointer;" onclick="openImageModal(this.src, 'الصوره')">
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -414,7 +418,8 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="text-center modal-body">
-                                                                    <img id="popupImage" src="" class="rounded img-fluid" style="max-width: 100%; max-height: 80vh;">
+                                                                    <img id="popupImage" src="" class="rounded img-fluid"
+                                                                        style="max-width: 100%; max-height: 80vh;">
                                                                 </div>
                                                             </div>
                                                         </div>

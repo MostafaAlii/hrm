@@ -122,8 +122,7 @@ class EmployeeController extends Controller
         return redirect()->back()->with('success', 'تم تحديث البيانات الشخصية بنجاح');
     }
 
-    public function update_military_service(Request $request, $id) {
-        //dd($request->file('employeeMilitaryCertificate'));
+    /*public function update_military_service(Request $request, $id) {
         $employee = Employee::findOrFail($id);
         $validated = $request->validate([
             'military_card_number' => 'nullable|string|max:255',
@@ -131,15 +130,86 @@ class EmployeeController extends Controller
             'expiry_date'          => 'nullable|date|after_or_equal:issue_date',
             'batch_number'         => 'nullable|string|max:255',
             'additional_info'      => 'nullable|string',
-            //'employeeMilitaryCertificate'          => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'status'                      => 'required|string|in:' . implode(',', array_column(\App\Enums\Employee\MilitaryStatus::cases(), 'value')),
         ]);
         $militaryService = $employee->militaryService()->updateOrCreate(
             ['employee_id' => $employee->id],
         );
         if ($request->hasFile('employeeMilitaryCertificate')) {
-            $militaryService->updateSingleMedia('employeeMilitaryCertificate', $request->file('employeeMilitaryCertificate'), $militaryService, null, 'media', true);
+            $militaryService->updateSingleMedia(
+                'militaryService', // الفولدر
+                $request->file('employeeMilitaryCertificate'),
+                $militaryService,
+                null,
+                'media', // علاقة media
+                true,  // useStorage (خليه false علشان الملفات تتحط في storage/app/public)
+                false,  // generateThumbnail
+                'employeeMilitaryCertificate' // collection name
+            );
         }
+        return back()->with('success', 'تم تحديث بيانات الخدمة العسكرية بنجاح');
+    }*/
+
+    /*public function update_military_service(Request $request, $id) {
+        $employee = Employee::findOrFail($id);
+        $validated = $request->validate([
+            'military_card_number' => 'nullable|string|max:255',
+            'issue_date' => 'nullable|date',
+            'expiry_date' => 'nullable|date|after_or_equal:issue_date',
+            'batch_number' => 'nullable|string|max:255',
+            'additional_info' => 'nullable|string',
+            'status' => 'required|string|in:' . implode(',', array_column(\App\Enums\Employee\MilitaryStatus::cases(), 'value')),
+        ]);
+        $militaryService = $employee->militaryService()->updateOrCreate(
+            ['employee_id' => $employee->id],
+            $validated
+        );
+
+        return back()->with('success', 'تم تحديث بيانات الخدمة العسكرية بنجاح');
+    }*/
+
+    public function update_military_service(Request $request, $id) {
+        //dd('وصلت جوه الكنترولر', $request->all(), $request->file('employeeMilitaryCertificate'));
+        //dd($request->file('employeeMilitaryCertificate'));
+        $employee = Employee::findOrFail($id);
+        //dd($employee->militaryService());
+        // Validate the request data
+        $validated = $request->validate([
+            'military_card_number' => 'nullable|string|max:255',
+            'issue_date' => 'nullable|date',
+            'expiry_date' => 'nullable|date|after_or_equal:issue_date',
+            'batch_number' => 'nullable|string|max:255',
+            'additional_info' => 'nullable|string',
+            'status' => 'nullable|string|in:' . implode(',', array_column(\App\Enums\Employee\MilitaryStatus::cases(), 'value')),
+            'status' => 'nullable|string',
+            'employeeMilitaryCertificate' => 'nullable|image|mimes:jpeg,png,webp|max:2048', // Validate the image
+        ]);
+        $militaryService = $employee->militaryService()->updateOrCreate(
+            ['employee_id' => $employee->id],
+            array_filter($validated, fn($key) => $key !== 'employeeMilitaryCertificate', ARRAY_FILTER_USE_KEY)
+        );
+        // بعد التحديث أو الإنشاء لازم تجيب الموديل مش العلاقة
+        $militaryService = $employee->militaryService;
+
+
+        //dd($militaryService);
+        if ($request->hasFile('employeeMilitaryCertificate')) {
+            //dd("دخلت جوة رفع الملف");
+            $militaryService->updateSingleMedia(
+                baseFolder: 'employeeMilitaryCertificates',
+                file: $request->file('employeeMilitaryCertificate'),
+                model: $militaryService,   // ✅ دلوقتي موديل فعلي
+                relation: 'media',
+                useStorage: true,
+                generateThumbnail: true,
+                collectionName: 'employeeMilitaryCertificate',
+                addWatermark: false
+            );
+        }
+        /*if ($request->hasFile('employeeMilitaryCertificate')) {
+            $path = $request->file('employeeMilitaryCertificate')->store('military_service_certificates', 'public');
+            dd($path);
+        }*/
         return back()->with('success', 'تم تحديث بيانات الخدمة العسكرية بنجاح');
     }
 }
