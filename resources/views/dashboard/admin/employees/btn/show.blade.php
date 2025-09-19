@@ -355,8 +355,7 @@
                                                             @foreach(\App\Enums\Employee\MilitaryStatus::options() as $status)
                                                             <div class="form-check form-check-inline">
                                                                 <input class="form-check-input" type="radio" name="status" id="status_{{ $status['value'] }}"
-                                                                    value="{{ $status['value'] }}" {{ old('status', $record->militaryService?->status) ===
-                                                                $status['value'] ? 'checked' : '' }}>
+                                                                    value="{{ $status['value'] }}" {{ old('status', $record->militaryService?->status?->value) == $status['value'] ? 'checked' : '' }}>
                                                                 <label class="form-check-label" for="status_{{ $status['value'] }}">
                                                                     {{ $status['label'] }}
                                                                 </label>
