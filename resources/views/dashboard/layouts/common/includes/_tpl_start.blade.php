@@ -55,6 +55,12 @@
         .dt-button {
             font-family: 'Cairo', sans-serif;
         }
+        .section-title {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.25rem;
+        }
         /* لو الصفحة RTL (العربية) */
         html[dir="rtl"] .navbar-content {
         direction: rtl; /* تخلي النصوص والقوائم لليمين */

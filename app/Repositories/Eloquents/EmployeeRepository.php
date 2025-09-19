@@ -2,12 +2,12 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\{Employee, Gender, Nationality, Level, Branch, Department, Section, JobCategory, SalaryPlace};
+use App\Models\{BloodType, Employee, Religion, Governorate, Gender, Nationality, Level, Branch, Department, Section, JobCategory, SalaryPlace};
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Concerns\UploadMedia;
-class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInterface
-{
+
+class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInterface {
     use UploadMedia;
     public function __construct(Employee $model)
     {
@@ -25,6 +25,14 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             $data['sections']      = Section::active()->get();
             $data['jobCategories'] = JobCategory::active()->get();
             $data['salaryPlaces']  = SalaryPlace::active()->get();
+            $data['governorates']  = Governorate::active()->get();
+            $data['religions']  = Religion::active()->get();
+            $data['bloodTypes']  = BloodType::active()->get();
+            if (request()->route('id')) {
+                $employee = $this->model->with(['profile', 'militaryService'])->find(request()->route('id'));
+                $data['profile'] = $employee?->profile;
+                $data['militaryService'] = $employee?->militaryService;
+            }
         }
         if (in_array($context, ['create', 'edit', 'index'])) {
             $data['genders']      = Gender::active()->get();
@@ -64,11 +72,15 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
         $record = $this->model->findOrFail($id);
         $data = [
             'hiring_date'       => $request->hiring_date,
+            'birthday_date'       => $request?->birthday_date,
+            'identity_number'       => $request?->identity_number,
+            'gender_id'       => $request?->gender_id,
+            'nationality_id'       => $request?->nationality_id,
         ];
         if ($request->hasFile('employee')) {
             $fileName = $record->updateSingleMedia('employee', $request->file('employee'), $record, null, 'media', true);
+            $data['employee'] = $fileName;
         }
-        $data['employee'] = $fileName;
         return $data;
     }
 

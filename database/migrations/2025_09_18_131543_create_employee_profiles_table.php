@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
 
             // البيانات الشخصية
-            $table->string('identify_number')->unique()->nullable(); // الرقم القومي أو الهوية
-            $table->date('birthdate')->nullable();
+            $table->string('identity_number')->unique()->nullable(); // الرقم القومي أو الهوية
+            $table->date('birthday_date')->nullable();
             $table->foreignId('gender_id')->nullable()->constrained('genders')->nullOnDelete();
             $table->foreignId('birth_governorate_id')->nullable()->constrained('governorates')->nullOnDelete();
             $table->foreignId('nationality_id')->nullable()->constrained('nationalities')->nullOnDelete();

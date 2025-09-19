@@ -6,8 +6,7 @@ use App\Models\Employee;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class EmployeeSaved
-{
+class EmployeeSaved {
     use Dispatchable, SerializesModels;
 
     public $employee;

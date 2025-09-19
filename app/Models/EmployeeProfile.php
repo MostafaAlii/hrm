@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\Employee\MaritalStatus;
 class EmployeeProfile extends BaseModel
 {
     protected $table = 'employee_profiles';
     protected $fillable = [
         'employee_id',
-        'identify_number',
-        'birthdate',
+        'identity_number',
+        'birthday_date',
         'gender_id',
         'birth_governorate_id',
         'nationality_id',
@@ -17,12 +18,17 @@ class EmployeeProfile extends BaseModel
         'blood_type_id',
         'address_governorate_id',
         'address_city_id',
+        'address_city',
         'address',
         'phone',
         'mobile1',
         'mobile2',
         'fax',
         'email',
+    ];
+
+    protected $casts = [
+        'marital_status' => MaritalStatus::class,
     ];
 
     public function employee()

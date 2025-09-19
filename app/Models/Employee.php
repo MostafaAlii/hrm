@@ -71,6 +71,11 @@ class Employee extends Authenticatable {
         return $this->belongsTo(Level::class, 'level_id');
     }
 
+    public function governorate()
+    {
+        return $this->belongsTo(Governorate::class, 'governorate_id');
+    }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
@@ -119,6 +124,11 @@ class Employee extends Authenticatable {
     public function profile()
     {
         return $this->hasOne(EmployeeProfile::class);
+    }
+
+    public function militaryService()
+    {
+        return $this->hasOne(MilitaryService::class);
     }
 
     public function media()

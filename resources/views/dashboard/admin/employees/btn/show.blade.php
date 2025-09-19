@@ -80,19 +80,13 @@
                                     <!-- Tabs Content -->
                                     <div class="tab-content p-3 border border-top-0" id="employeeTabsContent">
                                         <!-- البيانات الأساسية -->
-                                        {{--<div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
-                                            <p><strong>الاسم بالعربية:</strong> {{ $record->name_ar }}</p>
-                                            <p><strong>الاسم بالانجليزية:</strong> {{ $record->name_en }}</p>
-                                            <p><strong>البريد الالكتروني:</strong> {{ $record->email }}</p>
-                                            <p><strong>الحالة:</strong> {{ $record->is_active ? 'نشط' : 'غير نشط' }}</p>
-                                        </div>--}}
                                         <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                                             <form action="{{ route('admin.employee.update', $record->id) }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
 
                                                 <!-- البيانات الاساسية -->
-                                                <h5 class="mb-3 mt-2">البيانات الأساسية</h5>
+                                                <h5 class="mb-3 mt-2 section-title">البيانات الأساسية</h5>
                                                 <div class="row">
                                                     <!-- يمين -->
                                                     <div class="col-md-6">
@@ -135,16 +129,6 @@
                                                     </div>
 
                                                     <!-- شمال -->
-                                                    {{--<div class="col-md-6">
-                                                        <div class="mb-3 text-center">
-                                                            <label class="form-label">الصورة الشخصية</label>
-                                                            <input type="file" name="avatar" class="form-control">
-                                                            @if($record->avatar)
-                                                            <img src="{{ asset('storage/' . $record->avatar) }}" alt="avatar" class="img-thumbnail mt-2"
-                                                                width="150">
-                                                            @endif
-                                                        </div>
-                                                    </div>--}}
                                                     <div class="col-md-6">
                                                         <div class="p-3 mb-3 text-center border rounded">
                                                             <label for="image" class="form-label fw-bold">الصوره</label>
@@ -171,7 +155,7 @@
                                                 </div>
 
                                                 <!-- بيانات الوظيفة -->
-                                                <h5 class="mb-3 mt-4">بيانات الوظيفة</h5>
+                                                <h5 class="mb-3 mt-4 section-title">بيانات الوظيفة</h5>
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
                                                         <label class="form-label">المستوى</label>
@@ -208,18 +192,246 @@
 
                                         <!-- البيانات الشخصية -->
                                         <div class="tab-pane fade" id="personal" role="tabpanel" aria-labelledby="personal-tab">
-                                            <p><strong>الرقم القومي:</strong> {{-- $record->identity_number ?? '-' --}}</p>
-                                            <p><strong>تاريخ الميلاد:</strong> {{-- $record->birthday_date ?? '-' --}}</p>
-                                            <p><strong>الجنس:</strong> {{-- optional($record->gender)->name ?? '-' --}}</p>
-                                            <p><strong>الجنسية:</strong> {{-- optional($record->nationality)->name ?? '-' --}}</p>
+                                            <form action="{{ route('admin.employee.profile_update', $record->id) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <h5 class="mb-3 mt-2 section-title">البيانات الشخصية</h5>
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">رقم البطاقه / جواز السفر</label>
+                                                        <input type="text" name="identity_number" class="form-control" value="{{ old('identity_number', $record->identity_number) }}">
+                                                    </div>
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">تاريخ الميلاد</label>
+                                                        <input type="date" name="birthday_date" class="form-control"
+                                                            value="{{ old('birthday_date', $record->birthday_date?->format('Y-m-d')) }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">النوع</label>
+                                                        <select name="gender_id" class="form-select" required>
+                                                            <option value="">-- اختر النوع --</option>
+                                                            @foreach($genders as $gender)
+                                                            <option value="{{ $gender->id }}" {{ $record->gender_id == $gender->id ? 'selected' : '' }}>
+                                                                {{ $gender->name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">محافظه الميلاد</label>
+                                                        <select name="birth_governorate_id" class="form-select" required>
+                                                            <option value="">-- اختر المحافظه --</option>
+                                                            @foreach($governorates as $governorate)
+                                                            <option value="{{ $gender->id }}" {{ $record?->profile?->birth_governorate_id == $governorate->id ? 'selected' : '' }}>
+                                                                {{ $governorate->name_ar }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-4">
+                                                            <label class="form-label">الجنسيه</label>
+                                                            <select name="nationality_id" class="form-select" required>
+                                                                <option value="">-- اختر الجنسيه --</option>
+                                                                @foreach($nationalities as $nationality)
+                                                                <option value="{{ $nationality->id }}" {{ $record->nationality_id == $nationality->id ? 'selected' : '' }}>
+                                                                    {{ $nationality->name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label class="form-label">الديانه</label>
+                                                            <select name="religion_id" class="form-select" required>
+                                                                <option value="">-- اختر الديانه --</option>
+                                                                @foreach($religions as $religion)
+                                                                <option value="{{ $religion->id }}" {{ $record?->profile?->religion_id == $religion->id ? 'selected' : '' }}>
+                                                                    {{ $religion->name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-4">
+                                                            <label class="form-label">الحالة الاجتماعية</label>
+                                                            <select name="marital_status" class="form-select" required>
+                                                                <option value="">-- اختر الحالة --</option>
+                                                                @foreach(\App\Enums\Employee\MaritalStatus::options() as $status)
+                                                                <option value="{{ $status['value'] }}" {{ old('marital_status', $record->profile?->marital_status?->value ??
+                                                                    $record->profile?->marital_status) == $status['value'] ? 'selected' : '' }}>
+                                                                    {{ $status['label'] }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label class="form-label">فصيله الدم</label>
+                                                            <select name="blood_type_id" class="form-select" required>
+                                                                <option value="">-- اختر الفصيله --</option>
+                                                                @foreach($bloodTypes as $bloodType)
+                                                                <option value="{{ $bloodType->id }}" {{ $record?->profile?->blood_type_id == $bloodType->id ? 'selected' : '' }}>
+                                                                    {{ $bloodType->name_ar }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h5 class="mb-3 mt-2 section-title">بيانات العنوان</h5>
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">المحافظه</label>
+                                                        <select name="address_governorate_id" class="form-select" required>
+                                                            <option value="">-- اختر المحافظه --</option>
+                                                            @foreach($governorates as $governorate)
+                                                            <option value="{{ $governorate->id }}" {{ $record?->profile?->address_governorate_id == $governorate->id ? 'selected' : '' }}>
+                                                                {{ $governorate->name_ar }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">المركز / المدينة</label>
+                                                        <input type="text" name="address_city" class="form-control"
+                                                            value="{{ old('address_city', $record?->profile?->address_city) }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-8">
+                                                        <label class="form-label">العنوان</label>
+                                                        <input type="text" name="address" class="form-control"
+                                                            value="{{ old('address', $record?->profile?->address) }}">
+                                                    </div>
+                                                </div>
+                                                <h5 class="mb-3 mt-2 section-title">بيانات الاتصال</h5>
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">تليفون</label>
+                                                        <input type="text" name="phone" class="form-control"
+                                                            value="{{ old('phone', $record?->profile?->phone) }}">
+                                                    </div>
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">موبايل 1 / واتس اب</label>
+                                                        <input type="text" name="mobile1" class="form-control"
+                                                            value="{{ old('mobile1', $record?->profile?->mobile1) }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">فاكس</label>
+                                                        <input type="text" name="fax" class="form-control" value="{{ old('fax', $record?->profile?->fax) }}">
+                                                    </div>
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">موبايل 2</label>
+                                                        <input type="text" name="mobile2" class="form-control"
+                                                            value="{{ old('mobile2', $record?->profile?->mobile2) }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-4">
+                                                        <label class="form-label">البريد الالكترونى</label>
+                                                        <input type="email" name="email" class="form-control" value="{{ old('email', $record?->profile?->email) }}">
+                                                    </div>
+                                                </div>
+                                                <div class="mt-4 d-flex justify-content-center">
+                                                    <button type="submit" class="btn btn-success">حفظ</button>
+                                                </div>
+                                            </form>
                                         </div>
 
                                         <!-- بيانات الخدمة العسكرية -->
                                         <div class="tab-pane fade" id="military" role="tabpanel" aria-labelledby="military-tab">
-                                            <p><strong>موقف التجنيد:</strong> {{-- $record->military_status ?? '-' --}}</p>
-                                            <p><strong>تاريخ الإعفاء / التسريح:</strong> {{-- $record->military_date ?? '-' --}}</p>
-                                        </div>
+                                            <form action="{{ route('admin.employee.update_military_service', $record->id) }}" method="POST"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-12">
+                                                        <label class="form-label d-block">الموقف من التجنيد</label>
+                                                        <div class="d-flex flex-wrap gap-3">
+                                                            @foreach(\App\Enums\Employee\MilitaryStatus::options() as $status)
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio" name="status" id="status_{{ $status['value'] }}"
+                                                                    value="{{ $status['value'] }}" {{ old('status', $record->militaryService?->status) ===
+                                                                $status['value'] ? 'checked' : '' }}>
+                                                                <label class="form-check-label" for="status_{{ $status['value'] }}">
+                                                                    {{ $status['label'] }}
+                                                                </label>
+                                                            </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <!-- الجزء اليمين -->
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">رقم البطاقة العسكرية</label>
+                                                            <input type="text" name="military_card_number" class="form-control"
+                                                                value="{{ old('military_card_number', $record->militaryService?->military_card_number) }}">
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="mb-3 col-md-6">
+                                                                <label class="form-label">تاريخ الصدور</label>
+                                                                <input type="date" name="issue_date" class="form-control"
+                                                                    value="{{ old('issue_date', $record->militaryService?->issue_date?->format('Y-m-d')) }}">
+                                                            </div>
 
+                                                            <div class="mb-3 col-md-6">
+                                                                <label class="form-label">تاريخ الانتهاء</label>
+                                                                <input type="date" name="expiry_date" class="form-control"
+                                                                    value="{{ old('expiry_date', $record->militaryService?->expiry_date?->format('Y-m-d')) }}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-3 col-md-12">
+                                                            <label class="form-label">رقم الدفعة</label>
+                                                            <input type="text" name="batch_number" class="form-control"
+                                                                value="{{ old('batch_number', $record->militaryService?->batch_number) }}">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- الجزء الشمال -->
+                                                    <div class="col-md-6">
+                                                        <div class="p-3 mb-3 text-center border rounded">
+                                                            <label for="image" class="form-label fw-bold">الصوره</label>
+                                                            <input class="form-control" type="file" name="employeeMilitaryCertificate" id="employeeMilitaryCertificateInput" accept="image/*">
+                                                            <div class="mt-2">
+                                                                <img id="employeeMilitaryCertificatePreview"
+                                                                    src="{{ $record->getMediaUrl('employeeMilitaryCertificate', $record, null, 'media', 'employeeMilitaryCertificate', true) }}" alt=""
+                                                                    width="100" style="cursor: pointer;" onclick="openImageModal(this.src, 'الصوره')">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="imageModalLabel">عرض الصورة</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="text-center modal-body">
+                                                                    <img id="popupImage" src="" class="rounded img-fluid" style="max-width: 100%; max-height: 80vh;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-3 col-md-12">
+                                                        <label class="form-label">معلومات أخرى</label>
+                                                        <textarea name="additional_info" class="form-control"
+                                                            rows="3">{{ old('additional_info', $record->militaryService?->additional_info) }}</textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-3 text-end">
+                                                    <button type="submit" class="btn btn-success">حفظ البيانات</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                         <!-- بيانات التعاقد -->
                                         <div class="tab-pane fade" id="contract" role="tabpanel" aria-labelledby="contract-tab">
                                             <p><strong>تاريخ التعيين:</strong> {{-- $record->hiring_date ?? '-' --}}</p>
@@ -272,5 +484,6 @@ function openImageModal(src, title) {
     }
 }
 previewImage("employeeInput", "employeePreview");
+previewImage("employeeMilitaryCertificateInput", "employeeMilitaryCertificatePreview");
 </script>
 @endpush

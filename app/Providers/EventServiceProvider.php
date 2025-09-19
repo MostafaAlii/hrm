@@ -20,6 +20,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\EmployeeSaved::class => [
             \App\Listeners\SyncEmployeeProfile::class,
+            \App\Listeners\SyncEmployeeMilitaryService::class,
         ],
     ];
 

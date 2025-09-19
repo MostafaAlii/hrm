@@ -25,7 +25,7 @@
                                 'admin.departments.index', 'admin.jobCategories.index', 'admin.qualifications.index', 'admin.occasions.index',
                                 'admin.terminationTypes.index', 'admin.nationality.index', 'admin.religion.index', 'admin.section.index', 'admin.level.index',
                                 'admin.benefitVariable.index', 'admin.bankVariable.index','admin.bloodType.index', 'admin.country.index', 'admin.governorate.index',
-                                'admin.city.index',
+                                'admin.city.index'
                             ]) }}
                 ">
                     <a href="#!" class="nav-link">
@@ -303,7 +303,7 @@
                 <!-- Start Employees Departments -->
                 <li class="nav-item nav-hasmenu
                                     {{ is_open([
-                                                'admin.employee.index'
+                                                'admin.employee.index','admin.employee.show'
                                             ]) }}
                                 ">
                     <a href="#!" class="nav-link">

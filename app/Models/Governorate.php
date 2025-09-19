@@ -34,4 +34,9 @@ class Governorate extends BaseModel {
     {
         return $this->belongsTo(Admin::class, 'updated_by_id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('company_id', get_user_data()->company_id)->where('is_active', true);
+    }
 }

@@ -48,6 +48,8 @@ Route::group(
             Route::resource('governorate', Dashboard\GovernorateController::class);
             Route::resource('city', Dashboard\CityController::class);
             Route::resource('employee', Dashboard\EmployeeController::class);
+            Route::put('employee/{id}/profile-update', [Dashboard\EmployeeController::class, 'update_profile'])->name('employee.profile_update');
+            Route::put('employee/{id}/military-service-update', [Dashboard\EmployeeController::class, 'update_military_service'])->name('employee.update_military_service');
         });
         require __DIR__ . '../../auth.php';
     }

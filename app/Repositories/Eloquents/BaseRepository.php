@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 abstract class BaseRepository {
     protected $model;
     protected $rules = [
-        'name_ar'   => 'required|string|max:255',
+        'name_ar'   => 'nullable|string|max:255',
         'name_en'   => 'nullable|string|max:255',
         'is_active' => 'nullable|boolean',
     ];
@@ -71,9 +71,9 @@ abstract class BaseRepository {
         $validated = $request->validate($this->rules);
         $record = $this->model->findOrFail($id);
         $data = [
-            'name_ar'   => $validated['name_ar'],
-            'name_en'   => $validated['name_en'],
-            'is_active' => $request->has('is_active'),
+            'name_ar'   => $validated['name_ar'] ?? null,
+            'name_en'   => $validated['name_en'] ?? null,
+            'is_active' => $request->has('is_active') ?? null,
             'company_id' => get_user_data()->company_id ?? null,
             'updated_by_id' => get_user_data()->id ?? null,
         ];
