@@ -91,6 +91,10 @@ abstract class BaseRepository {
             $this->extraData('show')
         ));
     }
+    public function find($id)
+    {
+        return $this->model->findOrFail($id);
+    }
 
     public function destroy($model) {
         $model->delete();

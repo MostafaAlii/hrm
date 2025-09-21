@@ -78,4 +78,28 @@ return [
     'admin_employee_sidebar_title' => 'شئون العاملين',
     'employee_sidebar_title' => 'بيانات العاملين',
     'employee_page_title' => 'بيانات العاملين',
+
+    'admin_relative_degree_sidebar_title' => 'درجات القرابة',
+    'relative_degree_sidebar_title' => 'درجات القرابة',
+    'relative_degree_page_title' => 'بيانات درجات القرابة',
+
+    'admin_insurance_region_sidebar_title' => 'مناطق التأمين',
+    'insurance_region_sidebar_title' => 'مناطق التأمين',
+    'insurance_region_page_title' => 'بيانات  مناطق التأمين',
+
+    'admin_insurance_office_sidebar_title' => 'مكاتب التأمين',
+    'insurance_office_sidebar_title' => 'مكاتب التأمين',
+    'insurance_office_page_title' => 'بيانات  مكاتب التأمين',
+
+    'admin_contract_type_sidebar_title' => 'انواع العقود',
+    'contract_type_sidebar_title' => 'انواع العقود',
+    'contract_type_page_title' => 'بيانات انواع العقود',
+
+    'admin_insurance_type_sidebar_title' => 'انواع التأمين',
+    'insurance_type_sidebar_title' => 'انواع التأمين',
+    'insurance_type_page_title' => 'بيانات  انواع التأمين',
+
+    'admin_family_job_sidebar_title' => 'وظائف العوائل',
+    'family_job_sidebar_title' => 'انواع وظائف العوائل',
+    'family_job_page_title' => 'بيانات  وظائف العوائل',
 ];

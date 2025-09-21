@@ -25,7 +25,8 @@
                                 'admin.departments.index', 'admin.jobCategories.index', 'admin.qualifications.index', 'admin.occasions.index',
                                 'admin.terminationTypes.index', 'admin.nationality.index', 'admin.religion.index', 'admin.section.index', 'admin.level.index',
                                 'admin.benefitVariable.index', 'admin.bankVariable.index','admin.bloodType.index', 'admin.country.index', 'admin.governorate.index',
-                                'admin.city.index'
+                                'admin.city.index', 'admin.relative-degrees.index', 'admin.insurance-regions.index', 'admin.insurance-offices.index', 'admin.contract-type.index',
+                                'admin.insurance-types.index', 'admin.family-jobs.index'
                             ]) }}
                 ">
                     <a href="#!" class="nav-link">
@@ -297,6 +298,89 @@
                             </ul>
                         </li>
                         <!-- End City -->
+                        <!-- Start Relative Degrees -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.relative-degrees.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_relative_degree_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.relative-degrees.index') }}" href="{{route('admin.relative-degrees.index')}}">{{
+                                        trans('dashboard/sidebar.relative_degree_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Relative Degrees -->
+                        <!-- Start Insurance Regions -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.insurance-regions.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_insurance_region_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.insurance-regions.index') }}"
+                                        href="{{route('admin.insurance-regions.index')}}">{{
+                                        trans('dashboard/sidebar.insurance_region_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Insurance Regions -->
+                        <!-- Start Insurance Offices -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.insurance-offices.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_insurance_office_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.insurance-regions.index') }}"
+                                        href="{{route('admin.insurance-offices.index')}}">{{
+                                        trans('dashboard/sidebar.insurance_office_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Insurance Offices -->
+                        <!-- Start Contract Types -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.contract-types.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_contract_type_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.contract-types.index') }}"
+                                        href="{{route('admin.contract-types.index')}}">{{
+                                        trans('dashboard/sidebar.contract_type_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Contract Types -->
+                        <!-- Start Insurance Types -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.insurance-types.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_insurance_type_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.insurance-types.index') }}"
+                                        href="{{route('admin.insurance-types.index')}}">{{
+                                        trans('dashboard/sidebar.insurance_type_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Insurance Types -->
+                        <!-- Start Family Jobs -->
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.family-jobs.index']) }}">
+                            <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_family_job_sidebar_title') }}
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span></a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.family-jobs.index') }}"
+                                        href="{{route('admin.family-jobs.index')}}">{{
+                                        trans('dashboard/sidebar.family_job_sidebar_title')
+                                        }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Family Jobs -->
                     </ul>
                 </li>
                 <!-- End AdminPanelSetting -->
