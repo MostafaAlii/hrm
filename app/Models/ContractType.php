@@ -18,6 +18,11 @@ class ContractType extends BaseModel {
         return $this->belongsTo(Company::class);
     }
 
+    public function employeeContracts()
+    {
+        return $this->hasMany(EmployeeContract::class);
+    }
+
     public function addedBy()
     {
         return $this->belongsTo(Admin::class, 'added_by_id');
@@ -27,4 +32,6 @@ class ContractType extends BaseModel {
     {
         return $this->belongsTo(Admin::class, 'updated_by_id');
     }
+
+
 }

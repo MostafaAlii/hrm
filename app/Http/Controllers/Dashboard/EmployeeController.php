@@ -8,18 +8,16 @@ use App\DataTables\Dashboard\Admin\EmployeeDataTable;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Concerns\UploadMedia;
-class EmployeeController extends Controller
-{
+use Illuminate\Support\Facades\DB;
+class EmployeeController extends Controller {
     use UploadMedia;
     protected $repository;
 
-    public function __construct(EmployeeRepository $repository)
-    {
+    public function __construct(EmployeeRepository $repository) {
         $this->repository = $repository;
     }
 
-    public function index(EmployeeDataTable $dataTable)
-    {
+    public function index(EmployeeDataTable $dataTable) {
         return $this->repository->index(
             $dataTable,
             'dashboard.admin.employees.index',
@@ -27,21 +25,18 @@ class EmployeeController extends Controller
         );
     }
 
-    public function create()
-    {
+    public function create() {
         return $this->repository->create(
             'dashboard.admin.employees.btn.create',
             'إضافة موظف'
         );
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         return $this->repository->store($request);
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         return $this->repository->show(
             $id,
             'dashboard.admin.employees.btn.show',
@@ -49,8 +44,7 @@ class EmployeeController extends Controller
         );
     }
 
-    public function edit($id)
-    {
+    public function edit($id) {
         return $this->repository->edit(
             $id,
             'dashboard.admin.employees.btn.edit',
@@ -58,13 +52,11 @@ class EmployeeController extends Controller
         );
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         return $this->repository->update($request, $id);
     }
 
-    public function destroy(Employee $employee)
-    {
+    public function destroy(Employee $employee) {
         return $this->repository->destroy($employee);
     }
 
@@ -152,5 +144,61 @@ class EmployeeController extends Controller
             );
         }
         return back()->with('success', 'تم تحديث بيانات الخدمة العسكرية بنجاح');
+    }
+
+    public function contractStore(Request $request, Employee $employee) {
+        $validated = $request->validate([
+            'contract_type_id' => 'required|exists:contract_types,id',
+            'start_date'       => 'required|date',
+            'insurance_date'   => 'nullable|date',
+            'renewal_date'     => [
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($value && $request->start_date) {
+                        $start = \Carbon\Carbon::parse($request->start_date);
+                        $end   = \Carbon\Carbon::parse($value);
+
+                        if ($end->lessThanOrEqualTo($start)) {
+                            $fail('تاريخ التجديد يجب أن يكون بعد تاريخ بداية العقد، ولا يمكن أن يكون في نفس اليوم.');
+                        }
+                    }
+                },
+            ],
+            'description'      => 'nullable|string',
+        ], [
+            'contract_type_id.required' => 'برجاء اختيار نوع العقد.',
+            'contract_type_id.exists'   => 'نوع العقد غير صالح.',
+            'start_date.required'       => 'تاريخ بداية العقد مطلوب.',
+            'start_date.date'           => 'تاريخ البداية يجب أن يكون تاريخ صحيح.',
+            'insurance_date.date'       => 'تاريخ التأمينات يجب أن يكون تاريخ صحيح.',
+            'renewal_date.date'         => 'تاريخ التجديد يجب أن يكون تاريخ صحيح.',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $employee->contracts()->create(array_merge($validated, [
+                'company_id'   => get_user_data()->company_id,
+                'added_by_id'  => get_user_data()->id,
+            ]));
+            DB::commit();
+            return redirect()->back()->with('success', 'تم إضافة العقد بنجاح!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'حدث خطأ أثناء حفظ العقد: ' . $e->getMessage());
+        }
+    }
+
+    public function contractDestroy(Employee $employee, $contractId) {
+        DB::beginTransaction();
+        try {
+            $contract = $employee->contracts()->findOrFail($contractId);
+            $contract->delete();
+            DB::commit();
+            return redirect()->back()->with('success', 'تم حذف العقد بنجاح!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'حدث خطأ أثناء حذف العقد: ' . $e->getMessage());
+        }
     }
 }

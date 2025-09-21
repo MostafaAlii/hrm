@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\{BloodType, Employee, Religion, Governorate, Gender, Nationality, Level, Branch, Department, Section, JobCategory, SalaryPlace};
+use App\Models\{BloodType, ContractType, Employee, Religion, Governorate, Gender, Nationality, Level, Branch, Department, Section, JobCategory, SalaryPlace};
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Concerns\UploadMedia;
@@ -14,7 +14,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
         parent::__construct($model);
     }
 
-    protected function extraData(string $context): array {
+    /*protected function extraData(string $context): array {
         $data = [];
         if ($context === 'show') {
             $data['genders']       = Gender::active()->get();
@@ -29,9 +29,11 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             $data['religions']  = Religion::active()->get();
             $data['bloodTypes']  = BloodType::active()->get();
             if (request()->route('id')) {
-                $employee = $this->model->with(['profile', 'militaryService'])->find(request()->route('id'));
+                $employee = $this->model->with(['profile', 'militaryService', 'contracts.contractType'])->find(request()->route('id'));
                 $data['profile'] = $employee?->profile;
                 $data['militaryService'] = $employee?->militaryService;
+                $data['contracts']      = $employee?->contracts;
+                $data['contractTypes']  = ContractType::get(['id', 'name_ar']);
             }
         }
         if (in_array($context, ['create', 'edit', 'index'])) {
@@ -45,7 +47,64 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             $data['salaryPlaces']  = SalaryPlace::active()->get();
         }
         return $data;
+    }*/
+    protected function extraData(string $context): array
+    {
+        $data = [];
+
+        if ($context === 'show') {
+            $data['genders']       = Gender::active()->get();
+            $data['nationalities'] = Nationality::active()->get();
+            $data['levels']        = Level::active()->get();
+            $data['branches']      = Branch::active()->get();
+            $data['departments']   = Department::active()->get();
+            $data['sections']      = Section::active()->get();
+            $data['jobCategories'] = JobCategory::active()->get();
+            $data['salaryPlaces']  = SalaryPlace::active()->get();
+            $data['governorates']  = Governorate::active()->get();
+            $data['religions']     = Religion::active()->get();
+            $data['bloodTypes']    = BloodType::active()->get();
+
+            // Robust way to get the route id (works if param name is 'id' or 'employee' or anything)
+            $routeParams = request()->route()?->parameters() ?? [];
+            $id = $routeParams['id'] ?? $routeParams['employee'] ?? $routeParams['employee_id'] ?? ($routeParams ? array_values($routeParams)[0] : null);
+
+            if ($id) {
+                $employee = $this->model
+                    ->with(['profile', 'militaryService', 'contracts.contractType'])
+                    ->find($id);
+
+                $data['profile'] = $employee?->profile;
+                $data['militaryService'] = $employee?->militaryService;
+                $data['contracts'] = $employee?->contracts ?? collect();
+            } else {
+                // fallback empty values so view won't break
+                $data['profile'] = null;
+                $data['militaryService'] = null;
+                $data['contracts'] = collect();
+            }
+
+            // contract types: always return a collection (use active scope if you have one)
+            $data['contractTypes'] = \App\Models\ContractType::select('id', 'name_ar')->get();
+        }
+
+        if (in_array($context, ['create', 'edit', 'index'])) {
+            $data['genders']       = Gender::active()->get();
+            $data['nationalities'] = Nationality::active()->get();
+            $data['levels']        = Level::active()->get();
+            $data['branches']      = Branch::active()->get();
+            $data['departments']   = Department::active()->get();
+            $data['sections']      = Section::active()->get();
+            $data['jobCategories'] = JobCategory::active()->get();
+            $data['salaryPlaces']  = SalaryPlace::active()->get();
+
+            // if you want the contract types in other contexts too, add them here
+            // $data['contractTypes'] = \App\Models\ContractType::select('id', 'name_ar')->get();
+        }
+
+        return $data;
     }
+
 
     protected function extraStoreFields(Request $request): array {
 

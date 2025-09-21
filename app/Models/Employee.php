@@ -131,6 +131,20 @@ class Employee extends Authenticatable {
         return $this->hasOne(MilitaryService::class);
     }
 
+    public function contracts()
+    {
+        return $this->hasMany(EmployeeContract::class);
+    }
+
+    public function contractTypes()
+    {
+        return $this->hasMany(ContractType::class, 'company_id', 'company_id');
+    }
+
+    public function latestContract() {
+        return $this->hasOne(EmployeeContract::class)->latestOfMany();
+    }
+
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');

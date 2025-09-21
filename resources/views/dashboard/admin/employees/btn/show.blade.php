@@ -438,10 +438,48 @@
                                         </div>
                                         <!-- بيانات التعاقد -->
                                         <div class="tab-pane fade" id="contract" role="tabpanel" aria-labelledby="contract-tab">
-                                            <p><strong>تاريخ التعيين:</strong> {{-- $record->hiring_date ?? '-' --}}</p>
-                                            <p><strong>الوظيفة:</strong> {{-- optional($record->jobCategory)->name ?? '-' --}}</p>
-                                            <p><strong>الفرع:</strong> {{-- optional($record->branch)->name ?? '-' --}}</p>
-                                            <p><strong>القسم:</strong> {{-- optional($record->department)->name ?? '-' --}}</p>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <h5 class="mb-3 mt-2 section-title">
+                                                    عقود الموظف
+                                                    <span>{{ '( '  . $record?->name_ar . ' )' }}</span>
+                                                </h5>
+                                                <!-- زرار إضافة عقد -->
+                                                <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#createContractModal">
+                                                    <i class="fas fa-plus"></i> إضافة عقد جديد
+                                                </button>
+                                            </div>
+                                            <!-- Start Employee Contracts Table -->
+                                            @if($record->contracts && $record->contracts->count() > 0)
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>نوع العقد</th>
+                                                            <th>تاريخ بداية العقد</th>
+                                                            <th>تاريخ التأمينات</th>
+                                                            <th>تاريخ التجديد</th>
+                                                            <th>الوصف</th>
+                                                            <th>آخر تعديل</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($record->contracts as $contract)
+                                                        <tr>
+                                                            <td>{{ $contract->contractType?->name_ar }}</td>
+                                                            <td>{{ $contract->start_date }}</td>
+                                                            <td>{{ $contract->insurance_date }}</td>
+                                                            <td>{{ $contract->renewal_date }}</td>
+                                                            <td>{{ $contract->description }}</td>
+                                                            <td>{{ $contract->updated_at?->format('Y-m-d H:i') }}</td>
+                                                            @include('dashboard.admin.employees.btn.delete_contract', ['contract' => $contract])
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            @else
+                                                <p class="text-muted">لا يوجد عقود مسجلة.</p>
+                                            @endif
+                                            @include('dashboard.admin.employees.btn.create_contract', ['contractTypes' => $contractTypes])
+                                            <!-- End Employee Contracts Table -->
                                         </div>
                                     </div>
                                 </div>
