@@ -14,13 +14,13 @@
                 @method('PUT')
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editOccasionLabel{{ $occasion->id }}">تعديل المناسبه</h5>
+                        <h5 class="modal-title" id="editOccasionLabel{{ $occasion->id }}">تعديل عطله</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
                     </div>
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label class="form-label">اسم المناسبه</label>
+                            <label class="form-label">اسم العطله</label>
                             <input type="text" name="name" class="form-control" value="{{ $occasion->name }}"
                                 required>
                         </div>

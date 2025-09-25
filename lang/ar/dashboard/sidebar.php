@@ -35,9 +35,13 @@ return [
     'qualification_sidebar_title' => 'الموهلات الدراسيه',
     'qualification_page_title' => 'بيانات الموهلات',
 
-    'admin_occasion_sidebar_title' => ' المناسبات',
-    'occasion_sidebar_title' => 'المناسبات الرسميه',
-    'occasion_page_title' => 'بيانات المناسبات',
+    'admin_occasion_sidebar_title' => ' العطلات',
+    'occasion_sidebar_title' => 'العطلات الرسميه',
+    'occasion_page_title' => 'بيانات العطلات',
+
+    'admin_vacation_sidebar_title' => ' الاجازات',
+    'vacation_sidebar_title' => 'الاجازات',
+    'vacation_page_title' => 'بيانات الاجازات',    
 
     'admin_terminationType_sidebar_title' => 'الحالات',
     'terminationType_sidebar_title' => 'الحالات',

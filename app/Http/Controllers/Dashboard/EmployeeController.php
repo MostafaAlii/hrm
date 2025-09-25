@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Eloquents\EmployeeRepository;
 use App\DataTables\Dashboard\Admin\EmployeeDataTable;
 use Illuminate\Http\Request;
-use App\Models\Employee;
+use App\Models\{Employee, EmployeeInsurance};
 use App\Models\Concerns\UploadMedia;
 use Illuminate\Support\Facades\DB;
 class EmployeeController extends Controller {
@@ -200,5 +200,46 @@ class EmployeeController extends Controller {
             DB::rollBack();
             return redirect()->back()->with('error', 'حدث خطأ أثناء حذف العقد: ' . $e->getMessage());
         }
+    }
+
+    public function updateInsurance(Request $request, Employee $employee) {
+        /*$validated = $request->validate([
+            'is_insured' => 'nullable|boolean',
+            'salary_insurance' => 'nullable|boolean',
+            'employee_fund' => 'nullable|boolean',
+            'insurance_type_id' => 'nullable|exists:insurance_types,id',
+            'insurance_region_id' => 'nullable|exists:insurance_regions,id',
+            'insurance_office_id' => 'nullable|exists:insurance_offices,id',
+            'insurance_number' => 'nullable|string|max:255',
+            'insurance_date' => 'nullable|date',
+            'is_health_insured' => 'nullable|boolean',
+            'dependents_count' => 'nullable|integer|min:0',
+            'non_dependents_count' => 'nullable|integer|min:0',
+            'company_share' => 'nullable|numeric|min:0',
+            'employee_share' => 'nullable|numeric|min:0',
+            'insurance_amount' => 'nullable|numeric|min:0',
+        ]);*/
+        $insurance = EmployeeInsurance::updateOrCreate(
+            ['employee_id' => $employee->id],
+            [
+                'is_insured' => $request->has('is_insured'),
+                'salary_insurance' => $request->has('salary_insurance'),
+                'employee_fund' => $request->has('employee_fund'),
+                'insurance_type_id' => $request->insurance_type_id,
+                'insurance_region_id' => $request->insurance_region_id,
+                'insurance_office_id' => $request->insurance_office_id,
+                'insurance_number' => $request->insurance_number,
+                'insurance_date' => $request->insurance_date,
+                'is_health_insured' => $request->has('is_health_insured'),
+                'dependents_count' => $request->dependents_count ?? 0,
+                'non_dependents_count' => $request->non_dependents_count ?? 0,
+                'company_share' => $request->company_share ?? 0,
+                'employee_share' => $request->employee_share ?? 0,
+                'insurance_amount' => $request->insurance_amount ?? 0,
+                'company_id'   => get_user_data()->company_id,
+                'updated_by_id'  => get_user_data()->id,
+            ]
+        );
+        return redirect()->back()->with('success', 'تم تحديث بيانات التأمين بنجاح.');
     }
 }

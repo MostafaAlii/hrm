@@ -26,7 +26,7 @@
                                 'admin.terminationTypes.index', 'admin.nationality.index', 'admin.religion.index', 'admin.section.index', 'admin.level.index',
                                 'admin.benefitVariable.index', 'admin.bankVariable.index','admin.bloodType.index', 'admin.country.index', 'admin.governorate.index',
                                 'admin.city.index', 'admin.relative-degrees.index', 'admin.insurance-regions.index', 'admin.insurance-offices.index', 'admin.contract-type.index',
-                                'admin.insurance-types.index', 'admin.family-jobs.index'
+                                'admin.insurance-types.index', 'admin.family-jobs.index', 'admin.vacations.index'
                             ]) }}
                 ">
                     <a href="#!" class="nav-link">
@@ -162,7 +162,7 @@
                         </li>
                         <!-- End Qualifications -->
                         <!-- Start Occasions -->
-                        <li class="nav-item nav-hasmenu {{ is_open(['admin.occasions.index']) }}">
+                        <li class="nav-item nav-hasmenu {{ is_open(['admin.occasions.index', 'admin.vacations.index']) }}">
                             <a href="#!" class="nav-link">{{ trans('dashboard/sidebar.admin_occasion_sidebar_title') }}
                                 <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
                             </a>
@@ -170,6 +170,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.occasions.index') }}" href="{{route('admin.occasions.index')}}">{{
                                         trans('dashboard/sidebar.occasion_sidebar_title')
+                                        }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.vacations.index') }}" href="{{route('admin.vacations.index')}}">{{
+                                        trans('dashboard/sidebar.vacation_sidebar_title')
                                         }}</a>
                                 </li>
                             </ul>

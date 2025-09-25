@@ -1,7 +1,7 @@
 <footer class="app-footer">
     <div class="footer-wrapper">
         <div class="py-1">
-            <span class="text-muted">&copy; 2025, {{ $settings?->company_name }}</span>
+            <span class="text-muted">&copy; 2025 {{ $settings?->company_name }}</span>
         </div>
         <div class="py-1">
             <ul class="m-0 list-inline">

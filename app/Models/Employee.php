@@ -145,6 +145,16 @@ class Employee extends Authenticatable {
         return $this->hasOne(EmployeeContract::class)->latestOfMany();
     }
 
+    public function insurances()
+    {
+        return $this->hasMany(EmployeeInsurance::class);
+    }
+
+    public function latestInsurance() {
+        return $this->hasOne(EmployeeInsurance::class)->latestOfMany();
+    }
+
+
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');

@@ -37,6 +37,7 @@ Route::group(
             Route::resource('jobCategories', Dashboard\JobCategoryController::class);
             Route::resource('qualifications', Dashboard\QualificationController::class);
             Route::resource('occasions', Dashboard\OccasionController::class);
+            Route::resource('vacations', Dashboard\VacationController::class);
             Route::resource('terminationTypes', Dashboard\TerminationTypeController::class);
             Route::resource('nationality', Dashboard\NationalityController::class);
             Route::resource('religion', Dashboard\ReligionController::class);
@@ -59,6 +60,8 @@ Route::group(
             Route::put('employee/{id}/military-service-update', [Dashboard\EmployeeController::class, 'update_military_service'])->name('employee.update_military_service');
             Route::post('employees/{employee}/contracts', [Dashboard\EmployeeController::class, 'contractStore'])->name('employees.contracts.store');
             Route::delete('employees/{employee}/contracts/{contract}', [Dashboard\EmployeeController::class, 'contractDestroy'])->name('employees.contracts.destroy');
+            Route::put('employee/{employee}/insurance-update', [Dashboard\EmployeeController::class, 'updateInsurance'])->name('employee.insurance.update');
+
         });
 
         require __DIR__ . '../../auth.php';

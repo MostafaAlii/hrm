@@ -42,9 +42,9 @@ class InsuranceTypeDataTable extends BaseDataTable
     {
         return [
             ['name' => 'id', 'data' => 'id', 'title' => '#'],
+            ['name' => 'code', 'data' => 'code', 'title' => trans('dashboard/insurance_type.code')],
             ['name' => 'name_ar', 'data' => 'name_ar', 'title' => trans('dashboard/insurance_type.name_ar')],
             ['name' => 'name_en', 'data' => 'name_en', 'title' => trans('dashboard/insurance_type.name_en')],
-            ['name' => 'code', 'data' => 'code', 'title' => trans('dashboard/insurance_type.code')],
             ['name' => 'employee_percentage', 'data' => 'employee_percentage', 'title' => trans('dashboard/insurance_type.employee_percentage')],
             ['name' => 'company_percentage', 'data' => 'company_percentage', 'title' => trans('dashboard/insurance_type.company_percentage')],
             ['name' => 'responsible', 'data' => 'responsible', 'title' => trans('dashboard/financial_year.responsible')],
