@@ -62,7 +62,7 @@ class OccasionDataTable extends BaseDataTable
     {
         return [
             ['name' => 'id', 'data' => 'id', 'title' => '#'],
-            ['name' => 'name', 'data' => 'name', 'title' => trans('dashboard/branch.name')],
+            ['name' => 'name', 'data' => 'name', 'title' => trans('dashboard/occasion.name')],
             ['name' => 'from_date', 'data' => 'from_date', 'title' => 'من تاريخ'],
             ['name' => 'to_date', 'data' => 'to_date', 'title' => 'إلى تاريخ'],
             ['name' => 'days_count', 'data' => 'days_count', 'title' => 'عدد الأيام', 'orderable' => false, 'searchable' => false],

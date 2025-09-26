@@ -1,5 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
+use App\Models\Media;
 if (!function_exists('admin_guard')) {
     function admin_guard() {
         return auth('admin');
@@ -119,4 +122,35 @@ if (!function_exists('is_tree_open')) {
         }
     }
 
+    function saveMedia($model, UploadedFile $file, $collectionName = null, $disk = 'public', $type = 'main')
+    {
+        // فولدر الهدف داخل public
+        $folder = "uploads/{$collectionName}";
+
+        // توليد اسم فريد
+        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+
+        // المسار الكامل داخل public
+        $destination = public_path($folder);
+
+        // لو الفولدر مش موجود اعمله
+        if (!file_exists($destination)) {
+            mkdir($destination, 0755, true);
+        }
+
+        // نقل الملف
+        $file->move($destination, $fileName);
+
+        $path = $folder . '/' . $fileName; // مسار نسبى من public/
+
+        // حفظ البيانات فى جدول media
+        return Media::create([
+            'mediable_id'   => $model->id,
+            'mediable_type' => get_class($model),
+            'collection_name' => $collectionName,
+            'file_name'     => $path,   // هنا المسار النسبى
+            'disk'          => 'public_path', // بس عشان تبقى عارف انه جوه public
+            'type'          => $type,
+        ]);
+    }
 }

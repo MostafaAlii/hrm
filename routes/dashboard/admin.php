@@ -37,6 +37,7 @@ Route::group(
             Route::resource('jobCategories', Dashboard\JobCategoryController::class);
             Route::resource('qualifications', Dashboard\QualificationController::class);
             Route::resource('occasions', Dashboard\OccasionController::class);
+            Route::resource('vacations', Dashboard\VacationController::class);
             Route::resource('terminationTypes', Dashboard\TerminationTypeController::class);
             Route::resource('nationality', Dashboard\NationalityController::class);
             Route::resource('religion', Dashboard\ReligionController::class);
@@ -48,7 +49,21 @@ Route::group(
             Route::resource('governorate', Dashboard\GovernorateController::class);
             Route::resource('city', Dashboard\CityController::class);
             Route::resource('employee', Dashboard\EmployeeController::class);
+            Route::resource('relative-degrees', Dashboard\RelativeDegreeController::class);
+            Route::resource('insurance-regions', Dashboard\InsuranceRegionController::class);
+            Route::resource('insurance-offices', Dashboard\InsuranceOfficeController::class);
+            Route::resource('insurance-types', Dashboard\InsuranceTypeController::class);
+            Route::resource('contract-types', Dashboard\ContractTypeController::class);
+            Route::resource('family-jobs', Dashboard\FamilyJobController::class);
+
+            Route::put('employee/{id}/profile-update', [Dashboard\EmployeeController::class, 'update_profile'])->name('employee.profile_update');
+            Route::put('employee/{id}/military-service-update', [Dashboard\EmployeeController::class, 'update_military_service'])->name('employee.update_military_service');
+            Route::post('employees/{employee}/contracts', [Dashboard\EmployeeController::class, 'contractStore'])->name('employees.contracts.store');
+            Route::delete('employees/{employee}/contracts/{contract}', [Dashboard\EmployeeController::class, 'contractDestroy'])->name('employees.contracts.destroy');
+            Route::put('employee/{employee}/insurance-update', [Dashboard\EmployeeController::class, 'updateInsurance'])->name('employee.insurance.update');
+
         });
+
         require __DIR__ . '../../auth.php';
     }
 );
