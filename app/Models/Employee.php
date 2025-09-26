@@ -154,6 +154,10 @@ class Employee extends Authenticatable {
         return $this->hasOne(EmployeeInsurance::class)->latestOfMany();
     }
 
+    public function vacationRequests()
+    {
+        return $this->hasMany(EmployeeVacationRequest::class, 'employee_id');
+    }
 
     public function media()
     {

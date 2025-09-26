@@ -96,7 +96,7 @@
                                         </li>
                                     </ul>
                                     <!-- Tabs Content -->
-                                    <div class="tab-content p-3 border border-top-0" id="employeeTabsContent">
+                                    <div class="p-3 border tab-content border-top-0" id="employeeTabsContent">
                                         <!-- البيانات الأساسية -->
                                         @include('dashboard.admin.employees.btn.tabs.general_info.basic-tab')
 
@@ -143,7 +143,7 @@
                                                 type="button" role="tab" aria-controls="salary-advance" aria-selected="false">السلف</button>
                                         </li>
                                     </ul>
-                                    <div class="tab-content p-3 border border-top-0" id="salaryTabsContent">
+                                    <div class="p-3 border tab-content border-top-0" id="salaryTabsContent">
                                         <!-- Salary Details Tab -->
                                         @include('dashboard.admin.employees.btn.tabs.salary_info.salary-details-tab')
 
@@ -160,6 +160,47 @@
                         </div>
                     </div>
                     <!-- End Salary Info Accordion -->
+                    <br>
+                    <!-- Start Vacation Requests Accordion -->
+                    <div class="accordion" id="vactionEmployeeAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingVacation">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseVacation" aria-expanded="false" aria-controls="collapseVacation">
+                                    بيانات الاجازات
+                                </button>
+                            </h2>
+                            <div id="collapseVacation" class="accordion-collapse collapse" aria-labelledby="headingVacation"
+                                data-bs-parent="#vactionEmployeeAccordion">
+                                <div class="accordion-body">
+                                    <!-- Vacation Info Content Here -->
+                                    <ul class="nav nav-tabs" id="employeeVacationTabsNav" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="employee-vacations-tab" data-bs-toggle="tab"
+                                                data-bs-target="#employee-vacation" type="button" role="tab"
+                                                aria-controls="employee-vacation" aria-selected="true">
+                                                اجازات الموظف
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-vacation-details-tab" data-bs-toggle="tab"
+                                                data-bs-target="#employee-vacation-details" type="button" role="tab"
+                                                aria-controls="employee-vacation-details" aria-selected="false">
+                                                رصيد اجازات الموظف
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <div class="p-3 border tab-content border-top-0" id="employeeVacationTabsContent">
+                                            @include('dashboard.admin.employees.btn.tabs.vacation_info.employee-vacations-tab')
+
+                                            @include('dashboard.admin.employees.btn.tabs.vacation_info.employee-vacation-details-tab')
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Vacation Requests Accordion -->
                 </div>
             </div>
         </div>
