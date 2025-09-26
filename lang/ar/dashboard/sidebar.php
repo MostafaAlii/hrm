@@ -41,7 +41,7 @@ return [
 
     'admin_vacation_sidebar_title' => ' الاجازات',
     'vacation_sidebar_title' => 'الاجازات',
-    'vacation_page_title' => 'بيانات الاجازات',    
+    'vacation_page_title' => 'بيانات الاجازات',
 
     'admin_terminationType_sidebar_title' => 'الحالات',
     'terminationType_sidebar_title' => 'الحالات',
@@ -106,4 +106,6 @@ return [
     'admin_family_job_sidebar_title' => 'وظائف العوائل',
     'family_job_sidebar_title' => 'انواع وظائف العوائل',
     'family_job_page_title' => 'بيانات  وظائف العوائل',
+
+    'variables_sidebar_title' => 'قائمة المتغيرات',
 ];
