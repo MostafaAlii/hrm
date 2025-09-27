@@ -52,6 +52,7 @@
                         'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
+                        'admin.educational-degrees.index'
                     ];
 
                     $variablesRoutes = [
@@ -62,6 +63,7 @@
                         'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
+                        'admin.educational-degrees.index'
                     ];
                 @endphp
 
@@ -176,6 +178,14 @@
                                         }}</a>
                                 </li>
                                 <!-- End Section -->
+                                <!-- Start Educational Degrees -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.educational-degrees.index') }}"
+                                        href="{{route('admin.educational-degrees.index')}}">
+                                        انواع المؤهلات
+                                    </a>
+                                </li>
+                                <!-- End Educational Degrees -->
                                 <!-- Start Qualifications -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.qualifications.index') }}" href="{{route('admin.qualifications.index')}}">{{
