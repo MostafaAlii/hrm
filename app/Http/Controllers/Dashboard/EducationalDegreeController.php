@@ -21,9 +21,7 @@ class EducationalDegreeController extends Controller
         return $this->repository->create('dashboard.admin.educational-degrees.create', trans('dashboard/educational_degree.create'));
     }
 
-    public function store(Request $request)
-    {
-        //dd($request->all());
+    public function store(Request $request) {
         return $this->repository->store($request);
     }
 

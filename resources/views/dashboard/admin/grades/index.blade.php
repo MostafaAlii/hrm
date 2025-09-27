@@ -19,14 +19,14 @@
 @section('content')
 <div class="page-content">
     <div class="content-header">
-        <h1 class="mb-0">انواع المؤهلات</h1>
+        <h1 class="mb-0">انواع التقديرات</h1>
         <ul class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{route('admin.dashboard')}}">{{trans('dashboard/header.main_dashboard') }}</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{route('admin.educational-degrees.index')}}">
-                    انواع المؤهلات
+                <a href="{{route('admin.grades.index')}}">
+                    انواع التقديرات
                 </a>
             </li>
         </ul>
@@ -39,13 +39,13 @@
                     <span class="nav-icon">
                         <i class="ti ti-award"></i>
                     </span>
-                    انواع المؤهلات
+                    انواع التقديرات
                     <button data-pc-animate="3d-sign" type="button" class="btn btn-sm btn-light btn-active-primary"
                         data-bs-toggle="modal" data-bs-target="#createBranchModal">
                         <i class="fa fa-plus"></i>
-                        اضافه نوع موهل
+                        اضافه تقدير
                     </button>
-                    @include('dashboard.admin.educational-degrees.btn.create')
+                    @include('dashboard.admin.grades.btn.create')
                 </div>
                 <div class="card-body">
                     <!--begin::Table container-->

@@ -56,6 +56,9 @@ Route::group(
             Route::resource('contract-types', Dashboard\ContractTypeController::class);
             Route::resource('family-jobs', Dashboard\FamilyJobController::class);
             Route::resource('educational-degrees', Dashboard\EducationalDegreeController::class);
+            Route::resource('grades', Dashboard\GradeController::class);
+            Route::resource('universities', Dashboard\UniversityController::class);
+            Route::resource('specializations', Dashboard\SpecializationController::class);
 
             Route::put('employee/{id}/profile-update', [Dashboard\EmployeeController::class, 'update_profile'])->name('employee.profile_update');
             Route::put('employee/{id}/military-service-update', [Dashboard\EmployeeController::class, 'update_military_service'])->name('employee.update_military_service');

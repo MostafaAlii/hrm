@@ -49,7 +49,7 @@ class QualificationDataTable extends BaseDataTable
     {
         return [
             ['name' => 'id', 'data' => 'id', 'title' => '#'],
-            ['name' => 'name', 'data' => 'name', 'title' => trans('dashboard/branch.name')],
+            ['name' => 'name', 'data' => 'name', 'title' => 'الموهل'],
             ['name' => 'is_active', 'data' => 'is_active_label', 'title' => trans('dashboard/financial_year.is_active'), 'orderable' => false, 'searchable' => false],
             ['name' => 'responsible', 'data' => 'responsible', 'title' => trans('dashboard/financial_year.responsible'), 'orderable' => false, 'searchable' => false],
             ['name' => 'created_at', 'data' => 'created_at', 'title' => trans('dashboard/general.created_at')],

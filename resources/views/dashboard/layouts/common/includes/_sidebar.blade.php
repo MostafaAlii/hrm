@@ -52,7 +52,7 @@
                         'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
-                        'admin.educational-degrees.index'
+                        'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
                     ];
 
                     $variablesRoutes = [
@@ -63,7 +63,8 @@
                         'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
-                        'admin.educational-degrees.index'
+                        'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
+
                     ];
                 @endphp
 
@@ -193,6 +194,27 @@
                                         }}</a>
                                 </li>
                                 <!-- End Qualifications -->
+                                <!-- Start Grades -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.grades.index') }}" href="{{route('admin.grades.index')}}">
+                                        انواع التقديرات
+                                    </a>
+                                </li>
+                                <!-- End Grades -->
+                                <!-- Start Universities -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.universities.index') }}" href="{{route('admin.universities.index')}}">
+                                        الكليات / المدارس
+                                    </a>
+                                </li>
+                                <!-- End Universities -->
+                                <!-- Start Specializations -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.specializations.index') }}" href="{{route('admin.specializations.index')}}">
+                                        التخصصات
+                                    </a>
+                                </li>
+                                <!-- End Specializations -->
                                 <!-- Start Occasions -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.occasions.index') }}" href="{{route('admin.occasions.index')}}">{{
