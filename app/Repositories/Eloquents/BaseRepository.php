@@ -47,9 +47,9 @@ abstract class BaseRepository {
     public function store(Request $request) {
         $validated = $request->validate($this->rules);
         $data = [
-            'name_ar'   => $validated['name_ar'],
-            'name_en'   => $validated['name_en'],
-            'is_active' => $request->has('is_active'),
+            'name_ar'   => $validated['name_ar'] ?? null,
+            'name_en'   => $validated['name_en'] ?? null,
+            'is_active' => $request->has('is_active') ?? null,
             'company_id' => get_user_data()->company_id ?? null,
             'added_by_id' => get_user_data()->id ?? null,
         ];

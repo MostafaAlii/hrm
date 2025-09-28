@@ -53,6 +53,8 @@
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
                         'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
+                        'admin.penalty-types.index', 'admin.cost-centers.index', 'admin.salary-cards.index', 'admin.performance-report-items.index',
+                        'admin.license-variables.index', 'admin.employment-documents.index'
                     ];
 
                     $variablesRoutes = [
@@ -64,7 +66,8 @@
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
                         'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
-
+                        'admin.penalty-types.index', 'admin.cost-centers.index', 'admin.salary-cards.index', 'admin.performance-report-items.index',
+                        'admin.license-variables.index', 'admin.employment-documents.index'
                     ];
                 @endphp
 
@@ -91,6 +94,14 @@
                                 <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
                             </a>
                             <ul class="nav-submenu">
+                                <!-- Start Penalty Types -->
+                                <li class="nav-item {{ is_active('admin.penalty-types.index') ? 'custom-background' : '' }}">
+                                    <a class="nav-link {{ is_active('admin.penalty-types.index') }}"
+                                        href="{{ route('admin.penalty-types.index') }}">
+                                        الجزاءات
+                                    </a>
+                                </li>
+                                <!-- End Penalty Types -->
                                 <!-- BankVariable -->
                                 <li class="nav-item {{ is_active('admin.bankVariable.index') ? 'custom-background' : '' }}">
                                     <a class="nav-link {{ is_active('admin.bankVariable.index') }}"
@@ -137,6 +148,13 @@
                                         }}</a>
                                 </li>
                                 <!-- End City -->
+                                <!-- Start CostCenters -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.cost-centers.index') }}" href="{{route('admin.cost-centers.index')}}">
+                                        مراكز التكلفه
+                                    </a>
+                                </li>
+                                <!-- End CostCenters -->
                                 <!-- Start JobCategory -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.jobCategories.index') }}" href="{{route('admin.jobCategories.index')}}">{{
@@ -158,6 +176,36 @@
                                         }}</a>
                                 </li>
                                 <!-- End Branch -->
+                                <!-- Start SalaryCards -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.salary-cards.index') }}" href="{{route('admin.salary-cards.index')}}">
+                                        كروت المرتبات
+                                    </a>
+                                </li>
+                                <!-- End SalaryCards -->
+                                <!-- Start PerformanceReportItem -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.performance-report-items.index') }}" href="{{route('admin.performance-report-items.index')}}">
+                                        عناصر تقرير الكفاءه
+                                    </a>
+                                </li>
+                                <!-- End PerformanceReportItem -->
+                                <!-- Start LicenseVariable -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.license-variables.index') }}"
+                                        href="{{route('admin.license-variables.index')}}">
+                                        متغيرات الرخص
+                                    </a>
+                                </li>
+                                <!-- End LicenseVariable -->
+                                <!-- Start EmploymentDocument -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.employment-documents.index') }}"
+                                        href="{{route('admin.employment-documents.index')}}">
+                                        مصوغات التعيين
+                                    </a>
+                                </li>
+                                <!-- End EmploymentDocument -->
                                 <!-- Start ShiftTypes -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.shift-types.index') }}" href="{{route('admin.shift-types.index')}}">{{

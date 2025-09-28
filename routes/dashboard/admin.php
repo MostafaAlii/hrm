@@ -59,6 +59,12 @@ Route::group(
             Route::resource('grades', Dashboard\GradeController::class);
             Route::resource('universities', Dashboard\UniversityController::class);
             Route::resource('specializations', Dashboard\SpecializationController::class);
+            Route::resource('penalty-types', Dashboard\PenaltyTypeController::class);
+            Route::resource('cost-centers', Dashboard\CostCenterController::class);
+            Route::resource('salary-cards', Dashboard\SalaryCardController::class);
+            Route::resource('performance-report-items', Dashboard\PerformanceReportItemController::class);
+            Route::resource('license-variables', Dashboard\LicenseVariableController::class);
+            Route::resource('employment-documents', Dashboard\EmploymentDocumentController::class);
 
             Route::put('employee/{id}/profile-update', [Dashboard\EmployeeController::class, 'update_profile'])->name('employee.profile_update');
             Route::put('employee/{id}/military-service-update', [Dashboard\EmployeeController::class, 'update_military_service'])->name('employee.update_military_service');
