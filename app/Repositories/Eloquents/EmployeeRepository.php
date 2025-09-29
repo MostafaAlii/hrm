@@ -41,7 +41,8 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
                         'profile', 'militaryService', 'contracts.contractType', 'insurances.insuranceType',
                         'insurances.insuranceRegion', 'insurances', 'latestInsurance', 'families.relativeDegree',
                         'families.familyJob','emergencyContacts.relativeDegree','trainings.grade',
-                        'licenses.licenseVariable','employmentDocuments.employmentDocument', 'employmentDocuments.media'
+                        'licenses.licenseVariable','employmentDocuments.employmentDocument', 'employmentDocuments.media',
+                        'experiences',
                     ])
                     ->find($id);
                     $data['profile'] = $employee?->profile;
@@ -54,6 +55,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
                     $data['trainings'] = $employee?->trainings ?? collect();
                     $data['licenses'] = $employee?->licenses ?? collect();
                     $data['employmentDocuments'] = $employee?->employmentDocuments ?? collect();
+                    $data['experiences'] = $employee?->experiences ?? collect();
             } else {
                 $data['profile'] = null;
                 $data['militaryService'] = null;
@@ -62,6 +64,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
                 $data['trainings'] = collect();
                 $data['licenses'] = collect();
                 $data['employmentDocuments'] = collect();
+                $data['experiences'] = collect();
             }
             $data['relativeDegrees'] = RelativeDegree::select('id', 'name_ar')->get();
             $data['familyJobs']      = FamilyJob::select('id', 'name_ar')->get();

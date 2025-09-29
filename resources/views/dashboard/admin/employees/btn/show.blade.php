@@ -254,14 +254,21 @@
                                                 مصوغات التعيين
                                             </button>
                                         </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-experiences-tab" data-bs-toggle="tab" data-bs-target="#employee-experiences"
+                                                type="button" role="tab" aria-controls="employee-experiences" aria-selected="false">
+                                                الخبرات
+                                            </button>
+                                        </li>
                                     </ul>
                                     <div class="p-3 border tab-content border-top-0" id="employeeOtherInformationTabsContent">
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-qualification-tab')
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-family-details-tab')
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-emergency-details-tab')
-                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-emergency-details-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-tranings-tab')
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-licenses-tab')
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-employment-documents-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-employment-experiences-tab')
 
                                     </div>
                                 </div>

@@ -7,7 +7,8 @@ use App\Repositories\Eloquents\EmployeeRepository;
 use App\DataTables\Dashboard\Admin\EmployeeDataTable;
 use Illuminate\Http\Request;
 use App\Models\{Employee, EmployeeInsurance, EmployeeQualification, EmployeeFamily,
-                 EmployeeEmergency, EmployeeTraining, EmployeeLicense,EmployeeEmploymentDocument
+                 EmployeeEmergency, EmployeeTraining, EmployeeLicense,EmployeeEmploymentDocument,
+                EmployeeExperience
                 };
 use App\Models\Concerns\UploadMedia;
 use Illuminate\Support\Facades\DB;
@@ -544,5 +545,54 @@ class EmployeeController extends Controller {
         }
         $documentRecord->delete();
         return back()->with('success', 'تم حذف مصوغ التعيين بنجاح ✅');
+    }
+
+    public function experienceStore(Request $request, Employee $employee)
+    {
+        $validated = $request->validate([
+            'experience' => 'required|string|max:255',
+            'from_date' => 'required|date',
+            'to_date' => 'required|date|after_or_equal:from_date',
+            'previous_work_phone' => 'nullable|string|max:20',
+            'previous_work_address' => 'nullable|string',
+            'notes' => 'nullable|string',
+        ]);
+
+        $employee->experiences()->create([
+            ...$validated,
+            'company_id' => get_user_data()?->company_id,
+            'added_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم إضافة الخبرة بنجاح ✅');
+    }
+
+    public function experienceUpdate(Request $request, Employee $employee, $experience)
+    {
+        $experienceRecord = EmployeeExperience::findOrFail($experience);
+
+        $validated = $request->validate([
+            'experience' => 'required|string|max:255',
+            'from_date' => 'required|date',
+            'to_date' => 'required|date|after_or_equal:from_date',
+            'previous_work_phone' => 'nullable|string|max:20',
+            'previous_work_address' => 'nullable|string',
+            'notes' => 'nullable|string',
+        ]);
+
+        $experienceRecord->update([
+            ...$validated,
+            'updated_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم تحديث الخبرة بنجاح ✅');
+    }
+
+    public function experienceDestroy(Employee $employee, $experience)
+    {
+        $experienceRecord = EmployeeExperience::findOrFail($experience);
+        $experienceRecord->delete();
+
+        return back()->with('success', 'تم حذف الخبرة بنجاح ✅');
     }
 }

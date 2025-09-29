@@ -93,6 +93,10 @@ Route::group(
             Route::post('employees/{employee}/employment-documents', [Dashboard\EmployeeController::class, 'employmentDocumentStore'])->name('employee.employment-documents.store');
             Route::put('employees/{employee}/employment-documents/{document}', [Dashboard\EmployeeController::class, 'employmentDocumentUpdate'])->name('employee.employment-documents.update');
             Route::delete('employees/{employee}/employment-documents/{document}', [Dashboard\EmployeeController::class, 'employmentDocumentDestroy'])->name('employee.employment-documents.destroy');
+
+            Route::post('employees/{employee}/experiences', [Dashboard\EmployeeController::class, 'experienceStore'])->name('employee.experiences.store');
+            Route::put('employees/{employee}/experiences/{experience}', [Dashboard\EmployeeController::class, 'experienceUpdate'])->name('employee.experiences.update');
+            Route::delete('employees/{employee}/experiences/{experience}', [Dashboard\EmployeeController::class, 'experienceDestroy'])->name('employee.experiences.destroy');
         });
 
         require __DIR__ . '../../auth.php';
