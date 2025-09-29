@@ -6,7 +6,7 @@ use App\Models\{
         BloodType, ContractType, InsuranceType, InsuranceRegion, InsuranceOffice, Employee,
         Religion, Governorate, Gender, Nationality, Level, Branch, Department, Section, JobCategory,
         SalaryPlace,Qualification,EducationalDegree,University,Specialization,Grade,RelativeDegree,FamilyJob,
-        LicenseVariable,EmploymentDocument
+        LicenseVariable,EmploymentDocument,BenefitVariable
     };
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
@@ -42,7 +42,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
                         'insurances.insuranceRegion', 'insurances', 'latestInsurance', 'families.relativeDegree',
                         'families.familyJob','emergencyContacts.relativeDegree','trainings.grade',
                         'licenses.licenseVariable','employmentDocuments.employmentDocument', 'employmentDocuments.media',
-                        'experiences',
+                        'experiences', 'benefits.benefitVariable'
                     ])
                     ->find($id);
                     $data['profile'] = $employee?->profile;
@@ -56,6 +56,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
                     $data['licenses'] = $employee?->licenses ?? collect();
                     $data['employmentDocuments'] = $employee?->employmentDocuments ?? collect();
                     $data['experiences'] = $employee?->experiences ?? collect();
+                    $data['benefits'] = $employee?->benefits ?? collect();
             } else {
                 $data['profile'] = null;
                 $data['militaryService'] = null;
@@ -65,6 +66,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
                 $data['licenses'] = collect();
                 $data['employmentDocuments'] = collect();
                 $data['experiences'] = collect();
+                $data['benefits'] = collect();
             }
             $data['relativeDegrees'] = RelativeDegree::select('id', 'name_ar')->get();
             $data['familyJobs']      = FamilyJob::select('id', 'name_ar')->get();
@@ -79,6 +81,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             $data['grades'] = Grade::select('id', 'name_ar')->get();
             $data['licenseVariables'] = LicenseVariable::select('id', 'name_ar')->get();
             $data['employmentDocumentsList'] = EmploymentDocument::select('id', 'name_ar')->get();
+            $data['benefitVariables'] = BenefitVariable::select('id', 'name_ar')->get();
         }
 
         if (in_array($context, ['create', 'edit', 'index'])) {

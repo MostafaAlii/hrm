@@ -260,6 +260,12 @@
                                                 الخبرات
                                             </button>
                                         </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-benefits-tab" data-bs-toggle="tab" data-bs-target="#employee-benefits"
+                                                type="button" role="tab" aria-controls="employee-benefits" aria-selected="false">
+                                                مزايا الموظف
+                                            </button>
+                                        </li>
                                     </ul>
                                     <div class="p-3 border tab-content border-top-0" id="employeeOtherInformationTabsContent">
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-qualification-tab')
@@ -269,6 +275,7 @@
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-licenses-tab')
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-employment-documents-tab')
                                         @include('dashboard.admin.employees.btn.tabs.other_info.employee-employment-experiences-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-employment-benefits-tab')
 
                                     </div>
                                 </div>

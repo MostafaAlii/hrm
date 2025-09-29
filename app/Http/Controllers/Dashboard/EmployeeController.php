@@ -8,7 +8,7 @@ use App\DataTables\Dashboard\Admin\EmployeeDataTable;
 use Illuminate\Http\Request;
 use App\Models\{Employee, EmployeeInsurance, EmployeeQualification, EmployeeFamily,
                  EmployeeEmergency, EmployeeTraining, EmployeeLicense,EmployeeEmploymentDocument,
-                EmployeeExperience
+                EmployeeExperience,EmployeeBenefit
                 };
 use App\Models\Concerns\UploadMedia;
 use Illuminate\Support\Facades\DB;
@@ -592,7 +592,53 @@ class EmployeeController extends Controller {
     {
         $experienceRecord = EmployeeExperience::findOrFail($experience);
         $experienceRecord->delete();
-
         return back()->with('success', 'تم حذف الخبرة بنجاح ✅');
+    }
+
+    public function benefitStore(Request $request, Employee $employee)
+    {
+        $validated = $request->validate([
+            'benefit_variable_id' => 'required|exists:benefit_variables,id',
+            'benefit_date' => 'required|date',
+            'withdrawal_date' => 'nullable|date|after_or_equal:benefit_date',
+            'withdrawal_reason' => 'nullable|string',
+            'notes' => 'nullable|string',
+        ]);
+
+        $employee->benefits()->create([
+            ...$validated,
+            'company_id' => get_user_data()?->company_id,
+            'added_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم إضافة الميزة بنجاح ✅');
+    }
+
+    public function benefitUpdate(Request $request, Employee $employee, $benefit)
+    {
+        $benefitRecord = EmployeeBenefit::findOrFail($benefit);
+
+        $validated = $request->validate([
+            'benefit_variable_id' => 'required|exists:benefit_variables,id',
+            'benefit_date' => 'required|date',
+            'withdrawal_date' => 'nullable|date|after_or_equal:benefit_date',
+            'withdrawal_reason' => 'nullable|string',
+            'notes' => 'nullable|string',
+        ]);
+
+        $benefitRecord->update([
+            ...$validated,
+            'updated_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم تحديث الميزة بنجاح ✅');
+    }
+
+    public function benefitDestroy(Employee $employee, $benefit)
+    {
+        $benefitRecord = EmployeeBenefit::findOrFail($benefit);
+        $benefitRecord->delete();
+
+        return back()->with('success', 'تم حذف الميزة بنجاح ✅');
     }
 }
