@@ -16,8 +16,8 @@
 }
 
 .accordion-button.bg-primary {
-    transform: scale(1.02); /* يعمل تكبير خفيف لما يبقى مفتوح */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* ظل خفيف */
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .accordion-button.animating {
@@ -192,15 +192,83 @@
                                     </ul>
                                     <div class="p-3 border tab-content border-top-0" id="employeeVacationTabsContent">
                                             @include('dashboard.admin.employees.btn.tabs.vacation_info.employee-vacations-tab')
-
                                             @include('dashboard.admin.employees.btn.tabs.vacation_info.employee-vacation-details-tab')
-                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- End Vacation Requests Accordion -->
+                    <br>
+                    <!-- Start Other Information Accordion -->
+                    <div class="accordion" id="otherInformationEmployeeAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOtherInformation">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOtherInformation" aria-expanded="false" aria-controls="collapseOtherInformation">
+                                    معلومات اخرى
+                                </button>
+                            </h2>
+                            <div id="collapseOtherInformation" class="accordion-collapse collapse" aria-labelledby="headingOtherInformation"
+                                data-bs-parent="#otherInformationEmployeeAccordion">
+                                <div class="accordion-body">
+                                    <!-- Vacation Info Content Here -->
+                                    <ul class="nav nav-tabs" id="employeeOtherInformationTabsNav" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="employee-qualifications-tab" data-bs-toggle="tab"
+                                                data-bs-target="#employee-qualification" type="button" role="tab"
+                                                aria-controls="employee-qualification" aria-selected="true">
+                                                الموهل
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-family-details-tab" data-bs-toggle="tab"
+                                                data-bs-target="#employee-family-details" type="button" role="tab"
+                                                aria-controls="employee-family-details" aria-selected="false">
+                                                العوائل
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-emergency-details-tab" data-bs-toggle="tab"
+                                                data-bs-target="#employee-emergency-details" type="button" role="tab" aria-controls="employee-emergency-details"
+                                                aria-selected="false">
+                                                الطوارى
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-trainings-tab" data-bs-toggle="tab" data-bs-target="#employee-trainings"
+                                                type="button" role="tab" aria-controls="employee-trainings" aria-selected="false">
+                                                الدورات التدريبية
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-licenses-tab" data-bs-toggle="tab" data-bs-target="#employee-licenses"
+                                                type="button" role="tab" aria-controls="employee-licenses" aria-selected="false">
+                                                التراخيص
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="employee-employment-documents-tab" data-bs-toggle="tab"
+                                                data-bs-target="#employee-employment-documents" type="button" role="tab"
+                                                aria-controls="employee-employment-documents" aria-selected="false">
+                                                مصوغات التعيين
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <div class="p-3 border tab-content border-top-0" id="employeeOtherInformationTabsContent">
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-qualification-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-family-details-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-emergency-details-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-emergency-details-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-licenses-tab')
+                                        @include('dashboard.admin.employees.btn.tabs.other_info.employee-employment-documents-tab')
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Other Information Accordion -->
                 </div>
             </div>
         </div>

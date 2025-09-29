@@ -29,4 +29,9 @@ class RelativeDegree extends BaseModel {
     {
         return $this->belongsTo(Admin::class, 'updated_by_id');
     }
+
+    public function families()
+    {
+        return $this->hasMany(EmployeeFamily::class);
+    }
 }

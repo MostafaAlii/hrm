@@ -36,4 +36,9 @@ class Company extends Authenticatable {
             }
         });
     }
+
+    public function employeeFamilies()
+    {
+        return $this->hasMany(EmployeeFamily::class);
+    }
 }

@@ -71,7 +71,28 @@ Route::group(
             Route::post('employees/{employee}/contracts', [Dashboard\EmployeeController::class, 'contractStore'])->name('employees.contracts.store');
             Route::delete('employees/{employee}/contracts/{contract}', [Dashboard\EmployeeController::class, 'contractDestroy'])->name('employees.contracts.destroy');
             Route::put('employee/{employee}/insurance-update', [Dashboard\EmployeeController::class, 'updateInsurance'])->name('employee.insurance.update');
+            Route::post('employee-qualifications', [Dashboard\EmployeeController::class, 'qualificationsStore'])->name('employee.qualifications.store');
+            Route::delete('employee-qualifications/{id}', [Dashboard\EmployeeController::class, 'qualificationsDestroy'])->name('employee.qualifications.destroy');
+            Route::put('employee-qualifications-update/{id}', [Dashboard\EmployeeController::class, 'qualificationsUpdate'])->name('employee.qualifications.update');
+            Route::post('employees/{employee}/families', [Dashboard\EmployeeController::class, 'familyStore'])->name('employee.families.store');
+            Route::put('employees/{employee}/families/{family}', [Dashboard\EmployeeController::class, 'familyUpdate'])->name('employee.families.update');
+            Route::delete('employees/{employee}/families/{family}', [Dashboard\EmployeeController::class, 'familyDestroy'])->name('employee.families.destroy');
 
+            Route::post('employees/{employee}/emergencies', [Dashboard\EmployeeController::class, 'emergencyStore'])->name('employee.emergencies.store');
+            Route::put('employees/{employee}/emergencies/{emergency}', [Dashboard\EmployeeController::class, 'emergencyUpdate'])->name('employee.emergencies.update');
+            Route::delete('employees/{employee}/emergencies/{emergency}', [Dashboard\EmployeeController::class, 'emergencyDestroy'])->name('employee.emergencies.destroy');
+
+            Route::post('employees/{employee}/trainings', [Dashboard\EmployeeController::class, 'trainingStore'])->name('employee.trainings.store');
+            Route::put('employees/{employee}/trainings/{training}', [Dashboard\EmployeeController::class, 'trainingUpdate'])->name('employee.trainings.update');
+            Route::delete('employees/{employee}/trainings/{training}', [Dashboard\EmployeeController::class, 'trainingDestroy'])->name('employee.trainings.destroy');
+
+            Route::post('employees/{employee}/licenses', [Dashboard\EmployeeController::class, 'licenseStore'])->name('employee.licenses.store');
+            Route::put('employees/{employee}/licenses/{license}', [Dashboard\EmployeeController::class, 'licenseUpdate'])->name('employee.licenses.update');
+            Route::delete('employees/{employee}/licenses/{license}', [Dashboard\EmployeeController::class, 'licenseDestroy'])->name('employee.licenses.destroy');
+
+            Route::post('employees/{employee}/employment-documents', [Dashboard\EmployeeController::class, 'employmentDocumentStore'])->name('employee.employment-documents.store');
+            Route::put('employees/{employee}/employment-documents/{document}', [Dashboard\EmployeeController::class, 'employmentDocumentUpdate'])->name('employee.employment-documents.update');
+            Route::delete('employees/{employee}/employment-documents/{document}', [Dashboard\EmployeeController::class, 'employmentDocumentDestroy'])->name('employee.employment-documents.destroy');
         });
 
         require __DIR__ . '../../auth.php';

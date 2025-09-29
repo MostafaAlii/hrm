@@ -1,25 +1,25 @@
 <?php
 namespace App\Models;
-class EmployeeContract extends BaseModel {
-    protected $table = "employee_contracts";
+class EmployeeTraining extends BaseModel {
+    protected $table = "employee_trainings";
     protected $fillable = [
+        'name',
+        'uuid',
+        'training_place',
+        'from_date',
+        'to_date',
+        'hours',
+        'notes',
         'employee_id',
-        'contract_type_id',
-        'description',
-        'start_date',
-        'end_date',
-        'insurance_date',
-        'renewal_date',
+        'grade_id',
         'company_id',
         'added_by_id',
-        'updated_by_id',
+        'updated_by_id'
     ];
 
     protected $casts = [
-        'start_date' => 'date:Y-m-d',
-        'end_date' => 'date:Y-m-d',
-        'insurance_date' => 'date:Y-m-d',
-        'renewal_date' => 'date:Y-m-d',
+        'from_date' => 'date',
+        'to_date' => 'date',
     ];
 
     public function employee()
@@ -27,9 +27,9 @@ class EmployeeContract extends BaseModel {
         return $this->belongsTo(Employee::class);
     }
 
-    public function contractType()
+    public function grade()
     {
-        return $this->belongsTo(ContractType::class);
+        return $this->belongsTo(Grade::class);
     }
 
     public function company()

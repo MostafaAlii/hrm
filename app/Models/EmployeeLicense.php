@@ -1,25 +1,24 @@
 <?php
 namespace App\Models;
-class EmployeeContract extends BaseModel {
-    protected $table = "employee_contracts";
+class EmployeeLicense extends BaseModel {
+    protected $table = "employee_licenses";
     protected $fillable = [
+        'uuid',
+        'license_variable_id',
+        'license_number',
+        'issue_date',
+        'expiry_date',
+        'issuing_authority',
+        'notes',
         'employee_id',
-        'contract_type_id',
-        'description',
-        'start_date',
-        'end_date',
-        'insurance_date',
-        'renewal_date',
         'company_id',
         'added_by_id',
-        'updated_by_id',
+        'updated_by_id'
     ];
 
     protected $casts = [
-        'start_date' => 'date:Y-m-d',
-        'end_date' => 'date:Y-m-d',
-        'insurance_date' => 'date:Y-m-d',
-        'renewal_date' => 'date:Y-m-d',
+        'issue_date' => 'date',
+        'expiry_date' => 'date',
     ];
 
     public function employee()
@@ -27,9 +26,9 @@ class EmployeeContract extends BaseModel {
         return $this->belongsTo(Employee::class);
     }
 
-    public function contractType()
+    public function licenseVariable()
     {
-        return $this->belongsTo(ContractType::class);
+        return $this->belongsTo(LicenseVariable::class);
     }
 
     public function company()

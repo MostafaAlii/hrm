@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Eloquents\EmployeeRepository;
 use App\DataTables\Dashboard\Admin\EmployeeDataTable;
 use Illuminate\Http\Request;
-use App\Models\{Employee, EmployeeInsurance};
+use App\Models\{Employee, EmployeeInsurance, EmployeeQualification, EmployeeFamily,
+                 EmployeeEmergency, EmployeeTraining, EmployeeLicense,EmployeeEmploymentDocument
+                };
 use App\Models\Concerns\UploadMedia;
 use Illuminate\Support\Facades\DB;
 class EmployeeController extends Controller {
@@ -203,22 +205,6 @@ class EmployeeController extends Controller {
     }
 
     public function updateInsurance(Request $request, Employee $employee) {
-        /*$validated = $request->validate([
-            'is_insured' => 'nullable|boolean',
-            'salary_insurance' => 'nullable|boolean',
-            'employee_fund' => 'nullable|boolean',
-            'insurance_type_id' => 'nullable|exists:insurance_types,id',
-            'insurance_region_id' => 'nullable|exists:insurance_regions,id',
-            'insurance_office_id' => 'nullable|exists:insurance_offices,id',
-            'insurance_number' => 'nullable|string|max:255',
-            'insurance_date' => 'nullable|date',
-            'is_health_insured' => 'nullable|boolean',
-            'dependents_count' => 'nullable|integer|min:0',
-            'non_dependents_count' => 'nullable|integer|min:0',
-            'company_share' => 'nullable|numeric|min:0',
-            'employee_share' => 'nullable|numeric|min:0',
-            'insurance_amount' => 'nullable|numeric|min:0',
-        ]);*/
         $insurance = EmployeeInsurance::updateOrCreate(
             ['employee_id' => $employee->id],
             [
@@ -241,5 +227,322 @@ class EmployeeController extends Controller {
             ]
         );
         return redirect()->back()->with('success', 'تم تحديث بيانات التأمين بنجاح.');
+    }
+
+    public function qualificationsStore(Request $request) {
+        $validated = $request->validate([
+            'employee_id'          => 'required|exists:employees,id',
+            'qualification_id'     => 'nullable|exists:qualifications,id',
+            'educational_degree_id' => 'nullable|exists:educational_degrees,id',
+            'university_id'        => 'nullable|exists:universities,id',
+            'specialization_id'    => 'nullable|exists:specializations,id',
+            'grade_id'             => 'nullable|exists:grades,id',
+            'study_years'          => 'nullable|integer|min:0',
+            'graduation_year'      => 'nullable|integer|min:1900|max:' . date('Y'),
+            'notes'                => 'nullable|string|max:1000',
+        ]);
+        $validated['company_id']   = get_user_data()->company_id ?? null;
+        $validated['added_by_id']  = get_user_data()->id ?? null;
+        EmployeeQualification::create($validated);
+        return redirect()->back()->with('success', 'تم إضافة المؤهل بنجاح');
+    }
+
+    public function qualificationsDestroy($id) {
+        $qualification = EmployeeQualification::findOrFail($id);
+        $qualification->delete();
+        return redirect()->back()->with('success', 'تم حذف المؤهل بنجاح');
+    }
+
+    public function qualificationsUpdate(Request $request, $id) {
+        $qualification = EmployeeQualification::findOrFail($id);
+        $data = $request->validate([
+            'qualification_id' => 'required|exists:qualifications,id',
+            'educational_degree_id' => 'required|exists:educational_degrees,id',
+            'university_id' => 'nullable|exists:universities,id',
+            'specialization_id' => 'nullable|exists:specializations,id',
+            'grade_id' => 'nullable|exists:grades,id',
+            'study_years' => 'nullable|integer|min:0',
+            'graduation_year' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'notes' => 'nullable|string',
+        ]);
+
+        $qualification->update($data);
+        return redirect()->back()->with('success', 'تم تعديل المؤهل بنجاح');
+    }
+
+    public function familyStore(Request $request, Employee $employee) {
+        $validated = $request->validate([
+            'name_ar'                     => 'required|string|max:255',
+            'relative_degree_id'          => 'required|exists:relative_degrees,id',
+            'gender'                      => 'required|in:male,female',
+            'is_working'                  => 'required|boolean',
+            'family_job_id'               => 'nullable|exists:family_jobs,id',
+            'birth_date'                  => 'nullable|date',
+            'subject_to_health_insurance' => 'required|boolean',
+            'identity_number' => 'required|string',
+        ]);
+        $employee->families()->create([
+            ...$validated,
+            'company_id' => get_user_data()?->company_id
+        ]);
+        return back()->with('success', 'تم إضافة بيانات العائل بنجاح ✅');
+    }
+
+    public function familyUpdate(Request $request, Employee $employee, EmployeeFamily $family) {
+        $data = $request->validate([
+            'name_ar' => 'required|string|max:255',
+            'relative_degree_id' => 'required|exists:relative_degrees,id',
+            'gender' => 'required|in:male,female',
+            'is_working' => 'nullable|boolean',
+            'family_job_id' => 'nullable|exists:family_jobs,id',
+            'identity_number' => 'nullable|string|max:50',
+            'birth_date' => 'nullable|date',
+            'subject_to_health_insurance' => 'required|boolean',
+        ]);
+        $family->update($data);
+        return redirect()->back()->with('success', 'تم تحديث بيانات فرد العائلة بنجاح');
+    }
+
+    public function familyDestroy(Employee $employee, EmployeeFamily $family) {
+        $family->delete();
+        return redirect()->back()->with('success', 'تم حذف فرد العائلة بنجاح');
+    }
+
+    public function emergencyStore(Request $request, Employee $employee)
+    {
+        $validated = $request->validate([
+            'name_ar' => 'required|string|max:255',
+            'name_en' => 'nullable|string|max:255',
+            'relative_degree_id' => 'nullable|exists:relative_degrees,id',
+            'phone' => 'nullable|string|max:20',
+            'mobile' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+            'email' => 'nullable|email|max:255',
+        ]);
+
+        $employee->emergencyContacts()->create([
+            ...$validated,
+            'company_id' => get_user_data()?->company_id,
+            'added_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم إضافة جهة الاتصال للطوارئ بنجاح ✅');
+    }
+
+    public function emergencyUpdate(Request $request, Employee $employee, $emergency)
+    {
+        $emergencyContact = EmployeeEmergency::findOrFail($emergency);
+
+        $validated = $request->validate([
+            'name_ar' => 'required|string|max:255',
+            'name_en' => 'nullable|string|max:255',
+            'relative_degree_id' => 'nullable|exists:relative_degrees,id',
+            'phone' => 'nullable|string|max:20',
+            'mobile' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'address' => 'nullable|string',
+        ]);
+
+        $emergencyContact->update([
+            ...$validated,
+            'updated_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم تحديث جهة الاتصال للطوارئ بنجاح ✅');
+    }
+
+    public function emergencyDestroy(Employee $employee, $emergency)
+    {
+        $emergencyContact = EmployeeEmergency::findOrFail($emergency);
+        $emergencyContact->delete();
+        return back()->with('success', 'تم حذف جهة الاتصال للطوارئ بنجاح ✅');
+    }
+
+    public function trainingStore(Request $request, Employee $employee)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'training_place' => 'required|string|max:255',
+            'from_date' => 'required|date',
+            'to_date' => 'required|date|after_or_equal:from_date',
+            'hours' => 'required|integer|min:1',
+            'notes' => 'nullable|string',
+            'grade_id' => 'nullable|exists:grades,id',
+        ]);
+
+        $employee->trainings()->create([
+            ...$validated,
+            'company_id' => get_user_data()?->company_id,
+            'added_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم إضافة الدورة التدريبية بنجاح ✅');
+    }
+
+    public function trainingUpdate(Request $request, Employee $employee, $training)
+    {
+        $trainingRecord = EmployeeTraining::findOrFail($training);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'training_place' => 'required|string|max:255',
+            'from_date' => 'required|date',
+            'to_date' => 'required|date|after_or_equal:from_date',
+            'hours' => 'required|integer|min:1',
+            'notes' => 'nullable|string',
+            'grade_id' => 'nullable|exists:grades,id',
+        ]);
+
+        $trainingRecord->update([
+            ...$validated,
+            'updated_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم تحديث الدورة التدريبية بنجاح ✅');
+    }
+
+    public function trainingDestroy(Employee $employee, $training)
+    {
+        $trainingRecord = EmployeeTraining::findOrFail($training);
+        $trainingRecord->delete();
+
+        return back()->with('success', 'تم حذف الدورة التدريبية بنجاح ✅');
+    }
+
+    public function licenseStore(Request $request, Employee $employee)
+    {
+        $validated = $request->validate([
+            'license_variable_id' => 'required|exists:license_variables,id',
+            'license_number' => 'required|string|max:255',
+            'issue_date' => 'required|date',
+            'expiry_date' => 'required|date|after_or_equal:issue_date',
+            'issuing_authority' => 'required|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        $employee->licenses()->create([
+            ...$validated,
+            'company_id' => get_user_data()?->company_id,
+            'added_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم إضافة الرخصة بنجاح ✅');
+    }
+
+    public function licenseUpdate(Request $request, Employee $employee, $license)
+    {
+        $licenseRecord = EmployeeLicense::findOrFail($license);
+
+        $validated = $request->validate([
+            'license_variable_id' => 'required|exists:license_variables,id',
+            'license_number' => 'required|string|max:255',
+            'issue_date' => 'required|date',
+            'expiry_date' => 'required|date|after_or_equal:issue_date',
+            'issuing_authority' => 'required|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        $licenseRecord->update([
+            ...$validated,
+            'updated_by_id' => auth()->id()
+        ]);
+
+        return back()->with('success', 'تم تحديث الرخصة بنجاح ✅');
+    }
+
+    public function licenseDestroy(Employee $employee, $license) {
+        $licenseRecord = EmployeeLicense::findOrFail($license);
+        $licenseRecord->delete();
+        return back()->with('success', 'تم حذف الرخصة بنجاح ✅');
+    }
+
+    public function employmentDocumentStore(Request $request, Employee $employee)
+    {
+        $validated = $request->validate([
+            'employment_document_id' => 'required|exists:employment_documents,id',
+            'delivery_status' => 'required|in:delivered,not_delivered',
+            'notes' => 'nullable|string',
+            'document_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
+        ]);
+
+        $employmentDocument = $employee->employmentDocuments()->create([
+            ...$validated,
+            'company_id' => get_user_data()?->company_id,
+            'added_by_id' => auth()->id()
+        ]);
+
+        if ($request->hasFile('document_image')) {
+            try {
+                $employmentDocument->uploadSingleMedia(
+                    'employment_documents',
+                    $request->file('document_image'),
+                    $employmentDocument,
+                    null,
+                    'media',
+                    true, // true علشان public
+                    true, // generateThumbnail
+                    'employment_documents',
+                    false // addWatermark
+                );
+            } catch (\Exception $e) {
+                return back()->with('error', 'فشل رفع الصورة: ' . $e->getMessage());
+            }
+        }
+
+        return back()->with('success', 'تم إضافة مصوغ التعيين بنجاح ✅');
+    }
+
+    public function employmentDocumentUpdate(Request $request, Employee $employee, $document)
+    {
+        $documentRecord = EmployeeEmploymentDocument::findOrFail($document);
+
+        $validated = $request->validate([
+            'employment_document_id' => 'required|exists:employment_documents,id',
+            'delivery_status' => 'required|in:delivered,not_delivered',
+            'notes' => 'nullable|string',
+            'document_image' => 'nullable|image|mimes:jpeg,png,webp|max:2048',
+        ]);
+
+        $documentRecord->update([
+            ...$validated,
+            'updated_by_id' => auth()->id()
+        ]);
+
+        if ($request->hasFile('document_image')) {
+            try {
+                $documentRecord->updateSingleMedia(
+                    'employment_documents',
+                    $request->file('document_image'),
+                    $documentRecord,
+                    null,
+                    'media',
+                    true, // true علشان public
+                    true, // generateThumbnail
+                    'employment_documents',
+                    false // addWatermark
+                );
+            } catch (\Exception $e) {
+                return back()->with('error', 'فشل تحديث الصورة: ' . $e->getMessage());
+            }
+        }
+
+        return back()->with('success', 'تم تحديث مصوغ التعيين بنجاح ✅');
+    }
+
+    public function employmentDocumentDestroy(Employee $employee, $document)
+    {
+        $documentRecord = EmployeeEmploymentDocument::findOrFail($document);
+        if ($documentRecord->media) {
+            $documentRecord->deleteExistingMedia(
+                'employment_documents',
+                $documentRecord,
+                null,
+                'media',
+                true,
+                'employment_documents'
+            );
+        }
+        $documentRecord->delete();
+        return back()->with('success', 'تم حذف مصوغ التعيين بنجاح ✅');
     }
 }

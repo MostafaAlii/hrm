@@ -30,4 +30,9 @@ class EmploymentDocument extends BaseModel
     {
         return $this->belongsTo(Admin::class, 'updated_by_id');
     }
+
+    public function employeeDocuments()
+    {
+        return $this->hasMany(EmployeeEmploymentDocument::class);
+    }
 }

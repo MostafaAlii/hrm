@@ -27,4 +27,9 @@ class LicenseVariable extends BaseModel {
     {
         return $this->belongsTo(Admin::class, 'updated_by_id');
     }
+
+    public function employeeLicenses()
+    {
+        return $this->hasMany(EmployeeLicense::class);
+    }
 }
