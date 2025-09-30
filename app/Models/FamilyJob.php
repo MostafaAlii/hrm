@@ -14,6 +14,11 @@ class FamilyJob extends BaseModel {
         'updated_by_id',
     ];
 
+    public function families()
+    {
+        return $this->hasMany(EmployeeFamily::class);
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);

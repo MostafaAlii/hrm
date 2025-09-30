@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('employee_families', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid')->unique();
+            $table->string('name_ar');
+            $table->string('name_en')->nullable();
+            $table->enum('gender', ['male', 'female'])->default('male');
+            $table->boolean('is_working')->default(false);
+            $table->string('identity_number')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->boolean('subject_to_health_insurance')->default(false);
+            $table->text('notes')->nullable();
+            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('relative_degree_id')->nullable()->constrained('relative_degrees')->restrictOnDelete();
+            $table->foreignId('family_job_id')->nullable()->constrained('family_jobs')->nullOnDelete();
+            $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('added_by_id')->nullable()->constrained('admins')->nullOnDelete();
+            $table->foreignId('updated_by_id')->nullable()->constrained('admins')->nullOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('employee_families');
+    }
+};

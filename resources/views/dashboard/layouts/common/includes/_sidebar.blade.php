@@ -21,7 +21,7 @@
                 <!-- Start AdminPanelSetting -->
                 <li class="nav-item nav-hasmenu
                     {{ is_open([
-                                'admin.mainSettings.index',
+                                'admin.mainSettings.index', 'admin.tax-settings.index', 'insurance-settings.index'
                             ]) }}
                 ">
                     <a href="#!" class="nav-link">
@@ -35,6 +35,16 @@
                             <a class="nav-link {{ is_active('admin.mainSettings.index') }}"
                                 href="{{ route('admin.mainSettings.index') }}">
                                 {{ trans('dashboard/sidebar.main_settings_sidebar_title') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.tax-settings.index') }}" href="{{ route('admin.tax-settings.index') }}">
+                                اعدادات الضرائب
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.insurance-settings.index') }}" href="{{ route('admin.insurance-settings.index') }}">
+                                اعدادات التامينات
                             </a>
                         </li>
                         <!-- End Main Settings -->
@@ -52,6 +62,9 @@
                         'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
+                        'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
+                        'admin.penalty-types.index', 'admin.cost-centers.index', 'admin.salary-cards.index', 'admin.performance-report-items.index',
+                        'admin.license-variables.index', 'admin.employment-documents.index'
                     ];
 
                     $variablesRoutes = [
@@ -62,6 +75,9 @@
                         'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
+                        'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
+                        'admin.penalty-types.index', 'admin.cost-centers.index', 'admin.salary-cards.index', 'admin.performance-report-items.index',
+                        'admin.license-variables.index', 'admin.employment-documents.index'
                     ];
                 @endphp
 
@@ -88,6 +104,14 @@
                                 <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
                             </a>
                             <ul class="nav-submenu">
+                                <!-- Start Penalty Types -->
+                                <li class="nav-item {{ is_active('admin.penalty-types.index') ? 'custom-background' : '' }}">
+                                    <a class="nav-link {{ is_active('admin.penalty-types.index') }}"
+                                        href="{{ route('admin.penalty-types.index') }}">
+                                        الجزاءات
+                                    </a>
+                                </li>
+                                <!-- End Penalty Types -->
                                 <!-- BankVariable -->
                                 <li class="nav-item {{ is_active('admin.bankVariable.index') ? 'custom-background' : '' }}">
                                     <a class="nav-link {{ is_active('admin.bankVariable.index') }}"
@@ -134,6 +158,13 @@
                                         }}</a>
                                 </li>
                                 <!-- End City -->
+                                <!-- Start CostCenters -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.cost-centers.index') }}" href="{{route('admin.cost-centers.index')}}">
+                                        مراكز التكلفه
+                                    </a>
+                                </li>
+                                <!-- End CostCenters -->
                                 <!-- Start JobCategory -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.jobCategories.index') }}" href="{{route('admin.jobCategories.index')}}">{{
@@ -155,6 +186,36 @@
                                         }}</a>
                                 </li>
                                 <!-- End Branch -->
+                                <!-- Start SalaryCards -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.salary-cards.index') }}" href="{{route('admin.salary-cards.index')}}">
+                                        كروت المرتبات
+                                    </a>
+                                </li>
+                                <!-- End SalaryCards -->
+                                <!-- Start PerformanceReportItem -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.performance-report-items.index') }}" href="{{route('admin.performance-report-items.index')}}">
+                                        عناصر تقرير الكفاءه
+                                    </a>
+                                </li>
+                                <!-- End PerformanceReportItem -->
+                                <!-- Start LicenseVariable -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.license-variables.index') }}"
+                                        href="{{route('admin.license-variables.index')}}">
+                                        متغيرات الرخص
+                                    </a>
+                                </li>
+                                <!-- End LicenseVariable -->
+                                <!-- Start EmploymentDocument -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.employment-documents.index') }}"
+                                        href="{{route('admin.employment-documents.index')}}">
+                                        مصوغات التعيين
+                                    </a>
+                                </li>
+                                <!-- End EmploymentDocument -->
                                 <!-- Start ShiftTypes -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.shift-types.index') }}" href="{{route('admin.shift-types.index')}}">{{
@@ -176,6 +237,14 @@
                                         }}</a>
                                 </li>
                                 <!-- End Section -->
+                                <!-- Start Educational Degrees -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.educational-degrees.index') }}"
+                                        href="{{route('admin.educational-degrees.index')}}">
+                                        انواع المؤهلات
+                                    </a>
+                                </li>
+                                <!-- End Educational Degrees -->
                                 <!-- Start Qualifications -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.qualifications.index') }}" href="{{route('admin.qualifications.index')}}">{{
@@ -183,6 +252,27 @@
                                         }}</a>
                                 </li>
                                 <!-- End Qualifications -->
+                                <!-- Start Grades -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.grades.index') }}" href="{{route('admin.grades.index')}}">
+                                        انواع التقديرات
+                                    </a>
+                                </li>
+                                <!-- End Grades -->
+                                <!-- Start Universities -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.universities.index') }}" href="{{route('admin.universities.index')}}">
+                                        الكليات / المدارس
+                                    </a>
+                                </li>
+                                <!-- End Universities -->
+                                <!-- Start Specializations -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.specializations.index') }}" href="{{route('admin.specializations.index')}}">
+                                        التخصصات
+                                    </a>
+                                </li>
+                                <!-- End Specializations -->
                                 <!-- Start Occasions -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.occasions.index') }}" href="{{route('admin.occasions.index')}}">{{

@@ -45,7 +45,6 @@ class FamilyJobDataTable extends BaseDataTable
             ['name' => 'code', 'data' => 'code', 'title' => trans('dashboard/family_job.code')],
             ['name' => 'name_ar', 'data' => 'name_ar', 'title' => trans('dashboard/family_job.name_ar')],
             ['name' => 'name_en', 'data' => 'name_en', 'title' => trans('dashboard/family_job.name_en')],
-            ['name' => 'name_en', 'data' => 'name_en', 'title' => trans('dashboard/family_job.name_en')],
             ['name' => 'responsible', 'data' => 'responsible', 'title' => trans('dashboard/financial_year.responsible')],
             ['name' => 'created_at', 'data' => 'created_at', 'title' => trans('dashboard/general.created_at')],
             ['name' => 'updated_at', 'data' => 'updated_at', 'title' => trans('dashboard/general.updated_at')],

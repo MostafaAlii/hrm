@@ -2,7 +2,12 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\{BloodType, ContractType, InsuranceType, InsuranceRegion, InsuranceOffice, Employee, Religion, Governorate, Gender, Nationality, Level, Branch, Department, Section, JobCategory, SalaryPlace};
+use App\Models\{
+        BloodType, ContractType, InsuranceType, InsuranceRegion, InsuranceOffice, Employee,
+        Religion, Governorate, Gender, Nationality, Level, Branch, Department, Section, JobCategory,
+        SalaryPlace,Qualification,EducationalDegree,University,Specialization,Grade,RelativeDegree,FamilyJob,
+        LicenseVariable,EmploymentDocument,BenefitVariable
+    };
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Concerns\UploadMedia;
@@ -32,22 +37,51 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
 
             if ($id) {
                 $employee = $this->model
-                    ->with(['profile', 'militaryService', 'contracts.contractType', 'insurances.insuranceType', 'insurances.insuranceRegion', 'insurances', 'latestInsurance'])
+                    ->with([
+                        'profile', 'militaryService', 'contracts.contractType', 'insurances.insuranceType',
+                        'insurances.insuranceRegion', 'insurances', 'latestInsurance', 'families.relativeDegree',
+                        'families.familyJob','emergencyContacts.relativeDegree','trainings.grade',
+                        'licenses.licenseVariable','employmentDocuments.employmentDocument', 'employmentDocuments.media',
+                        'experiences', 'benefits.benefitVariable'
+                    ])
                     ->find($id);
-                $data['profile'] = $employee?->profile;
-                $data['militaryService'] = $employee?->militaryService;
-                $data['contracts'] = $employee?->contracts ?? collect();
-                $data['employeeInsurances'] = $employee?->insurances ?? collect();
-                $data['latestInsurance'] = $employee?->latestInsurance ?? collect();
+                    $data['profile'] = $employee?->profile;
+                    $data['militaryService'] = $employee?->militaryService;
+                    $data['contracts'] = $employee?->contracts ?? collect();
+                    $data['employeeInsurances'] = $employee?->insurances ?? collect();
+                    $data['latestInsurance'] = $employee?->latestInsurance ?? collect();
+                    $data['families'] = $employee?->families ?? collect();
+                    $data['emergencyContacts'] = $employee?->emergencyContacts ?? collect();
+                    $data['trainings'] = $employee?->trainings ?? collect();
+                    $data['licenses'] = $employee?->licenses ?? collect();
+                    $data['employmentDocuments'] = $employee?->employmentDocuments ?? collect();
+                    $data['experiences'] = $employee?->experiences ?? collect();
+                    $data['benefits'] = $employee?->benefits ?? collect();
             } else {
                 $data['profile'] = null;
                 $data['militaryService'] = null;
                 $data['contracts'] = collect();
+                $data['emergencyContacts'] = collect();
+                $data['trainings'] = collect();
+                $data['licenses'] = collect();
+                $data['employmentDocuments'] = collect();
+                $data['experiences'] = collect();
+                $data['benefits'] = collect();
             }
+            $data['relativeDegrees'] = RelativeDegree::select('id', 'name_ar')->get();
+            $data['familyJobs']      = FamilyJob::select('id', 'name_ar')->get();
             $data['contractTypes'] = ContractType::select('id', 'name_ar')->get();
             $data['insuranceTypes']   = InsuranceType::select('id', 'name_ar')->get();
             $data['insuranceRegions'] = InsuranceRegion::select('id', 'name_ar')->get();
             $data['insuranceOffices'] = InsuranceOffice::select('id', 'name_ar')->get();
+            $data['qualifications'] = Qualification::active()->select('id', 'name')->get();
+            $data['educationalDegrees'] = EducationalDegree::select('id', 'name_ar')->get();
+            $data['universities'] = University::select('id', 'name_ar')->get();
+            $data['specializations'] = Specialization::select('id', 'name_ar')->get();
+            $data['grades'] = Grade::select('id', 'name_ar')->get();
+            $data['licenseVariables'] = LicenseVariable::select('id', 'name_ar')->get();
+            $data['employmentDocumentsList'] = EmploymentDocument::select('id', 'name_ar')->get();
+            $data['benefitVariables'] = BenefitVariable::select('id', 'name_ar')->get();
         }
 
         if (in_array($context, ['create', 'edit', 'index'])) {

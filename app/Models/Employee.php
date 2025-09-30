@@ -101,6 +101,32 @@ class Employee extends Authenticatable {
         return $this->belongsTo(SalaryPlace::class, 'salary_place_id');
     }
 
+    public function families()
+    {
+        return $this->hasMany(EmployeeFamily::class);
+    }
+
+    public function emergencyContacts()
+    {
+        return $this->hasMany(EmployeeEmergency::class);
+    }
+
+    public function trainings()
+    {
+        return $this->hasMany(EmployeeTraining::class);
+    }
+
+    public function licenses()
+    {
+        return $this->hasMany(EmployeeLicense::class);
+    }
+
+    public function employmentDocuments()
+    {
+        return $this->hasMany(EmployeeEmploymentDocument::class);
+    }
+
+
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -157,6 +183,21 @@ class Employee extends Authenticatable {
     public function vacationRequests()
     {
         return $this->hasMany(EmployeeVacationRequest::class, 'employee_id');
+    }
+
+    public function qualifications()
+    {
+        return $this->hasMany(EmployeeQualification::class, 'employee_id');
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(EmployeeExperience::class);
+    }
+
+    public function benefits()
+    {
+        return $this->hasMany(EmployeeBenefit::class);
     }
 
     public function media()
