@@ -21,7 +21,7 @@
                 <!-- Start AdminPanelSetting -->
                 <li class="nav-item nav-hasmenu
                     {{ is_open([
-                                'admin.mainSettings.index',
+                                'admin.mainSettings.index', 'admin.tax-settings.index', 'insurance-settings.index'
                             ]) }}
                 ">
                     <a href="#!" class="nav-link">
@@ -35,6 +35,16 @@
                             <a class="nav-link {{ is_active('admin.mainSettings.index') }}"
                                 href="{{ route('admin.mainSettings.index') }}">
                                 {{ trans('dashboard/sidebar.main_settings_sidebar_title') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.tax-settings.index') }}" href="{{ route('admin.tax-settings.index') }}">
+                                اعدادات الضرائب
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.insurance-settings.index') }}" href="{{ route('admin.insurance-settings.index') }}">
+                                اعدادات التامينات
                             </a>
                         </li>
                         <!-- End Main Settings -->

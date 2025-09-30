@@ -20,8 +20,39 @@ abstract class BaseRepository {
         return [];
     }
 
-    public function index($dataTable, $view, $title) {
+    /*public function index($dataTable, $view, $title) {
         return $dataTable->render($view, array_merge(
+            ['title' => $title],
+            $this->extraData('index')
+        ));
+    }*/
+    public function index($dataTable = null, $view = null, $title = null)
+    {
+        // إذا مديليش parameters خليهم null وارجع view عادي
+        if ($dataTable === null && $view === null && $title === null) {
+            return view('default.index', array_merge(
+                ['title' => 'Default Title'],
+                $this->extraData('index')
+            ));
+        }
+        if ($dataTable instanceof \Yajra\DataTables\DataTables) {
+            return $dataTable->render($view, array_merge(
+                ['title' => $title],
+                $this->extraData('index')
+            ));
+        }
+        if (is_string($dataTable) && is_string($view)) {
+            return view($dataTable, array_merge(
+                ['title' => $view],
+                $this->extraData('index')
+            ));
+        }
+        throw new \InvalidArgumentException('Invalid parameters for index method');
+    }
+
+    public function indexView($view, $title)
+    {
+        return view($view, array_merge(
             ['title' => $title],
             $this->extraData('index')
         ));
