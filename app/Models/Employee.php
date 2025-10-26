@@ -200,6 +200,12 @@ class Employee extends Authenticatable {
         return $this->hasMany(EmployeeBenefit::class);
     }
 
+    public function salaryBasic()
+    {
+        return $this->hasOne(EmployeeSalaryBasic::class);
+    }
+
+
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');

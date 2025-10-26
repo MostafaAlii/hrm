@@ -8,10 +8,11 @@ use App\DataTables\Dashboard\Admin\EmployeeDataTable;
 use Illuminate\Http\Request;
 use App\Models\{Employee, EmployeeInsurance, EmployeeQualification, EmployeeFamily,
                  EmployeeEmergency, EmployeeTraining, EmployeeLicense,EmployeeEmploymentDocument,
-                EmployeeExperience,EmployeeBenefit
+                EmployeeExperience,EmployeeBenefit, EmployeeSalaryBasic
                 };
 use App\Models\Concerns\UploadMedia;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\TaxHelper;
 class EmployeeController extends Controller {
     use UploadMedia;
     protected $repository;
@@ -641,4 +642,52 @@ class EmployeeController extends Controller {
 
         return back()->with('success', 'تم حذف الميزة بنجاح ✅');
     }
+
+    public function basicSalaryStore(Request $request, $employeeId) {
+        $request->validate([
+            'allowance_variable_id' => 'required|exists:allowance_variables,id',
+            'basic_salary' => 'required|numeric|min:0',
+        ]);
+
+        $companyId = get_user_data()->company_id ?? null;
+        $adminId = get_user_data()->id;
+        EmployeeSalaryBasic::create([
+            'employee_id' => $employeeId,
+            'company_id' => $companyId,
+            'added_by_id' => $adminId,
+            'allowance_variable_id' => $request->allowance_variable_id,
+            'basic_salary' => $request->basic_salary,
+        ]);
+        return response()->json(['success' => true, 'message' => 'تم حفظ البيانات بنجاح']);
+    }
+
+
+    public function toggleTaxStatus(Request $request, $employeeId) {
+        $employeeSalary = EmployeeSalaryBasic::where('employee_id', $employeeId)->first();
+        if (!$employeeSalary) {
+            return response()->json(['success' => false, 'message' => 'لم يتم العثور على بيانات الراتب.']);
+        }
+
+        $employeeSalary->is_taxable = $request->is_taxable ? 1 : 0;
+        $employeeSalary->save();
+
+        if ($employeeSalary->is_taxable) {
+            $taxData = TaxHelper::calculateMonthlyTax(
+                $employeeSalary->basic_salary,
+                $employeeSalary->company_id
+            );
+        } else {
+            $taxData = [
+                'taxable_amount' => 0,
+                'tax_amount' => 0,
+                'net_salary' => $employeeSalary->basic_salary,
+            ];
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'تم تحديث حالة الضريبة بنجاح',
+            'data' => $taxData,
+        ]);
+    }
+
 }

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أحدث الأخبار - تصميم استاتيكي</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --at-primary: #2c5aa0;
+            --at-secondary: #f8f9fa;
+            --at-text: #333;
+            --at-border-radius: 8px;
+            --at-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --at-shadow-hover: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .at-section {
+            background-color: white;
+            padding: 3rem 0;
+        }
+        
+        @media (min-width: 768px) {
+            .at-section {
+                padding: 5.5rem 0;
+            }
+        }
+        
+        .at-title {
+            color: var(--at-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .at-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 0;
+            text-transform: capitalize;
+        }
+        
+        .at-mb-4 {
+            margin-bottom: 2rem !important;
+        }
+        
+        @media (min-width: 768px) {
+            .at-mb-8 {
+                margin-bottom: 4rem !important;
+            }
+        }
+        
+        /* Carousel Container */
+        .at-carousel-container {
+            position: relative;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        
+        .at-carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .at-carousel-item {
+            flex: 0 0 calc(100% - 20px);
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        
+        @media (min-width: 768px) {
+            .at-carousel-item {
+                flex: 0 0 calc(50% - 20px);
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .at-carousel-item {
+                flex: 0 0 calc(33.333% - 20px);
+            }
+        }
+        
+        /* Card Styles */
+        .at-card {
+            border: 1px solid #e0e0e0;
+            border-radius: var(--at-border-radius);
+            box-shadow: var(--at-shadow);
+            padding: 1rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            cursor: pointer;
+            background: white;
+        }
+        
+        .at-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--at-shadow-hover);
+        }
+        
+        .at-card-zoom {
+            overflow: hidden;
+            border-radius: var(--at-border-radius);
+            margin-bottom: 1rem;
+        }
+        
+        .at-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--at-border-radius);
+            transition: transform 0.5s ease;
+        }
+        
+        .at-card:hover .at-card-img {
+            transform: scale(1.05);
+        }
+        
+        .at-card-footer {
+            padding: 0 0.5rem;
+            text-align: center;
+            background: transparent;
+            border: none;
+        }
+        
+        .at-card-date {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: #6c757d;
+        }
+        
+        .at-card-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 54px;
+        }
+        
+        /* Navigation Buttons */
+        .at-carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 10px;
+        }
+        
+        .at-nav-btn {
+            background: var(--at-primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .at-nav-btn:hover {
+            background: #1e3d6f;
+        }
+        
+        .at-nav-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        /* Animation */
+        .at-fade-in {
+            opacity: 0;
+            animation: atFadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes atFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Modal Styles */
+        .at-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .at-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .at-modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .at-modal.show .at-modal-content {
+            transform: translateY(0);
+        }
+        
+        .at-modal-header {
+            background: var(--at-primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .at-modal-title {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        .at-modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .at-modal-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .at-modal-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .at-modal-date {
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        
+        .at-modal-desc {
+            text-align: right;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        
+        /* RTL Adjustments */
+        [dir="rtl"] .at-modal-desc {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .at-carousel-track {
+            direction: ltr;
+        }
+        
+        [dir="rtl"] .at-carousel-item {
+            direction: rtl;
+        }
+    </style>
+</head>
+<body>
+    <section class="at-section">
+        <div class="container">
+            <div class="text-center at-mb-4 at-mb-8">
+                <h1 class="at-title">أحدث الأخبار</h1>
+                <p class="at-subtitle">اكتشف برنامجك المثالي في دوراتنا.</p>
+            </div>
+
+            <!-- Static Carousel -->
+            <div class="at-carousel-container">
+                <div class="at-carousel-track" id="atCarouselTrack">
+                    <div class="at-carousel-item">
+                        <div class="at-card at-fade-in" 
+                             data-img="https://arabtrainers.test/storage/articles/2YkW0jup5bHYsCPy8pVmvI8nFjHvRNxaTJhQF7cW.jpg" 
+                             data-date="09 October, 2025" 
+                             data-title="The Best Destinations to Begin Your Round the World Trip" 
+                             data-desc="Explore the most breathtaking destinations around the globe that make the perfect start for your round-the-world journey. Discover hidden gems, rich cultures, and scenic landscapes.">
+                            <div class="at-card-zoom">
+                                <img class="at-card-img" 
+                                     src="https://arabtrainers.test/storage/articles/2YkW0jup5bHYsCPy8pVmvI8nFjHvRNxaTJhQF7cW.jpg" 
+                                     alt="The Best Destinations to Begin Your Round the World Trip">
+                            </div>
+                            <div class="at-card-footer">
+                                <div class="at-card-date">09 October, 2025</div>
+                                <h5 class="at-card-title">The Best Destinations to Begin Your Round the World Trip</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="at-carousel-item">
+                        <div class="at-card at-fade-in" 
+                             data-img="https://arabtrainers.test/storage/articles/eNMKAry0u5zm6JEnYg65RHBYcu57aQaMZzRmPegF.jpg" 
+                             data-date="02 November, 2008" 
+                             data-title="Nam sint ea sit eaq" 
+                             data-desc="Sequi nihil ad fugia">
+                            <div class="at-card-zoom">
+                                <img class="at-card-img" 
+                                     src="https://arabtrainers.test/storage/articles/eNMKAry0u5zm6JEnYg65RHBYcu57aQaMZzRmPegF.jpg" 
+                                     alt="Nam sint ea sit eaq">
+                            </div>
+                            <div class="at-card-footer">
+                                <div class="at-card-date">02 November, 2008</div>
+                                <h5 class="at-card-title">Nam sint ea sit eaq</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="at-carousel-item">
+                        <div class="at-card at-fade-in" 
+                             data-img="https://arabtrainers.test/storage/articles/evXF48mZQ683lxXmwn30Uf3O9MYzpvtGCFhjvgyX.jpg" 
+                             data-date="17 April, 1983" 
+                             data-title="Vero et veniam porr" 
+                             data-desc="Sequi vero eos volup">
+                            <div class="at-card-zoom">
+                                <img class="at-card-img" 
+                                     src="https://arabtrainers.test/storage/articles/evXF48mZQ683lxXmwn30Uf3O9MYzpvtGCFhjvgyX.jpg" 
+                                     alt="Vero et veniam porr">
+                            </div>
+                            <div class="at-card-footer">
+                                <div class="at-card-date">17 April, 1983</div>
+                                <h5 class="at-card-title">Vero et veniam porr</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="at-carousel-item">
+                        <div class="at-card at-fade-in" 
+                             data-img="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                             data-date="15 June, 2024" 
+                             data-title="أفضل الطرق لتعلم البرمجة" 
+                             data-desc="اكتشف أحدث الطرق والأساليب لتعلم البرمجة بشكل فعال. تعرف على أفضل الموارد والدورات التي تساعدك في رحلتك لتصبح مبرمجاً محترفاً.">
+                            <div class="at-card-zoom">
+                                <img class="at-card-img" 
+                                     src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                                     alt="أفضل الطرق لتعلم البرمجة">
+                            </div>
+                            <div class="at-card-footer">
+                                <div class="at-card-date">15 June, 2024</div>
+                                <h5 class="at-card-title">أفضل الطرق لتعلم البرمجة</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="at-carousel-nav">
+                    <button class="at-nav-btn" id="atPrevBtn">السابق</button>
+                    <button class="at-nav-btn" id="atNextBtn">التالي</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Modal -->
+    <div class="at-modal" id="atModal">
+        <div class="at-modal-content">
+            <div class="at-modal-header">
+                <h5 class="at-modal-title" id="atModalTitle"></h5>
+                <button class="at-modal-close" id="atModalClose">&times;</button>
+            </div>
+            <div class="at-modal-body">
+                <img id="atModalImg" src="" alt="" class="at-modal-img">
+                <div id="atModalDate" class="at-modal-date"></div>
+                <p id="atModalDesc" class="at-modal-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carousel functionality
+            const track = document.getElementById('atCarouselTrack');
+            const items = document.querySelectorAll('.at-carousel-item');
+            const prevBtn = document.getElementById('atPrevBtn');
+            const nextBtn = document.getElementById('atNextBtn');
+            const modal = document.getElementById('atModal');
+            const modalClose = document.getElementById('atModalClose');
+            
+            let currentIndex = 0;
+            const itemWidth = items[0].offsetWidth + 20; // width + margin
+            
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+                
+                // Update button states
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex >= items.length - getVisibleItems();
+            }
+            
+            function getVisibleItems() {
+                if (window.innerWidth >= 992) return 3;
+                if (window.innerWidth >= 768) return 2;
+                return 1;
+            }
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentIndex < items.length - getVisibleItems()) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            });
+            
+            // Modal functionality
+            const cards = document.querySelectorAll('.at-card');
+            const modalTitle = document.getElementById('atModalTitle');
+            const modalImg = document.getElementById('atModalImg');
+            const modalDate = document.getElementById('atModalDate');
+            const modalDesc = document.getElementById('atModalDesc');
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const imgSrc = this.getAttribute('data-img');
+                    const date = this.getAttribute('data-date');
+                    const title = this.getAttribute('data-title');
+                    const desc = this.getAttribute('data-desc');
+                    
+                    modalImg.src = imgSrc;
+                    modalImg.alt = title;
+                    modalDate.textContent = date;
+                    modalTitle.textContent = title;
+                    modalDesc.textContent = desc;
+                    
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            modalClose.addEventListener('click', function() {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Initialize carousel
+            updateCarousel();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                itemWidth = items[0].offsetWidth + 20;
+                updateCarousel();
+            });
+        });
+    </script>
+</body>
+</html>
