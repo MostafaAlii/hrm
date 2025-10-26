@@ -205,6 +205,47 @@ class Employee extends Authenticatable {
         return $this->hasOne(EmployeeSalaryBasic::class);
     }
 
+    public function allowances()
+    {
+        return $this->hasMany(EmployeeAllowance::class);
+    }
+
+    public function entitlements()
+    {
+        return $this->hasMany(EmployeeEntitlement::class);
+    }
+
+    public function deductions()
+    {
+        return $this->hasMany(EmployeeDeduction::class);
+    }
+
+    public function variableInsurances()
+    {
+        return $this->hasMany(EmployeeVariableInsurance::class);
+    }
+
+    public function getTotalVariableInsuranceAttribute()
+    {
+        return $this->variableInsurances()->sum('value');
+    }
+
+    public function getTotalDeductionsAttribute()
+    {
+        return $this->deductions()->sum('amount');
+    }
+
+
+    public function getTotalAllowancesAttribute()
+    {
+        return $this->allowances()->sum('amount');
+    }
+
+    public function getEntitlementsSumAttribute()
+    {
+        return $this->entitlements->sum('amount');
+    }
+
 
     public function media()
     {

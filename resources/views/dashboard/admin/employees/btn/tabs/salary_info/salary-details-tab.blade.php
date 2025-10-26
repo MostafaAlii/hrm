@@ -69,14 +69,14 @@
                         <button type="button" class="btn btn-danger btn-lg d-flex align-items-center" data-bs-toggle="modal"
                             data-bs-target="#variableInsuranceModal">
                             <i class="fa fa-shield-alt me-2"></i>
-                            تأمين متغير
+                            تأمين الصحى الشامل
                         </button>
 
                         <!-- تأمين ثابت -->
                         <button type="button" class="btn btn-secondary btn-lg d-flex align-items-center" data-bs-toggle="modal"
                             data-bs-target="#fixedInsuranceModal">
                             <i class="fa fa-shield me-2"></i>
-                            تأمين ثابت
+                            التأمين الاجتماعى
                         </button>
                     </div>
                     <!-- End Button Bar -->
@@ -238,9 +238,25 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>هنا يمكنك إدارة علاوات الموظفين</p>
-                <!-- يمكن إضافة محتوى إضافي هنا -->
+                
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="allowanceSelect" class="form-label fw-bold">اختر العلاوة</label>
+                        <select class="form-select" id="allowanceSelect" name="allowance_variable_id">
+                            <option value="">-- اختر العلاوة --</option>
+                            @foreach($allowanceVariables as $allowance)
+                                <option value="{{ $allowance->id }}">{{ $allowance->name_ar }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="allowanceAmount" class="form-label fw-bold">قيمة العلاوة</label>
+                        <input type="number" step="0.01" class="form-control" id="allowanceAmount" name="amount" placeholder="ادخل قيمة العلاوة" required>
+                    </div>
+                </div>
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
                 <button type="button" class="btn btn-success">حفظ</button>
@@ -262,12 +278,27 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>هنا يمكنك إدارة استحقاقات الموظفين</p>
-                <!-- يمكن إضافة محتوى إضافي هنا -->
+                @php
+                    use App\Models\EntitlementVariable;
+                    $entitlementVariables = EntitlementVariable::get();
+                @endphp
+                <div class="col-md-6 mb-3">
+                    <label for="entitlementSelect" class="form-label fw-bold">اختر الاستحقاق</label>
+                    <select class="form-select" id="entitlementSelect" name="entitlement_variable_id">
+                        <option value="">-- اختر الاستحقاق --</option>
+                        @foreach($entitlementVariables as $entitlement)
+                            <option value="{{ $entitlement->id }}">{{ $entitlement->name_ar }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="entitlementAmount" class="form-label fw-bold">قيمة الاستحقاق</label>
+                    <input type="number" step="0.01" class="form-control" id="entitlementAmount" name="amount" placeholder="ادخل قيمة الاستحقاق" required>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                <button type="button" class="btn btn-info">حفظ</button>
+                <button type="button" class="btn btn-info" id="saveEntitlement">حفظ</button>
             </div>
         </div>
     </div>
@@ -286,18 +317,35 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>هنا يمكنك إدارة استقطاعات الموظفين</p>
-                <!-- يمكن إضافة محتوى إضافي هنا -->
+                @php
+                    use App\Models\DeductionVariable;
+                    $deductionVariables = DeductionVariable::get();
+                @endphp
+
+                <div class="col-md-6 mb-3">
+                    <label for="deductionSelect" class="form-label fw-bold">اختر نوع الاستقطاع</label>
+                    <select class="form-select" id="deductionSelect" name="deduction_variable_id">
+                        <option value="">-- اختر الاستقطاع --</option>
+                        @foreach($deductionVariables as $deduction)
+                            <option value="{{ $deduction->id }}">{{ $deduction->name_ar }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="deductionAmount" class="form-label fw-bold">قيمة الاستقطاع</label>
+                    <input type="number" step="0.01" class="form-control" id="deductionAmount" name="amount" placeholder="ادخل قيمة الاستقطاع" required>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                <button type="button" class="btn btn-warning">حفظ</button>
+                <button type="button" class="btn btn-warning" id="saveDeduction">حفظ</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal تأمين متغير -->
+<!-- Modal تأمين صحى الشامل -->
 <div class="modal fade" id="variableInsuranceModal" tabindex="-1" aria-labelledby="variableInsuranceModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -305,18 +353,31 @@
             <div class="modal-header bg-danger text-white">
                 <h5 class="modal-title" id="variableInsuranceModalLabel">
                     <i class="fa fa-shield-alt me-2"></i>
-                    إدارة التأمين المتغير
+                    إدارة تامين صحى الشامل
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>هنا يمكنك إدارة التأمين المتغير للموظفين</p>
-                <!-- يمكن إضافة محتوى إضافي هنا -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="insuranceType" class="form-label fw-bold">النوع</label>
+                        <select id="insuranceType" class="form-select">
+                            <option value="amount">قيمة</option>
+                            <option value="percentage">نسبة %</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="insuranceValue" class="form-label fw-bold">القيمة / النسبة</label>
+                        <input type="number" step="0.01" class="form-control" id="insuranceValue"
+                            placeholder="ادخل القيمة أو النسبة">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                <button type="button" class="btn btn-danger">حفظ</button>
+                <button type="button" class="btn btn-danger" id="saveVariableInsurance">حفظ</button>
             </div>
         </div>
     </div>
@@ -330,7 +391,7 @@
             <div class="modal-header bg-secondary text-white">
                 <h5 class="modal-title" id="fixedInsuranceModalLabel">
                     <i class="fa fa-shield me-2"></i>
-                    إدارة التأمين الثابت
+                    إدارة التأمين الاجتماعى
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>

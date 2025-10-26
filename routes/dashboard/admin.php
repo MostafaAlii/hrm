@@ -97,6 +97,10 @@ Route::group(
             // Basic Salart الاساسى من الراتب
             Route::post('employees/{employee}/basic-salary', [Dashboard\EmployeeController::class, 'basicSalaryStore'])->name('employee.basic_salary.store');
             Route::post('employees/{employee}/toggle-tax', [Dashboard\EmployeeController::class, 'toggleTaxStatus'])->name('employee.toggle_tax');
+            Route::post('employees/{employee}/allowance', [Dashboard\EmployeeController::class, 'allowanceStore'])->name('employee.allowance.store');
+            Route::post('employees/{employee}/entitlement', [Dashboard\EmployeeController::class, 'entitlementStore'])->name('employee.entitlement.store');
+            Route::post('employees/{employee}/deduction', [Dashboard\EmployeeController::class, 'deductionStore'])->name('employee.deduction.store');
+            Route::post('employees/{employee}/variable-insurance', [Dashboard\EmployeeController::class, 'variableInsuranceStore'])->name('employee.variable_insurance.store');
 
             // Tax-Settings ::
             Route::get('tax-settings', [Dashboard\TaxSettingController::class, 'index'])->name('tax-settings.index');
