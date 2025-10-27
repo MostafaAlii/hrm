@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Concerns\HasUuid;
 use App\Enums\Employee\WorkingStatus;
 use App\Models\Concerns\UploadMedia;
+use App\Helpers\TaxHelper;
 class Employee extends Authenticatable {
     use HasUuid, HasApiTokens, HasFactory, Notifiable, UploadMedia;
     protected $table = 'employees';
@@ -200,9 +201,9 @@ class Employee extends Authenticatable {
         return $this->hasMany(EmployeeBenefit::class);
     }
 
-    public function salaryBasic()
+    public function salaryBasics()
     {
-        return $this->hasOne(EmployeeSalaryBasic::class);
+        return $this->hasMany(EmployeeSalaryBasic::class);
     }
 
     public function allowances()
@@ -225,6 +226,11 @@ class Employee extends Authenticatable {
         return $this->hasMany(EmployeeVariableInsurance::class);
     }
 
+    public function getTotalBasicSalaryAttribute()
+    {
+        return $this->salaryBasics()->sum('basic_salary');
+    }
+
     public function getTotalVariableInsuranceAttribute()
     {
         return $this->variableInsurances()->sum('value');
@@ -245,6 +251,29 @@ class Employee extends Authenticatable {
     {
         return $this->entitlements->sum('amount');
     }
+
+    public function getTotalSalaryAttribute()
+    {
+        $basic = $this->total_basic_salary ?? 0;
+        $allowances = $this->total_allowances ?? 0;
+        $entitlements = $this->entitlements_sum ?? 0;
+        return $basic + $allowances + $entitlements;
+    }
+
+    public function getMonthlyTaxAttribute() {
+        $basicSalary = $this->total_basic_salary ?? 0;
+        $companyId = $this->company_id ?? null;
+        $taxData = TaxHelper::calculateMonthlyTax($basicSalary, $companyId);
+        return $taxData['tax_amount'];
+    }
+
+    public function getNetSalaryAfterTaxAttribute() {
+        $basicSalary = $this->salaryBasic?->basic_salary ?? 0;
+        $companyId = $this->company_id ?? null;
+        $taxData = TaxHelper::calculateMonthlyTax($basicSalary, $companyId);
+        return $taxData['net_salary'];
+    }
+
 
 
     public function media()

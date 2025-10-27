@@ -30,6 +30,23 @@
                         بيانات المرتب
                     </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="salary-basic-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#salary-basic"
+                            type="button"
+                            role="tab"
+                            aria-controls="salary-basic"
+                            aria-selected="false">
+                         تفاصيل الاساسى
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="salary-allowance-tab" data-bs-toggle="tab" data-bs-target="#salary-allowance" type="button"
+                        role="tab" aria-controls="salary-allowance" aria-selected="false">
+                        تفاصيل العلاوات
+                    </button>
+                </li>
             </ul>
 
             <!-- محتوى التبويبات -->
@@ -80,9 +97,100 @@
                         </button>
                     </div>
                     <!-- End Button Bar -->
+                    <!-- Start Salary Table -->
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered text-center align-middle" style="font-size: 14px;">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>الكود</th>
+                                    <th>البند</th>
+                                    <th>تاريخ الإضافة</th>
+                                    <th>الفترة</th>
+                                    <th>القيمة</th>
+                                    <th>زيادة المرتب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- 🟩 عرض الاستحقاقات --}}
+                                @foreach($record->entitlements as $entitlement)
+                                <tr style="background-color:#e8f5e9;">
+                                    <td>{{ $entitlement?->entitlementVariable?->code ?? '-' }}</td>
+                                    <td>{{ $entitlement?->entitlementVariable?->name_ar ?? '-' }}</td>
+                                    <td>{{ $entitlement->created_at?->format('Y-m-d H:i:s') }}</td>
+                                    <td>{{ $entitlement->period ?? '-' }}</td>
+                                    <td>{{ number_format($entitlement->amount, 2) }}</td>
+                                    <td>{{ number_format($entitlement->amount, 2) }}</td>
+                                </tr>
+                                @endforeach
+
+                                {{-- 🟥 عرض الاستقطاعات --}}
+                                @foreach($record->deductions as $deduction)
+                                <tr style="background-color:#ffebee;">
+                                    <td>{{ $deduction?->variable?->code ?? '-' }}</td>
+                                    <td>{{ $deduction?->variable?->name_ar ?? '-' }}</td>
+                                    <td>{{ $deduction->created_at?->format('Y-m-d H:i:s') }}</td>
+                                    <td>{{ $deduction->period ?? '-' }}</td>
+                                    <td>{{ number_format($deduction->amount, 2) }}</td>
+                                    <td>{{ number_format($deduction->amount, 2) }}</td>
+                                </tr>
+                                @endforeach
+
+                                {{-- 🧾 الإجماليات --}}
+                                <tr style="background-color:#e8f5e9;">
+                                    <td colspan="4"></td>
+                                    <td><strong>إجمالي الأساسي</strong></td>
+                                    <td>{{ number_format($record?->total_basic_salary, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#e3f2fd;">
+                                    <td colspan="4"></td>
+                                    <td><strong>إجمالي العلاوة</strong></td>
+                                    <td>{{ number_format($record?->total_allowances, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#f1f8e9;">
+                                    <td colspan="4"></td>
+                                    <td><strong>إجمالي الاستحقاقات</strong></td>
+                                    <td>{{ number_format($record?->entitlements_sum, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#fff8e1;">
+                                    <td colspan="4"></td>
+                                    <td><strong>الإجمالي</strong></td>
+                                    <td>{{ number_format($record?->total_salary, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#ffebee;">
+                                    <td colspan="4"></td>
+                                    <td><strong>إجمالي الاستقطاعات</strong></td>
+                                    <td>-{{ number_format($record?->total_deductions, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#fce4ec;">
+                                    <td colspan="4"></td>
+                                    <td><strong>إجمالي الضرائب</strong></td>
+                                    <td>{{ number_format($record->monthly_tax, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#e0f2f1;">
+                                    <td colspan="4"></td>
+                                    <td><strong>إجمالي التأمينات</strong></td>
+                                    <td>{{ number_format($record->total_insurance ?? 0, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#e0f7fa;">
+                                    <td colspan="4"></td>
+                                    <td><strong>الصافي</strong></td>
+                                    <td><strong>{{ number_format(($record?->total_salary - $record?->total_deductions -
+                                            $record->monthly_tax),
+                                            2) }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End Salary Table -->
                 </div>
                 <div class="tab-pane fade" id="salary-data" role="tabpanel" aria-labelledby="salary-data-tab">
-                    
                     <form id="salaryDataForm" class="p-3">
                         <!-- 🟢 قسم بيانات التكلفة والضرائب -->
                         <h6 class="fw-bold text-primary mb-3 border-bottom pb-2">
@@ -180,6 +288,82 @@
                         </div>
                     </form>
                 </div>
+                <div class="tab-pane fade" id="salary-basic" role="tabpanel" aria-labelledby="salary-basic-tab">
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered text-center align-middle" style="font-size: 14px;">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>#</th>
+                                    <th>الأساسي</th>
+                                    <th>تاريخ الإضافة</th>
+                                    <th>الفترة</th>
+                                    <th>القيمة</th>
+                                    <th>زيادة المرتب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($record->salaryBasics as $index => $basic)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $basic->title ?? 'الأساسي' }}</td>
+                                    <td>{{ $basic->created_at?->format('Y-m-d H:i') }}</td>
+                                    <td>{{ $basic->period ?? '-' }}</td>
+                                    <td>{{ number_format($basic->basic_salary, 2) }}</td>
+                                    <td>{{ number_format($basic->basic_salary, 2) }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-muted">لا توجد بيانات أساسي حالياً</td>
+                                </tr>
+                                @endforelse
+
+                                {{-- صف الإجمالي --}}
+                                <tr class="fw-bold" style="background-color: #e8f5e9;">
+                                    <td colspan="5" class="text-end"><strong>الإجمالي:</strong></td>
+                                    <td colspan="2">{{ number_format($record->salaryBasics->sum('basic_salary'), 2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="salary-allowance" role="tabpanel" aria-labelledby="salary-allowance-tab">
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered text-center align-middle" style="font-size: 14px;">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>#</th>
+                                    <th>العلاوة</th>
+                                    <th>تاريخ الإضافة</th>
+                                    <th>الفترة</th>
+                                    <th>القيمة</th>
+                                    <th>زيادة المرتب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($record->allowances as $index => $allowance)
+                                <tr>
+                                    <td>{{ $allowance->allowanceVariable?->code }}</td>
+                                    <td>{{ $allowance->allowanceVariable?->name_ar ?? '—' }}</td>
+                                    <td>{{ $allowance->created_at?->format('Y-m-d H:i') }}</td>
+                                    <td>{{ $allowance->period ?? '-' }}</td>
+                                    <td>{{ number_format($allowance->amount, 2) }}</td>
+                                    <td>{{ number_format($allowance->amount, 2) }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-muted">لا توجد علاوات حالياً</td>
+                                </tr>
+                                @endforelse
+
+                                {{-- صف الإجمالي --}}
+                                <tr class="fw-bold" style="background-color: #e3f2fd;">
+                                    <td colspan="4" class="text-end"><strong>الإجمالي:</strong></td>
+                                    <td colspan="2">{{ number_format($record->allowances->sum('amount'), 2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -238,7 +422,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+
 
                 <div class="row">
                     <div class="col-md-6 mb-3">

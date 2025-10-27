@@ -50,87 +50,84 @@
             </div>
 
             <!-- Start Salary Table -->
-
-            <div class="table-responsive mt-3">
-                <table class="table table-bordered text-center align-middle" style="font-size: 14px;">
-                    <thead class="bg-primary text-white">
-                        <tr>
-                            <th>الكود</th>
-                            <th>البند</th>
-                            <th>تاريخ الإضافة</th>
-                            <th>الفترة</th>
-                            <th>القيمة</th>
-                            <th>زيادة المرتب</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background-color:#e8f5e9;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>إجمالي الأساسي</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color:#e3f2fd;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>إجمالي العلاوة</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color:#f1f8e9;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>إجمالي الاستحقاقات</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color:#fff8e1;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>الإجمالي</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color:#ffebee;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>إجمالي الاستقطاعات</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color:#fce4ec;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>إجمالي الضرائب</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color:#e0f2f1;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>إجمالي التأمينات</strong></td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color:#e0f7fa;">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>الصافي</strong></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table table-bordered text-center align-middle" style="font-size: 14px;">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>الكود</th>
+                        <th>البند</th>
+                        <th>تاريخ الإضافة</th>
+                        <th>الفترة</th>
+                        <th>القيمة</th>
+                        <th>زيادة المرتب</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:#e8f5e9;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>إجمالي الأساسي</strong></td>
+                        <td>{{ number_format($record?->total_basic_salary, 2) }}</td>
+                    </tr>
+                    <tr style="background-color:#e3f2fd;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>إجمالي العلاوة</strong></td>
+                        <td>{{ $record?->total_allowances }}</td>
+                    </tr>
+                    <tr style="background-color:#f1f8e9;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>إجمالي الاستحقاقات</strong></td>
+                        <td>{{ $record?->entitlements_sum }}</td>
+                    </tr>
+                    <tr style="background-color:#fff8e1;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>الإجمالي</strong></td>
+                        <td>{{ number_format($record?->total_salary, 2) }}</td>
+                    </tr>
+                    <tr style="background-color:#ffebee;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>إجمالي الاستقطاعات</strong></td>
+                        <td>{{ $record?->total_deductions }} -</td>
+                    </tr>
+                    <tr style="background-color:#fce4ec;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>إجمالي الضرائب</strong></td>
+                        <td>{{ number_format($record->monthly_tax, 2) }}</td>
+                    </tr>
+                    <tr style="background-color:#e0f2f1;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>إجمالي التأمينات</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr style="background-color:#e0f7fa;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>الصافي</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
             <!-- End Salary Table -->
         </div>
     </div>
