@@ -1,6 +1,8 @@
 @extends('dashboard.layouts.master')
 @section('css')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- ✅ SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.min.css" rel="stylesheet">
 <style>
     #departments_datatable tbody td,
     #departments_datatable thead th {
@@ -292,6 +294,7 @@
 @endsection
 
 @push('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.0/dist/sweetalert2.all.min.js"></script>
 <script>
     function previewImage(inputId, previewId) {
     let input = document.getElementById(inputId);
@@ -350,7 +353,263 @@ document.addEventListener("hidden.bs.collapse", function (event) {
         }
     }
 });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('#basicModal .btn.btn-primary').addEventListener('click', function () {
+        // خُد القيم من داخل المودال نفسه (عشان لو فيه أكتر من مودال)
+        let modal = document.getElementById('basicModal');
+        let allowance_variable_id = modal.querySelector('#allowanceSelect').value;
+        let basic_salary = modal.querySelector('#basicSalary').value.trim();
+
+        console.log('allowance_variable_id:', allowance_variable_id);
+        console.log('basic_salary:', basic_salary);
+
+        if (!allowance_variable_id || basic_salary === '' || basic_salary === '0') {
+            alert('من فضلك اختر العلاوة وأدخل قيمة الأساسي');
+            return;
+        }
+
+        fetch('{{ route("admin.employee.basic_salary.store", $record->id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                allowance_variable_id,
+                basic_salary
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                let modalInstance = bootstrap.Modal.getInstance(modal);
+                modalInstance.hide();
+            } else {
+                alert('حدث خطأ أثناء الحفظ');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert('حدث خطأ أثناء الاتصال بالسيرفر');
+        });
+    });
+});
+</script>
 
 
+<script>
+$(document).ready(function() {
+    $('#isTaxable').on('change', function() {
+        const isTaxable = $(this).is(':checked') ? 1 : 0;
+        const employeeId = "{{ $record->id }}"; // تأكد إن عندك $record->id
+        const url = "{{ route('admin.employee.toggle_tax', ':id') }}".replace(':id', employeeId);
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                is_taxable: isTaxable
+            },
+            beforeSend: function() {
+                // ممكن تحط لودينج بسيط
+                $('#isTaxable').prop('disabled', true);
+            },
+            success: function(response) {
+                $('#isTaxable').prop('disabled', false);
+
+                if (response.success) {
+                    const data = response.data;
+
+                    // تحديث الحقول مباشرة
+                    $('#taxableAmount').val(data.taxable_amount);
+                    $('#taxes').val(data.tax_amount);
+                    $('#netAfterDeductions').val(data.net_salary);
+
+                    // عرض رسالة نجاح
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم تحديث الحالة',
+                        html: `
+                            💰 المبلغ الخاضع للضريبة: ${data.taxable_amount} جنيه<br>
+                            📉 قيمة الضريبة الشهرية: ${data.tax_amount} جنيه<br>
+                            ✅ صافي المرتب بعد الضريبة: ${data.net_salary} جنيه
+                        `,
+                        confirmButtonText: 'تم',
+                        timer: 4000
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطأ',
+                        text: response.message,
+                    });
+                }
+            },
+            error: function() {
+                $('#isTaxable').prop('disabled', false);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ في الاتصال',
+                    text: 'حدث خطأ أثناء تحديث الحالة',
+                });
+            }
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('#allowanceModal .btn.btn-success').addEventListener('click', function () {
+        let modal = document.getElementById('allowanceModal');
+        let allowance_variable_id = modal.querySelector('#allowanceSelect').value;
+        let amount = modal.querySelector('#allowanceAmount').value.trim();
+
+        if (!allowance_variable_id || amount === '' || amount === '0') {
+            alert('من فضلك اختر العلاوة وأدخل قيمتها');
+            return;
+        }
+
+        fetch('{{ route("admin.employee.allowance.store", $record->id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                allowance_variable_id,
+                amount
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                let modalInstance = bootstrap.Modal.getInstance(modal);
+                modalInstance.hide();
+            } else {
+                alert('حدث خطأ أثناء الحفظ');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert('حدث خطأ أثناء الاتصال بالسيرفر');
+        });
+    });
+});
+</script>
+
+<script>
+document.getElementById('saveEntitlement').addEventListener('click', function () {
+    let entitlement_variable_id = document.getElementById('entitlementSelect').value;
+    let amount = document.getElementById('entitlementAmount').value;
+
+    if (!entitlement_variable_id || !amount) {
+        alert('من فضلك اختر الاستحقاق وأدخل القيمة');
+        return;
+    }
+
+    fetch('{{ route("admin.employee.entitlement.store", $record->id) }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            entitlement_variable_id,
+            amount
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            let modal = bootstrap.Modal.getInstance(document.getElementById('entitlementModal'));
+            modal.hide();
+        } else {
+            alert('حدث خطأ أثناء الحفظ');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('حدث خطأ أثناء الاتصال بالسيرفر');
+    });
+});
+</script>
+
+<script>
+    document.getElementById('saveDeduction').addEventListener('click', function () {
+        let deduction_variable_id = document.getElementById('deductionSelect').value;
+        let amount = document.getElementById('deductionAmount').value;
+
+        if (!deduction_variable_id || !amount) {
+            alert('من فضلك اختر الاستقطاع وأدخل القيمة');
+            return;
+        }
+
+        fetch('{{ route("admin.employee.deduction.store", $record->id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                deduction_variable_id,
+                amount
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                let modal = bootstrap.Modal.getInstance(document.getElementById('deductionModal'));
+                modal.hide();
+            } else {
+                alert('حدث خطأ أثناء الحفظ');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('حدث خطأ أثناء الاتصال بالسيرفر');
+        });
+    });
+</script>
+<script>
+    document.getElementById('saveVariableInsurance').addEventListener('click', function () {
+        let type = document.getElementById('insuranceType').value;
+        let value = document.getElementById('insuranceValue').value;
+
+        if (!type || !value) {
+            alert('من فضلك اختر النوع وأدخل القيمة');
+            return;
+        }
+
+        fetch('{{ route("admin.employee.variable_insurance.store", $record->id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ type, value })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                let modal = bootstrap.Modal.getInstance(document.getElementById('variableInsuranceModal'));
+                modal.hide();
+            } else {
+                alert('حدث خطأ أثناء الحفظ');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('حدث خطأ أثناء الاتصال بالسيرفر');
+        });
+    });
 </script>
 @endpush

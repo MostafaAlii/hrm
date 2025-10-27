@@ -80,7 +80,6 @@
                         'admin.license-variables.index', 'admin.employment-documents.index'
                     ];
                 @endphp
-
                 <!-- Employees Departments -->
                 <li class="nav-item nav-hasmenu {{ in_array(Route::currentRouteName(), $employeeRoutes) ? 'custom-background nav-provoke' : '' }}">
                     <a href="#!" class="nav-link">
@@ -365,6 +364,83 @@
                     </ul>
                 </li>
                 <!-- End Employees Departments -->
+
+                <!-- Start Employees Salary Departments -->
+                @php
+                $salariesRoutes = [
+                    'admin.tax-transaction-types.index', 'admin.expense-types.index', 'admin.revenue-types.index',
+                    'admin.deduction-types.index','admin.allowance-types.index', 'admin.entitlement-variables.index',
+                    'admin.deduction-variables.index'
+                ];
+
+                $salaryVariablesRoutes = [
+                    'admin.tax-transaction-types.index', 'admin.expense-types.index', 'admin.revenue-types.index',
+                    'admin.deduction-types.index','admin.allowance-types.index', 'admin.entitlement-variables.index',
+                    'admin.deduction-variables.index'
+                ];
+                @endphp
+                <li
+                    class="nav-item nav-hasmenu {{ in_array(Route::currentRouteName(), $salariesRoutes) ? 'custom-background nav-provoke' : '' }}">
+                    <a href="#!" class="nav-link">
+                        <span class="nav-icon"><i class="ti ti-cash"></i></span>
+                        <span class="nav-text">المرتبات</span>
+                        <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                    </a>
+
+                    <ul class="nav-submenu">
+                        <!-- Variables Dropdown -->
+                        <li
+                            class="nav-item nav-hasmenu {{ in_array(Route::currentRouteName(), $salaryVariablesRoutes) ? 'custom-background nav-provoke' : '' }}">
+                            <a href="#!" class="nav-link">
+                                متغيرات المرتبات
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                            </a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.deduction-variables.index') }}"
+                                        href="{{ route('admin.deduction-variables.index') }}">
+                                        متغيرات الاستقطاعات
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.entitlement-variables.index') }}"
+                                        href="{{ route('admin.entitlement-variables.index') }}">
+                                        متغيرات الاستحقاقات
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.allowance-variables.index') }}"
+                                        href="{{ route('admin.allowance-variables.index') }}">
+                                        متغيرات العلاوات
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.deduction-types.index') }}" href="{{ route('admin.deduction-types.index') }}">
+                                        أنواع الاستقطاعات
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.revenue-types.index') }}"
+                                        href="{{ route('admin.revenue-types.index') }}">
+                                        أنواع الايرادات
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.expense-types.index') }}" href="{{ route('admin.expense-types.index') }}">
+                                        أنواع الصرفيات
+                                    </a>
+                                </li>
+                                <!-- Allowances -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.tax-transaction-types.index') }}" href="{{ route('admin.tax-transaction-types.index') }}">
+                                        أنواع المعاملات الضريبية
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Employees Salary Departments -->
 
 
 

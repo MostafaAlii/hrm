@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Concerns\HasUuid;
 use App\Enums\Employee\WorkingStatus;
 use App\Models\Concerns\UploadMedia;
+use App\Helpers\TaxHelper;
 class Employee extends Authenticatable {
     use HasUuid, HasApiTokens, HasFactory, Notifiable, UploadMedia;
     protected $table = 'employees';
@@ -199,6 +200,81 @@ class Employee extends Authenticatable {
     {
         return $this->hasMany(EmployeeBenefit::class);
     }
+
+    public function salaryBasics()
+    {
+        return $this->hasMany(EmployeeSalaryBasic::class);
+    }
+
+    public function allowances()
+    {
+        return $this->hasMany(EmployeeAllowance::class);
+    }
+
+    public function entitlements()
+    {
+        return $this->hasMany(EmployeeEntitlement::class);
+    }
+
+    public function deductions()
+    {
+        return $this->hasMany(EmployeeDeduction::class);
+    }
+
+    public function variableInsurances()
+    {
+        return $this->hasMany(EmployeeVariableInsurance::class);
+    }
+
+    public function getTotalBasicSalaryAttribute()
+    {
+        return $this->salaryBasics()->sum('basic_salary');
+    }
+
+    public function getTotalVariableInsuranceAttribute()
+    {
+        return $this->variableInsurances()->sum('value');
+    }
+
+    public function getTotalDeductionsAttribute()
+    {
+        return $this->deductions()->sum('amount');
+    }
+
+
+    public function getTotalAllowancesAttribute()
+    {
+        return $this->allowances()->sum('amount');
+    }
+
+    public function getEntitlementsSumAttribute()
+    {
+        return $this->entitlements->sum('amount');
+    }
+
+    public function getTotalSalaryAttribute()
+    {
+        $basic = $this->total_basic_salary ?? 0;
+        $allowances = $this->total_allowances ?? 0;
+        $entitlements = $this->entitlements_sum ?? 0;
+        return $basic + $allowances + $entitlements;
+    }
+
+    public function getMonthlyTaxAttribute() {
+        $basicSalary = $this->total_basic_salary ?? 0;
+        $companyId = $this->company_id ?? null;
+        $taxData = TaxHelper::calculateMonthlyTax($basicSalary, $companyId);
+        return $taxData['tax_amount'];
+    }
+
+    public function getNetSalaryAfterTaxAttribute() {
+        $basicSalary = $this->salaryBasic?->basic_salary ?? 0;
+        $companyId = $this->company_id ?? null;
+        $taxData = TaxHelper::calculateMonthlyTax($basicSalary, $companyId);
+        return $taxData['net_salary'];
+    }
+
+
 
     public function media()
     {

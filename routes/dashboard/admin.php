@@ -94,6 +94,14 @@ Route::group(
             Route::post('employees/{employee}/benefits', [Dashboard\EmployeeController::class, 'benefitStore'])->name('employee.benefits.store');
             Route::put('employees/{employee}/benefits/{benefit}', [Dashboard\EmployeeController::class, 'benefitUpdate'])->name('employee.benefits.update');
             Route::delete('employees/{employee}/benefits/{benefit}', [Dashboard\EmployeeController::class, 'benefitDestroy'])->name('employee.benefits.destroy');
+            // Basic Salart الاساسى من الراتب
+            Route::post('employees/{employee}/basic-salary', [Dashboard\EmployeeController::class, 'basicSalaryStore'])->name('employee.basic_salary.store');
+            Route::post('employees/{employee}/toggle-tax', [Dashboard\EmployeeController::class, 'toggleTaxStatus'])->name('employee.toggle_tax');
+            Route::post('employees/{employee}/allowance', [Dashboard\EmployeeController::class, 'allowanceStore'])->name('employee.allowance.store');
+            Route::post('employees/{employee}/entitlement', [Dashboard\EmployeeController::class, 'entitlementStore'])->name('employee.entitlement.store');
+            Route::post('employees/{employee}/deduction', [Dashboard\EmployeeController::class, 'deductionStore'])->name('employee.deduction.store');
+            Route::post('employees/{employee}/variable-insurance', [Dashboard\EmployeeController::class, 'variableInsuranceStore'])->name('employee.variable_insurance.store');
+
             // Tax-Settings ::
             Route::get('tax-settings', [Dashboard\TaxSettingController::class, 'index'])->name('tax-settings.index');
             Route::post('tax-settings', [Dashboard\TaxSettingController::class, 'store'])->name('tax-settings.store');
@@ -103,6 +111,15 @@ Route::group(
             Route::get('insurance-settings', [Dashboard\InsuranceSettingController::class, 'index'])->name('insurance-settings.index');
             Route::post('insurance-settings', [Dashboard\InsuranceSettingController::class, 'store'])->name('insurance-settings.store');
             Route::put('insurance-settings/{insuranceSetting}', [Dashboard\InsuranceSettingController::class, 'update'])->name('insurance-settings.update');
+
+            // Employees Salary Tabs::
+            Route::resource('tax-transaction-types', Dashboard\TaxTransactionTypeController::class);
+            Route::resource('expense-types', Dashboard\ExpenseTypeController::class);
+            Route::resource('revenue-types', Dashboard\RevenueTypeController::class);
+            Route::resource('deduction-types', Dashboard\DeductionTypeController::class);
+            Route::resource('allowance-variables', Dashboard\AllowanceVariableController::class);
+            Route::resource('entitlement-variables', Dashboard\EntitlementVariableController::class);
+            Route::resource('deduction-variables', Dashboard\DeductionVariableController::class);
         });
 
         require __DIR__ . '../../auth.php';

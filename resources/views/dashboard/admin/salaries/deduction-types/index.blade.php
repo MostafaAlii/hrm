@@ -1,0 +1,85 @@
+@extends('dashboard.layouts.master')
+@section('title')
+{{ $title }}
+@endsection
+
+@section('content')
+<div class="page-content">
+    <div class="content-header">
+        <h1 class="mb-0">{{ $title }}</h1>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{route('admin.dashboard')}}">{{trans('dashboard/header.main_dashboard') }}</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{route('admin.deduction-types.index')}}">{{ $title }}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 card-title">{{ $title }}</h5>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#createDeductionTypeModal">
+                        <i class="fa fa-plus"></i> إضافة جديد
+                    </button>
+                </div>
+                <div class="card-body">
+                    {!! $dataTable->table(['class' => 'table table-bordered table-striped']) !!}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal الإضافة -->
+<div class="modal fade" id="createDeductionTypeModal" tabindex="-1" aria-labelledby="createDeductionTypeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createDeductionTypeModalLabel">إضافة نوع استقطاع</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('admin.deduction-types.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">الكود <span class="text-danger">*</span></label>
+                            <input type="text" name="code" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">الاسم عربي <span class="text-danger">*</span></label>
+                            <input type="text" name="name_ar" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">الاسم إنجليزي</label>
+                            <input type="text" name="name_en" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">الحالة</label>
+                            <div class="mt-2 form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="is_active" id="is_active"
+                                    value="1" checked>
+                                <label class="form-check-label" for="is_active">نشط</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('js')
+{!! $dataTable->scripts() !!}
+@endpush
