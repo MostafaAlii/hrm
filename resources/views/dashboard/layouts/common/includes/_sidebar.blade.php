@@ -64,7 +64,9 @@
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
                         'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
                         'admin.penalty-types.index', 'admin.cost-centers.index', 'admin.salary-cards.index', 'admin.performance-report-items.index',
-                        'admin.license-variables.index', 'admin.employment-documents.index'
+                        'admin.license-variables.index', 'admin.employment-documents.index',
+                        // Reports ::
+                        'admin.reports.employee-informations'
                     ];
 
                     $variablesRoutes = [
@@ -77,7 +79,9 @@
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
                         'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
                         'admin.penalty-types.index', 'admin.cost-centers.index', 'admin.salary-cards.index', 'admin.performance-report-items.index',
-                        'admin.license-variables.index', 'admin.employment-documents.index'
+                        'admin.license-variables.index', 'admin.employment-documents.index',
+                        // Reports ::
+                        'admin.reports.employee-informations'
                     ];
                 @endphp
                 <!-- Employees Departments -->
@@ -361,6 +365,22 @@
                                 <!-- End Family Jobs -->
                             </ul>
                         </li>
+
+                        <!-- Start Employee Reports تقارير شئون العاملين -->
+                        <li class="nav-item nav-hasmenu {{ in_array(Route::currentRouteName(), $variablesRoutes) ? 'custom-background nav-provoke' : '' }}">
+                            <a href="#!" class="nav-link">
+                                تقارير شئون العاملين
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                            </a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item {{ is_active('admin.reports.employee-informations.index') ? 'custom-background' : '' }}">
+                                    <a class="nav-link {{ is_active('admin.reports.employee-informations.index') }}" href="{{ route('admin.reports.employee-informations.index') }}">
+                                        بيانات العاملين
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Employee Reports تقارير شئون العاملين -->
                     </ul>
                 </li>
                 <!-- End Employees Departments -->

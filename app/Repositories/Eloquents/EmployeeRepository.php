@@ -3,25 +3,50 @@
 namespace App\Repositories\Eloquents;
 
 use App\Models\{
-        BloodType, ContractType, InsuranceType, InsuranceRegion, InsuranceOffice, Employee,
-        Religion, Governorate, Gender, Nationality, Level, Branch, Department, Section, JobCategory,
-        SalaryPlace,Qualification,EducationalDegree,University,Specialization,Grade,RelativeDegree,FamilyJob,
-        LicenseVariable,EmploymentDocument,BenefitVariable
-    };
+    BloodType,
+    ContractType,
+    InsuranceType,
+    InsuranceRegion,
+    InsuranceOffice,
+    Employee,
+    Religion,
+    Governorate,
+    Gender,
+    Nationality,
+    Level,
+    Branch,
+    Department,
+    Section,
+    JobCategory,
+    SalaryPlace,
+    Qualification,
+    EducationalDegree,
+    University,
+    Specialization,
+    Grade,
+    RelativeDegree,
+    FamilyJob,
+    LicenseVariable,
+    EmploymentDocument,
+    BenefitVariable,
+    ShiftType
+};
 use App\Repositories\Contracts\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Concerns\UploadMedia;
 
-class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInterface {
+class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInterface
+{
     use UploadMedia;
     public function __construct(Employee $model)
     {
         parent::__construct($model);
     }
-    protected function extraData(string $context): array{
+    protected function extraData(string $context): array {
         $data = [];
         if ($context === 'show') {
             $data['genders']       = Gender::active()->get(['id', 'name']);
+            $data['shiftTypes'] = ShiftType::active()->get(['id', 'type']);
             $data['nationalities'] = Nationality::active()->get(['id', 'name']);
             $data['levels']        = Level::active()->get(['id', 'name']);
             $data['branches']      = Branch::active()->get(['id', 'name']);
@@ -38,25 +63,37 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             if ($id) {
                 $employee = $this->model
                     ->with([
-                        'profile', 'militaryService', 'contracts.contractType', 'insurances.insuranceType',
-                        'insurances.insuranceRegion', 'insurances', 'latestInsurance', 'families.relativeDegree',
-                        'families.familyJob','emergencyContacts.relativeDegree','trainings.grade',
-                        'licenses.licenseVariable','employmentDocuments.employmentDocument', 'employmentDocuments.media',
-                        'experiences', 'benefits.benefitVariable'
+                        'profile',
+                        'militaryService',
+                        'contracts.contractType',
+                        'insurances.insuranceType',
+                        'insurances.insuranceRegion',
+                        'insurances',
+                        'latestInsurance',
+                        'families.relativeDegree',
+                        'families.familyJob',
+                        'emergencyContacts.relativeDegree',
+                        'trainings.grade',
+                        'licenses.licenseVariable',
+                        'employmentDocuments.employmentDocument',
+                        'employmentDocuments.media',
+                        'experiences',
+                        'benefits.benefitVariable',
+                        'shift'
                     ])
                     ->find($id);
-                    $data['profile'] = $employee?->profile;
-                    $data['militaryService'] = $employee?->militaryService;
-                    $data['contracts'] = $employee?->contracts ?? collect();
-                    $data['employeeInsurances'] = $employee?->insurances ?? collect();
-                    $data['latestInsurance'] = $employee?->latestInsurance ?? collect();
-                    $data['families'] = $employee?->families ?? collect();
-                    $data['emergencyContacts'] = $employee?->emergencyContacts ?? collect();
-                    $data['trainings'] = $employee?->trainings ?? collect();
-                    $data['licenses'] = $employee?->licenses ?? collect();
-                    $data['employmentDocuments'] = $employee?->employmentDocuments ?? collect();
-                    $data['experiences'] = $employee?->experiences ?? collect();
-                    $data['benefits'] = $employee?->benefits ?? collect();
+                $data['profile'] = $employee?->profile;
+                $data['militaryService'] = $employee?->militaryService;
+                $data['contracts'] = $employee?->contracts ?? collect();
+                $data['employeeInsurances'] = $employee?->insurances ?? collect();
+                $data['latestInsurance'] = $employee?->latestInsurance ?? collect();
+                $data['families'] = $employee?->families ?? collect();
+                $data['emergencyContacts'] = $employee?->emergencyContacts ?? collect();
+                $data['trainings'] = $employee?->trainings ?? collect();
+                $data['licenses'] = $employee?->licenses ?? collect();
+                $data['employmentDocuments'] = $employee?->employmentDocuments ?? collect();
+                $data['experiences'] = $employee?->experiences ?? collect();
+                $data['benefits'] = $employee?->benefits ?? collect();
             } else {
                 $data['profile'] = null;
                 $data['militaryService'] = null;
@@ -93,13 +130,13 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             $data['sections']      = Section::active()->get();
             $data['jobCategories'] = JobCategory::active()->get();
             $data['salaryPlaces']  = SalaryPlace::active()->get();
+            $data['shiftTypes'] = ShiftType::active()->get(['id', 'type']);
         }
         return $data;
     }
 
 
     protected function extraStoreFields(Request $request): array {
-
         return [
             'code'   => $request->code,
             'barcode'   => $request->barcode,
@@ -116,6 +153,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             'hiring_date'       => $request->hiring_date,
             'birthday_date'       => $request->birthday_date,
             'identity_number'       => $request->identity_number,
+            'shift_type_id' => $request->shift_type_id,
         ];
     }
 
@@ -127,6 +165,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             'identity_number'       => $request?->identity_number,
             'gender_id'       => $request?->gender_id,
             'nationality_id'       => $request?->nationality_id,
+            'shift_type_id' => $request->shift_type_id,
         ];
         if ($request->hasFile('employee')) {
             $fileName = $record->updateSingleMedia('employee', $request->file('employee'), $record, null, 'media', true);

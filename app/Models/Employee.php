@@ -31,6 +31,7 @@ class Employee extends Authenticatable {
         'section_id',
         'job_category_id',
         'salary_place_id',
+        'shift_type_id',
         'is_active',
         'company_id',
         'uuid',
@@ -60,6 +61,11 @@ class Employee extends Authenticatable {
     public function gender()
     {
         return $this->belongsTo(Gender::class, 'gender_id');
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(ShiftType::class, 'shift_type_id');
     }
 
     public function nationality()
