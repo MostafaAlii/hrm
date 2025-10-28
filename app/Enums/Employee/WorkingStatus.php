@@ -2,7 +2,8 @@
 
 namespace App\Enums\Employee;
 
-enum WorkingStatus: string {
+enum WorkingStatus: string
+{
     case Working    = 'working';      // يعمل
     case Vacation   = 'vacation';     // إجازة
     case SickLeave  = 'sick_leave';   // إجازة مرضية

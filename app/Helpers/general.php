@@ -154,3 +154,12 @@ if (!function_exists('is_tree_open')) {
         ]);
     }
 }
+if (!function_exists('shift_type_labels')) {
+    function shift_type_labels() {
+        $labels = [];
+        foreach (\App\Enums\ShiftType\ShiftType::cases() as $case) {
+            $labels[$case->value] = \App\Enums\ShiftType\ShiftType::label($case->value);
+        }
+        return $labels;
+    }
+}

@@ -154,6 +154,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             'birthday_date'       => $request->birthday_date,
             'identity_number'       => $request->identity_number,
             'shift_type_id' => $request->shift_type_id,
+            'working_status' => $request->working_status,
         ];
     }
 
@@ -166,6 +167,7 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             'gender_id'       => $request?->gender_id,
             'nationality_id'       => $request?->nationality_id,
             'shift_type_id' => $request->shift_type_id,
+            'working_status' => $request?->working_status,
         ];
         if ($request->hasFile('employee')) {
             $fileName = $record->updateSingleMedia('employee', $request->file('employee'), $record, null, 'media', true);
