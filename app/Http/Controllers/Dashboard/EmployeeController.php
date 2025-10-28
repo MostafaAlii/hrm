@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\{Employee, EmployeeInsurance, EmployeeQualification, EmployeeFamily,
                  EmployeeEmergency, EmployeeTraining, EmployeeLicense,EmployeeEmploymentDocument,
                 EmployeeExperience,EmployeeBenefit, EmployeeSalaryBasic, EmployeeAllowance, EmployeeEntitlement,
-                EmployeeDeduction, EmployeeVariableInsurance
+                EmployeeDeduction, EmployeeVariableInsurance, EmployeeSocialInsurance
                 };
 use App\Models\Concerns\UploadMedia;
 use Illuminate\Support\Facades\DB;
@@ -742,6 +742,7 @@ class EmployeeController extends Controller {
         return response()->json(['success' => true, 'message' => 'تم حفظ الاستقطاع بنجاح']);
     }
 
+    // التامين الصحى الشامل
     public function variableInsuranceStore(Request $request, $employeeId) {
         $request->validate([
             'type' => 'required|in:amount,percentage',
@@ -759,7 +760,21 @@ class EmployeeController extends Controller {
         return response()->json(['success' => true, 'message' => 'تم حفظ التأمين الصحي الشامل بنجاح']);
     }
 
-
-
-
+    // التامين الاجتماعى
+    public function socialInsuranceStore(Request $request, $employeeId) {
+        $request->validate([
+            'type' => 'required|in:amount,percentage',
+            'value' => 'required|numeric|min:0',
+        ]);
+        $companyId = get_user_data()->company_id ?? null;
+        $adminId = get_user_data()->id;
+        EmployeeSocialInsurance::create([
+            'employee_id' => $employeeId,
+            'company_id' => $companyId,
+            'added_by_id' => $adminId,
+            'type' => $request->type,
+            'value' => $request->value,
+        ]);
+        return response()->json(['success' => true, 'message' => 'تم حفظ التأمين الاجتماعى بنجاح']);
+    }
 }

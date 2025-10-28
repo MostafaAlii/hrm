@@ -101,6 +101,7 @@ Route::group(
             Route::post('employees/{employee}/entitlement', [Dashboard\EmployeeController::class, 'entitlementStore'])->name('employee.entitlement.store');
             Route::post('employees/{employee}/deduction', [Dashboard\EmployeeController::class, 'deductionStore'])->name('employee.deduction.store');
             Route::post('employees/{employee}/variable-insurance', [Dashboard\EmployeeController::class, 'variableInsuranceStore'])->name('employee.variable_insurance.store');
+            Route::post('employees/{employee}/social-insurance', [Dashboard\EmployeeController::class, 'socialInsuranceStore'])->name('employee.social_insurance.store');
 
             // Tax-Settings ::
             Route::get('tax-settings', [Dashboard\TaxSettingController::class, 'index'])->name('tax-settings.index');

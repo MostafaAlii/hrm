@@ -62,6 +62,7 @@
                     {{ trans('dashboard/sidebar.employee_sidebar_title') }}
                 </div>
                 <div class="card-body">
+                    
                     <!-- Start Basic Info Accordion -->
                     <div class="accordion" id="employeeAccordion">
                         <div class="accordion-item">
@@ -611,5 +612,41 @@ document.getElementById('saveEntitlement').addEventListener('click', function ()
             alert('حدث خطأ أثناء الاتصال بالسيرفر');
         });
     });
+</script>
+
+<script>
+    document.getElementById('saveSocialInsurance').addEventListener('click', function () {
+    let type = document.getElementById('socialInsuranceType').value;
+    let value = document.getElementById('socialInsuranceValue').value;
+
+    if (!type || !value) {
+        alert('من فضلك اختر النوع وأدخل القيمة');
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append('type', type);
+    formData.append('value', value);
+
+    fetch('{{ route("admin.employee.social_insurance.store", $record->id) }}', {
+        method: 'POST',
+        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            let modal = bootstrap.Modal.getInstance(document.getElementById('socialInsuranceModal'));
+            modal.hide();
+        } else {
+            alert('حدث خطأ أثناء الحفظ');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('حدث خطأ أثناء الاتصال بالسيرفر');
+    });
+});
 </script>
 @endpush
