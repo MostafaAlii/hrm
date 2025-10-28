@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Concerns\HasUuid;
 use App\Enums\Employee\WorkingStatus;
 use App\Models\Concerns\UploadMedia;
-use App\Helpers\TaxHelper;
+use App\Helpers\{TaxHelper,InsuranceHelper};
 class Employee extends Authenticatable {
     use HasUuid, HasApiTokens, HasFactory, Notifiable, UploadMedia;
     protected $table = 'employees';
@@ -221,9 +221,16 @@ class Employee extends Authenticatable {
         return $this->hasMany(EmployeeDeduction::class);
     }
 
+    // التامين الصحى الشامل
     public function variableInsurances()
     {
         return $this->hasMany(EmployeeVariableInsurance::class);
+    }
+
+    // التامين الاجتماعى
+    public function socialInsurances()
+    {
+        return $this->hasMany(EmployeeSocialInsurance::class);
     }
 
     public function getTotalBasicSalaryAttribute()
@@ -268,13 +275,44 @@ class Employee extends Authenticatable {
     }
 
     public function getNetSalaryAfterTaxAttribute() {
-        $basicSalary = $this->salaryBasic?->basic_salary ?? 0;
+        $basicSalary = $this->total_basic_salary ?? 0;
         $companyId = $this->company_id ?? null;
         $taxData = TaxHelper::calculateMonthlyTax($basicSalary, $companyId);
         return $taxData['net_salary'];
     }
 
+    /**
+     * 🧾 إجمالي التأمين الاجتماعي
+     */
+    public function getSocialInsuranceAttribute(): float
+    {
+        if (!InsuranceHelper::isEmployeeInsured($this->id)) {
+            return 0.0;
+        }
+        return InsuranceHelper::calculateSocialInsurance($this->id);
+    }
 
+    /**
+     * 🏥 إجمالي التأمين الصحي الشامل
+     */
+    public function getComprehensiveInsuranceAttribute(): float
+    {
+        if (!InsuranceHelper::isEmployeeInsured($this->id)) {
+            return 0.0;
+        }
+        return InsuranceHelper::calculateComprehensiveHealthInsurance($this->id);
+    }
+
+    /**
+     * 💰 الإجمالي الكامل للتأمينات (الاجتماعي + الصحي)
+     */
+    public function getTotalInsuranceAttribute(): float
+    {
+        if (!InsuranceHelper::isEmployeeInsured($this->id)) {
+            return 0.0;
+        }
+        return $this->social_insurance + $this->comprehensive_insurance;
+    }
 
     public function media()
     {

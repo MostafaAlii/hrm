@@ -6,6 +6,40 @@
 
         <!-- تبويبات إدارة المرتب -->
         <div class="card-body">
+            {{--@php
+            use App\Helpers\InsuranceHelper;
+            $healthInsurance = InsuranceHelper::calculateComprehensiveHealthInsurance($record->id);
+            $socialInsurance = InsuranceHelper::calculateSocialInsurance($record->id);
+            $insuranceData = InsuranceHelper::getSettingsByEmployee($record->id);
+            @endphp
+
+            @if ($insuranceData)
+            <p>
+                <strong>حالة التأمين:</strong>
+                @if ($insuranceData['is_insured'])
+                <span class="text-success"><i class="fa fa-check-circle"></i> مؤمن عليه</span>
+                @else
+                <span class="text-danger"><i class="fa fa-times-circle"></i> غير مؤمن عليه</span>
+                @endif
+            </p>
+
+            @if ($insuranceData['is_insured'] && $insuranceData['settings'])
+            @php $setting = $insuranceData['settings']; @endphp
+            <p>الحد الأدنى: {{ $setting['min_insurance_amount'] }}</p>
+            <p>الحد الأقصى: {{ $setting['max_insurance_amount'] }}</p>
+            <p>نسبة خصم الموظف: {{ $setting['employee_deduction_percentage'] }}%</p>
+            <p>نسبة خصم الشركة: {{ $setting['company_deduction_percentage'] }}%</p>
+            <p class="fw-bold text-success">قيمة التأمين الصحي الشامل: {{ $healthInsurance }} جنيه</p>
+            <p class="fw-bold text-primary">
+                <i class="fa fa-users me-1"></i>
+                التأمين الاجتماعي: {{ $socialInsurance }} جنيه
+            </p>
+            @elseif ($insuranceData['is_insured'] && ! $insuranceData['settings'])
+            <p class="text-danger">لا توجد إعدادات تأمين مسجلة لهذه الشركة.</p>
+            @endif
+            @else
+            <p class="text-danger">لا يمكن جلب بيانات التأمين.</p>
+            @endif--}}
             <!-- Nav Tabs -->
             <ul class="nav nav-tabs" id="salaryTabs" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -45,6 +79,19 @@
                     <button class="nav-link" id="salary-allowance-tab" data-bs-toggle="tab" data-bs-target="#salary-allowance" type="button"
                         role="tab" aria-controls="salary-allowance" aria-selected="false">
                         تفاصيل العلاوات
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="universal-health-insurance-tab" data-bs-toggle="tab" data-bs-target="#universal-health-insurance"
+                        type="button" role="tab" aria-controls="universal-health-insurance" aria-selected="false">
+                        تفاصيل التامين الصحى الشامل
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="social-insurance-tab" data-bs-toggle="tab"
+                        data-bs-target="#social-insurance" type="button" role="tab" aria-controls="social-insurance"
+                        aria-selected="false">
+                        تفاصيل التامين الاجتماعى
                     </button>
                 </li>
             </ul>
@@ -91,7 +138,7 @@
 
                         <!-- تأمين ثابت -->
                         <button type="button" class="btn btn-secondary btn-lg d-flex align-items-center" data-bs-toggle="modal"
-                            data-bs-target="#fixedInsuranceModal">
+                            data-bs-target="#socialInsuranceModal">
                             <i class="fa fa-shield me-2"></i>
                             التأمين الاجتماعى
                         </button>
@@ -174,15 +221,21 @@
 
                                 <tr style="background-color:#e0f2f1;">
                                     <td colspan="4"></td>
-                                    <td><strong>إجمالي التأمينات</strong></td>
-                                    <td>{{ number_format($record->total_insurance ?? 0, 2) }}</td>
+                                    <td><strong>إجمالي التامين الاجتماعى</strong></td>
+                                    <td>-{{ number_format($record->social_insurance, 2) }}</td>
+                                </tr>
+
+                                <tr style="background-color:#e0f2f1;">
+                                    <td colspan="4"></td>
+                                    <td><strong>إجمالي التامين الصحى الشامل</strong></td>
+                                    <td>-{{ number_format($record->comprehensive_insurance ?? 0, 2) }}</td>
                                 </tr>
 
                                 <tr style="background-color:#e0f7fa;">
                                     <td colspan="4"></td>
                                     <td><strong>الصافي</strong></td>
                                     <td><strong>{{ number_format(($record?->total_salary - $record?->total_deductions -
-                                            $record->monthly_tax),
+                                            $record->monthly_tax - $record->total_insurance),
                                             2) }}</strong></td>
                                 </tr>
                             </tbody>
@@ -364,7 +417,83 @@
                         </table>
                     </div>
                 </div>
-
+                <div class="tab-pane fade" id="universal-health-insurance" role="tabpanel"
+                    aria-labelledby="universal-health-insurance-tab">
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered text-center align-middle" style="font-size: 14px;">
+                            <thead class="bg-danger text-white">
+                                <tr>
+                                    <th>#</th>
+                                    <th>تاريخ الإضافة</th>
+                                    <th>الفترة</th>
+                                    <th>القيمة</th>
+                                    <th>نقص المرتب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($record->variableInsurances as $index => $insurance)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $insurance->created_at?->format('Y-m-d H:i') }}</td>
+                                    <td>
+                                        {{-- $insurance->type ?? '—' --}}
+                                    </td>
+                                    <td>{{ number_format($insurance->value, 2) }}</td>
+                                    <td>
+                                        {{ number_format($insurance->value, 2) }}
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-muted">لا توجد بيانات للتأمين الصحي الشامل حالياً</td>
+                                </tr>
+                                @endforelse
+                                <tr class="fw-bold" style="background-color: #fdecea;">
+                                    <td colspan="3" class="text-end"><strong>الإجمالي:</strong></td>
+                                    <td colspan="2">{{ number_format($record->variableInsurances->sum('value'), 2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="social-insurance" role="tabpanel" aria-labelledby="social-insurance-tab">
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered text-center align-middle" style="font-size: 14px;">
+                            <thead class="bg-danger text-white">
+                                <tr>
+                                    <th>#</th>
+                                    <th>تاريخ الإضافة</th>
+                                    <th>الفترة</th>
+                                    <th>القيمة</th>
+                                    <th>نقص المرتب</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($record->socialInsurances as $index => $socialInsurance)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $socialInsurance->created_at?->format('Y-m-d H:i') }}</td>
+                                    <td>
+                                        {{-- $insurance->type ?? '—' --}}
+                                    </td>
+                                    <td>{{ number_format($socialInsurance->value, 2) }}</td>
+                                    <td>
+                                        {{ number_format($socialInsurance->value, 2) }}
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-muted">لا توجد بيانات للتأمين اجتماعى حالياً</td>
+                                </tr>
+                                @endforelse
+                                <tr class="fw-bold" style="background-color: #fdecea;">
+                                    <td colspan="3" class="text-end"><strong>الإجمالي:</strong></td>
+                                    <td colspan="2">{{ number_format($record->socialInsurances->sum('value'), 2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -567,26 +696,39 @@
     </div>
 </div>
 
-<!-- Modal تأمين ثابت -->
-<div class="modal fade" id="fixedInsuranceModal" tabindex="-1" aria-labelledby="fixedInsuranceModalLabel"
+<!-- Modal تأمين اجتماعي -->
+<div class="modal fade" id="socialInsuranceModal" tabindex="-1" aria-labelledby="socialInsuranceModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-secondary text-white">
-                <h5 class="modal-title" id="fixedInsuranceModalLabel">
-                    <i class="fa fa-shield me-2"></i>
-                    إدارة التأمين الاجتماعى
+                <h5 class="modal-title" id="socialInsuranceModalLabel">
+                    <i class="fa fa-briefcase me-2"></i>
+                    إدارة التأمين الاجتماعي
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>هنا يمكنك إدارة التأمين الثابت للموظفين</p>
-                <!-- يمكن إضافة محتوى إضافي هنا -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="socialInsuranceType" class="form-label fw-bold">النوع</label>
+                        <select id="socialInsuranceType" class="form-select">
+                            <option value="amount">قيمة</option>
+                            <option value="percentage">نسبة %</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="socialInsuranceValue" class="form-label fw-bold">القيمة / النسبة</label>
+                        <input type="number" step="0.01" class="form-control" id="socialInsuranceValue"
+                            placeholder="ادخل القيمة أو النسبة">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
-                <button type="button" class="btn btn-dark">حفظ</button>
+                <button type="button" class="btn btn-primary" id="saveSocialInsurance">حفظ</button>
             </div>
         </div>
     </div>

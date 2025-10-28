@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Models;
-class EmployeeVariableInsurance extends BaseModel {
-    protected $table = "employee_variable_insurances"; // جدول تامين صحى شامل الموظف
+class EmployeeSocialInsurance extends BaseModel {
+    protected $table = "employee_social_insurances"; // جدول التامين الاجتماعى
     protected $fillable = [
         'uuid',
         'employee_id',
