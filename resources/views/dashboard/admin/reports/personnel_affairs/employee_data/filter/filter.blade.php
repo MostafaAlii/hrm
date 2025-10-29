@@ -57,20 +57,24 @@
             </div>
         </div>
 
-        <!-- فلتر الاسم (مثال إضافي) -->
+        <!-- فلتر مكان استلام المرتب -->
         <div class="col-md">
             <div class="filter-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="filter_by_name_checkbox" name="filter_by_name"
-                        value="1">
-                    <label class="form-check-label" for="filter_by_name_checkbox">
-                        اسم الموظف
+                    <input class="form-check-input" type="checkbox" id="filter_by_salary_place_checkbox"
+                        name="filter_by_salary_place" value="1">
+                    <label class="form-check-label" for="filter_by_salary_place_checkbox">
+                        مكان استلام المرتب
                     </label>
                 </div>
 
-                <div id="nameFields" class="filter-fields mt-2" style="display: none;">
-                    <input type="text" name="employee_name" id="employee_name" class="form-control form-control-sm"
-                        placeholder="ادخل الاسم">
+                <div id="salaryPlaceFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="salary_place_id" id="salary_place_id" class="form-select form-select-sm">
+                        <option value="">اختر مكان الاستلام</option>
+                        @foreach(salary_place_options() as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
@@ -97,57 +101,74 @@
             </div>
         </div>
 
-        <!-- فلتر الراتب (مثال إضافي) -->
+        <!-- فلتر الإدارة -->
         <div class="col-md">
             <div class="filter-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="filter_by_salary_checkbox"
-                        name="filter_by_salary" value="1">
-                    <label class="form-check-label" for="filter_by_salary_checkbox">
-                        الراتب
+                    <input class="form-check-input" type="checkbox" id="filter_by_department_checkbox"
+                        name="filter_by_department" value="1">
+                    <label class="form-check-label" for="filter_by_department_checkbox">
+                        الإدارة
                     </label>
                 </div>
 
-                <div id="salaryFields" class="filter-fields mt-2" style="display: none;">
-                    <div class="row g-2">
-                        <div class="col">
-                            <label for="salary_from" class="form-label mb-0">من</label>
-                            <input type="number" name="salary_from" id="salary_from"
-                                class="form-control form-control-sm" placeholder="من">
-                        </div>
-                        <div class="col">
-                            <label for="salary_to" class="form-label mb-0">إلى</label>
-                            <input type="number" name="salary_to" id="salary_to" class="form-control form-control-sm"
-                                placeholder="إلى">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- الصف الثاني (إذا زاد عدد الفلاتر عن 5) -->
-    <!--
-    <div class="row g-3 align-items-end mb-3">
-        <div class="col-md">
-            <div class="filter-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="filter_by_status_checkbox" name="filter_by_status" value="1">
-                    <label class="form-check-label" for="filter_by_status_checkbox">
-                        الحالة
-                    </label>
-                </div>
-                <div id="statusFields" class="filter-fields mt-2" style="display: none;">
-                    <select name="status" id="status" class="form-select form-select-sm">
-                        <option value="">اختر الحالة</option>
-                        <option value="active">نشط</option>
-                        <option value="inactive">غير نشط</option>
+                <div id="departmentFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="department_id" id="department_id" class="form-select form-select-sm">
+                        <option value="">اختر الإدارة</option>
+                        @foreach(department_options() as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
         </div>
     </div>
-    -->
+    <div class="row g-3 align-items-end mb-3">
+        <!-- فلتر الأقسام -->
+        <div class="col-md-2">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_section_checkbox" name="filter_by_section"
+                        value="1">
+                    <label class="form-check-label" for="filter_by_section_checkbox">
+                        القسم
+                    </label>
+                </div>
+
+                <div id="sectionFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="section_id" id="section_id" class="form-select form-select-sm">
+                        <option value="">اختر القسم</option>
+                        @foreach(section_options() as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- فلتر حالة العمل -->
+        <div class="col-md-2">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_working_status_checkbox"
+                        name="filter_by_working_status" value="1">
+                    <label class="form-check-label" for="filter_by_working_status_checkbox">
+                        حالة العمل
+                    </label>
+                </div>
+
+                <div id="workingStatusFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="working_status" id="working_status" class="form-select form-select-sm">
+                        <option value="">اختر حالة العمل</option>
+                        @foreach(working_status_options() as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <hr class="my-3">
@@ -175,10 +196,11 @@
         // تهيئة جميع فلاتر البحث
         initCodeFilter();
         initHiringDateFilter();
-        initNameFilter();
+        initSalaryPlaceFilter();
         initShiftTypeFilter();
-        initSalaryFilter();
-        // initStatusFilter(); // إذا أضفت فلتر الحالة
+        initDepartmentFilter();
+        initSectionFilter();
+        initWorkingStatusFilter();
     });
 
     // دالة خاصة بفلتر كود الموظف
@@ -213,18 +235,18 @@
         }
     }
 
-    // دالة خاصة بفلتر الاسم
-    function initNameFilter() {
-        const nameCheckbox = document.getElementById('filter_by_name_checkbox');
-        const nameFields = document.getElementById('nameFields');
-        const nameInput = document.getElementById('employee_name');
+    // دالة خاصة بفلتر مكان استلام المرتب
+    function initSalaryPlaceFilter() {
+        const salaryPlaceCheckbox = document.getElementById('filter_by_salary_place_checkbox');
+        const salaryPlaceFields = document.getElementById('salaryPlaceFields');
+        const salaryPlaceSelect = document.getElementById('salary_place_id');
 
-        nameCheckbox.addEventListener('change', function () {
-            toggleFilterFields(this.checked, nameFields, nameInput);
+        salaryPlaceCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, salaryPlaceFields, salaryPlaceSelect);
         });
 
-        if (nameCheckbox.checked) {
-            toggleFilterFields(true, nameFields, nameInput);
+        if (salaryPlaceCheckbox.checked) {
+            toggleFilterFields(true, salaryPlaceFields, salaryPlaceSelect);
         }
     }
 
@@ -243,19 +265,48 @@
         }
     }
 
-    // دالة خاصة بفلتر الراتب
-    function initSalaryFilter() {
-        const salaryCheckbox = document.getElementById('filter_by_salary_checkbox');
-        const salaryFields = document.getElementById('salaryFields');
-        const salaryFrom = document.getElementById('salary_from');
-        const salaryTo = document.getElementById('salary_to');
+    // دالة خاصة بفلتر الإدارة
+    function initDepartmentFilter() {
+        const departmentCheckbox = document.getElementById('filter_by_department_checkbox');
+        const departmentFields = document.getElementById('departmentFields');
+        const departmentSelect = document.getElementById('department_id');
 
-        salaryCheckbox.addEventListener('change', function () {
-            toggleFilterFields(this.checked, salaryFields, salaryFrom, salaryTo);
+        departmentCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, departmentFields, departmentSelect);
         });
 
-        if (salaryCheckbox.checked) {
-            toggleFilterFields(true, salaryFields, salaryFrom, salaryTo);
+        if (departmentCheckbox.checked) {
+            toggleFilterFields(true, departmentFields, departmentSelect);
+        }
+    }
+
+    // دالة خاصة بفلتر الأقسام
+    function initSectionFilter() {
+        const sectionCheckbox = document.getElementById('filter_by_section_checkbox');
+        const sectionFields = document.getElementById('sectionFields');
+        const sectionSelect = document.getElementById('section_id');
+
+        sectionCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, sectionFields, sectionSelect);
+        });
+
+        if (sectionCheckbox.checked) {
+            toggleFilterFields(true, sectionFields, sectionSelect);
+        }
+    }
+
+    // دالة خاصة بفلتر حالة العمل
+    function initWorkingStatusFilter() {
+        const workingStatusCheckbox = document.getElementById('filter_by_working_status_checkbox');
+        const workingStatusFields = document.getElementById('workingStatusFields');
+        const workingStatusSelect = document.getElementById('working_status');
+
+        workingStatusCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, workingStatusFields, workingStatusSelect);
+        });
+
+        if (workingStatusCheckbox.checked) {
+            toggleFilterFields(true, workingStatusFields, workingStatusSelect);
         }
     }
 

@@ -11,6 +11,10 @@ class EmployeeReportFilter { // بيانات العاملين
         Base\CodeFilter::class,
         Base\HiringDateFilter::class,
         Base\ShiftTypeFilter::class,
+        Base\SalaryPlaceFilter::class,
+        Base\DepartmentFilter::class,
+        Base\SectionFilter::class,
+        Base\WorkingStatusFilter::class,
     ];
 
     public function __construct(Request $request, Builder $query)

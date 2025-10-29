@@ -154,38 +154,3 @@ if (!function_exists('is_tree_open')) {
         ]);
     }
 }
-
-if (!function_exists('shift_type_labels')) {
-    function shift_type_labels() {
-        $labels = [];
-        foreach (\App\Enums\ShiftType\ShiftType::cases() as $case) {
-            $labels[$case->value] = \App\Enums\ShiftType\ShiftType::label($case);
-        }
-        return $labels;
-    }
-}
-
-if (!function_exists('all_shift_type_options')) {
-    function all_shift_type_options()
-    {
-        $companyId = get_user_data()->company_id;
-        $options = [];
-
-        // أولاً: إضافة شيفتات الشركة من الداتابيز
-        if ($companyId) {
-            $shifts = \App\Models\ShiftType::where('company_id', $companyId)->get();
-            foreach ($shifts as $shift) {
-                $options[$shift->id] = \App\Enums\ShiftType\ShiftType::label($shift->type);
-            }
-        }
-
-        // إذا لم توجد شيفتات في الداتابيز، استخدم الـ enum كبديل
-        if (empty($options)) {
-            foreach (shift_type_labels() as $value => $label) {
-                $options[$value] = $label; // هنا الـ value سيكون نصي (morning, evening...)
-            }
-        }
-
-        return $options;
-    }
-}
