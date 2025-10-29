@@ -87,3 +87,33 @@ if (!function_exists('is_employee_insured')) {
             ->exists();
     }
 }
+
+if (!function_exists('job_category_options')) {
+    function job_category_options() {
+        $companyId = get_user_data()->company_id;
+        if (!$companyId) {
+            return [];
+        }
+        return \App\Models\JobCategory::where('company_id', $companyId)
+            ->where('is_active', 1)
+            ->get()
+            ->pluck('name', 'id')
+            ->toArray();
+    }
+}
+
+if (!function_exists('level_options')) {
+    function level_options() {
+        $companyId = get_user_data()->company_id;
+
+        if (!$companyId) {
+            return [];
+        }
+        
+        return \App\Models\Level::where('company_id', $companyId)
+            ->where('is_active', 1)
+            ->get()
+            ->pluck('name', 'id')
+            ->toArray();
+    }
+}

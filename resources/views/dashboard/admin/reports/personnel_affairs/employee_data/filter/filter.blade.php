@@ -190,6 +190,50 @@
             </div>
         </div>
 
+        <!-- فلتر الفئة الوظيفية -->
+        <div class="col-md-2">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_job_category_checkbox"
+                        name="filter_by_job_category" value="1">
+                    <label class="form-check-label" for="filter_by_job_category_checkbox">
+                        الوظيفه
+                    </label>
+                </div>
+
+                <div id="jobCategoryFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="job_category_id" id="job_category_id" class="form-select form-select-sm">
+                        <option value="">اختر الفئة الوظيفية</option>
+                        @foreach(job_category_options() as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- فلتر المستوى -->
+        <div class="col-md-2">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_level_checkbox" name="filter_by_level"
+                        value="1">
+                    <label class="form-check-label" for="filter_by_level_checkbox">
+                        المستوى
+                    </label>
+                </div>
+
+                <div id="levelFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="level_id" id="level_id" class="form-select form-select-sm">
+                        <option value="">اختر المستوى</option>
+                        @foreach(level_options() as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -224,6 +268,8 @@
         initSectionFilter();
         initWorkingStatusFilter();
         initInsuranceFilter();
+        initJobCategoryFilter();
+        initLevelFilter();
     });
 
     // دالة خاصة بفلتر كود الموظف
@@ -345,6 +391,36 @@
 
         if (insuranceCheckbox.checked) {
             toggleFilterFields(true, insuranceFields, insuranceSelect);
+        }
+    }
+
+    // دالة خاصة بفلتر الفئة الوظيفية
+    function initJobCategoryFilter() {
+        const jobCategoryCheckbox = document.getElementById('filter_by_job_category_checkbox');
+        const jobCategoryFields = document.getElementById('jobCategoryFields');
+        const jobCategorySelect = document.getElementById('job_category_id');
+
+        jobCategoryCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, jobCategoryFields, jobCategorySelect);
+        });
+
+        if (jobCategoryCheckbox.checked) {
+            toggleFilterFields(true, jobCategoryFields, jobCategorySelect);
+        }
+    }
+
+    // دالة خاصة بفلتر المستوى
+    function initLevelFilter() {
+        const levelCheckbox = document.getElementById('filter_by_level_checkbox');
+        const levelFields = document.getElementById('levelFields');
+        const levelSelect = document.getElementById('level_id');
+
+        levelCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, levelFields, levelSelect);
+        });
+
+        if (levelCheckbox.checked) {
+            toggleFilterFields(true, levelFields, levelSelect);
         }
     }
 
