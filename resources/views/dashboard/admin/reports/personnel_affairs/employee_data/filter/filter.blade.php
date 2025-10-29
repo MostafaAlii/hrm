@@ -255,6 +255,51 @@
             </div>
         </div>
     </div>
+    <div class="row g-3 align-items-end mb-3">
+        <!-- فلتر جهه العمل -->
+        <div class="col-md-3">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_branch_checkbox" name="filter_by_branch"
+                        value="1">
+                    <label class="form-check-label" for="filter_by_branch_checkbox">
+                        جهه العمل
+                    </label>
+                </div>
+
+                <div id="branchFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="branch_id" id="branch_id" class="form-select form-select-sm">
+                        <option value="">اختر فرع العمل</option>
+                        @foreach(branch_options() as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- فلتر الموقف من التجنيد -->
+        <div class="col-md-3">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_military_status_checkbox"
+                        name="filter_by_military_status" value="1">
+                    <label class="form-check-label" for="filter_by_military_status_checkbox">
+                        الموقف من التجنيد
+                    </label>
+                </div>
+
+                <div id="militaryStatusFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="military_status" id="military_status" class="form-select form-select-sm">
+                        <option value="">اختر الموقف من التجنيد</option>
+                        @foreach(military_status_options() as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <hr class="my-3">
@@ -291,6 +336,8 @@
         initJobCategoryFilter();
         initLevelFilter();
         initTaxFilter();
+        initBranchFilter();
+        initMilitaryStatusFilter();
     });
 
     // دالة خاصة بفلتر كود الموظف
@@ -460,6 +507,35 @@
         }
     }
 
+    // دالة خاصة بفلتر جهه العمل
+    function initBranchFilter() {
+        const branchCheckbox = document.getElementById('filter_by_branch_checkbox');
+        const branchFields = document.getElementById('branchFields');
+        const branchSelect = document.getElementById('branch_id');
+
+        branchCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, branchFields, branchSelect);
+        });
+
+        if (branchCheckbox.checked) {
+            toggleFilterFields(true, branchFields, branchSelect);
+        }
+    }
+
+    // دالة خاصة بفلتر الموقف من التجنيد
+    function initMilitaryStatusFilter() {
+        const militaryStatusCheckbox = document.getElementById('filter_by_military_status_checkbox');
+        const militaryStatusFields = document.getElementById('militaryStatusFields');
+        const militaryStatusSelect = document.getElementById('military_status');
+
+        militaryStatusCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, militaryStatusFields, militaryStatusSelect);
+        });
+
+        if (militaryStatusCheckbox.checked) {
+            toggleFilterFields(true, militaryStatusFields, militaryStatusSelect);
+        }
+    }
     // دالة عامة للتحكم في إظهار/إخفاء حقول الفلتر
     function toggleFilterFields(isChecked, container, ...inputs) {
         if (isChecked) {

@@ -127,3 +127,28 @@ if (!function_exists('tax_status_options')) {
         ];
     }
 }
+
+if (!function_exists('branch_options')) {
+    function branch_options() {
+        $companyId = get_user_data()->company_id;
+        if (!$companyId) {
+            return [];
+        }
+        return \App\Models\Branch::where('company_id', $companyId)
+            ->where('is_active', 1)
+            ->get()
+            ->pluck('name', 'id')
+            ->toArray();
+    }
+}
+
+if (!function_exists('military_status_options')) {
+    function military_status_options()
+    {
+        $options = [];
+        foreach (\App\Enums\Employee\MilitaryStatus::cases() as $case) {
+            $options[$case->value] = $case->label();
+        }
+        return $options;
+    }
+}
