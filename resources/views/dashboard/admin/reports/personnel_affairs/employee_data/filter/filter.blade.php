@@ -234,6 +234,26 @@
             </div>
         </div>
 
+        <!-- فلتر الخضوع للضريبة -->
+        <div class="col-md-2">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_tax_checkbox" name="filter_by_tax" value="1">
+                    <label class="form-check-label" for="filter_by_tax_checkbox">
+                        الخضوع للضريبة
+                    </label>
+                </div>
+
+                <div id="taxFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="is_taxable" id="is_taxable" class="form-select form-select-sm">
+                        <option value="">اختر حالة الضريبة</option>
+                        @foreach(tax_status_options() as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -270,6 +290,7 @@
         initInsuranceFilter();
         initJobCategoryFilter();
         initLevelFilter();
+        initTaxFilter();
     });
 
     // دالة خاصة بفلتر كود الموظف
@@ -421,6 +442,21 @@
 
         if (levelCheckbox.checked) {
             toggleFilterFields(true, levelFields, levelSelect);
+        }
+    }
+
+    // دالة خاصة بفلتر الخضوع للضريبة
+    function initTaxFilter() {
+        const taxCheckbox = document.getElementById('filter_by_tax_checkbox');
+        const taxFields = document.getElementById('taxFields');
+        const taxSelect = document.getElementById('is_taxable');
+
+        taxCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, taxFields, taxSelect);
+        });
+
+        if (taxCheckbox.checked) {
+            toggleFilterFields(true, taxFields, taxSelect);
         }
     }
 

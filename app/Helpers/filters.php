@@ -109,11 +109,21 @@ if (!function_exists('level_options')) {
         if (!$companyId) {
             return [];
         }
-        
+
         return \App\Models\Level::where('company_id', $companyId)
             ->where('is_active', 1)
             ->get()
             ->pluck('name', 'id')
             ->toArray();
+    }
+}
+
+if (!function_exists('tax_status_options')) {
+    function tax_status_options()
+    {
+        return [
+            1 => 'يخضع للضريبة',
+            0 => 'لا يخضع للضريبة',
+        ];
     }
 }

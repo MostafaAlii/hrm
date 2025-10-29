@@ -18,6 +18,7 @@ class EmployeeReportFilter { // بيانات العاملين
         Base\IsInsuredFilter::class,
         Base\JobCategoryFilter::class,
         Base\LevelFilter::class,
+        Base\TaxFilter::class,
     ];
 
     public function __construct(Request $request, Builder $query)
