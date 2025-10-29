@@ -10,6 +10,7 @@ class EmployeeReportFilter { // بيانات العاملين
     protected array $filters = [
         Base\CodeFilter::class,
         Base\HiringDateFilter::class,
+        Base\ShiftTypeFilter::class,
     ];
 
     public function __construct(Request $request, Builder $query)

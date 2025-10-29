@@ -75,23 +75,23 @@
             </div>
         </div>
 
-        <!-- فلتر القسم (مثال إضافي) -->
+        <!-- فلتر الوردية (shiftType) -->
         <div class="col-md">
             <div class="filter-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="filter_by_department_checkbox"
-                        name="filter_by_department" value="1">
-                    <label class="form-check-label" for="filter_by_department_checkbox">
-                        القسم
+                    <input class="form-check-input" type="checkbox" id="filter_by_shift_type_checkbox"
+                        name="filter_by_shift_type" value="1">
+                    <label class="form-check-label" for="filter_by_shift_type_checkbox">
+                        الوردية
                     </label>
                 </div>
 
-                <div id="departmentFields" class="filter-fields mt-2" style="display: none;">
-                    <select name="department" id="department" class="form-select form-select-sm">
-                        <option value="">اختر القسم</option>
-                        <option value="1">المبيعات</option>
-                        <option value="2">التسويق</option>
-                        <option value="3">التطوير</option>
+                <div id="shiftTypeFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="shift_type_id" id="shift_type" class="form-select form-select-sm">
+                        <option value="">اختر الوردية</option>
+                        @foreach(all_shift_type_options() as $id => $label)
+                            <option value="{{ $id }}">{{ $label }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -176,7 +176,7 @@
         initCodeFilter();
         initHiringDateFilter();
         initNameFilter();
-        initDepartmentFilter();
+        initShiftTypeFilter();
         initSalaryFilter();
         // initStatusFilter(); // إذا أضفت فلتر الحالة
     });
@@ -228,18 +228,18 @@
         }
     }
 
-    // دالة خاصة بفلتر القسم
-    function initDepartmentFilter() {
-        const deptCheckbox = document.getElementById('filter_by_department_checkbox');
-        const deptFields = document.getElementById('departmentFields');
-        const deptSelect = document.getElementById('department');
+    // دالة خاصة بفلتر الوردية
+    function initShiftTypeFilter() {
+        const shiftTypeCheckbox = document.getElementById('filter_by_shift_type_checkbox');
+        const shiftTypeFields = document.getElementById('shiftTypeFields');
+        const shiftTypeSelect = document.getElementById('shift_type');
 
-        deptCheckbox.addEventListener('change', function () {
-            toggleFilterFields(this.checked, deptFields, deptSelect);
+        shiftTypeCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, shiftTypeFields, shiftTypeSelect);
         });
 
-        if (deptCheckbox.checked) {
-            toggleFilterFields(true, deptFields, deptSelect);
+        if (shiftTypeCheckbox.checked) {
+            toggleFilterFields(true, shiftTypeFields, shiftTypeSelect);
         }
     }
 
