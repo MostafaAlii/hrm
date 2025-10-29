@@ -95,4 +95,9 @@ class ShiftType extends BaseModel {
 
         return (int)$hours . ' ' . __('dashboard/shift_types.hour') . ' ' . (int)$minutes . ' ' . __('dashboard/shift_types.minute');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('company_id', get_user_data()->company_id)->where('is_active', true);
+    }
 }

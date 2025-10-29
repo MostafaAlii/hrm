@@ -42,9 +42,14 @@
                     </div>
                     <div class="mb-3 col-md-6">
                         <label class="form-label">الحالة</label>
-                        <input type="text" name="working_status" class="form-control"
-                            value="{{ \App\Enums\Employee\WorkingStatus::labels()[$record->working_status->value ?? $record->working_status] ?? '-' }}"
-                            readonly>
+                        <select name="working_status" class="form-control">
+                            <option value="">اختر الحالة</option>
+                            @foreach(\App\Enums\Employee\WorkingStatus::labels() as $value => $label)
+                            <option value="{{ $value }}" {{ $record?->working_status?->value === $value ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 
@@ -99,8 +104,16 @@
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label">الوردية</label>
-                <input type="text" class="form-control" value="{{ $record?->shift?->name }}" readonly>
+                <select name="shift_type_id" class="form-control">
+                    <option value="">اختر الوردية</option>
+                    @foreach($shiftTypes as $shift)
+                    <option value="{{ $shift->id }}" {{ $record->shift_type_id == $shift->id ? 'selected' : '' }}>
+                        {{ \App\Enums\ShiftType\ShiftType::label($shift->type) }}
+                    </option>
+                    @endforeach
+                </select>
             </div>
+
             <div class="col-md-6 mb-3">
                 <label class="form-label">مكان استلام المرتب</label>
                 <input type="text" class="form-control" value="{{ $record->salaryPlace?->name }}" readonly>

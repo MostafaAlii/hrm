@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Dashboard\Reports;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 /*
@@ -121,6 +122,11 @@ Route::group(
             Route::resource('allowance-variables', Dashboard\AllowanceVariableController::class);
             Route::resource('entitlement-variables', Dashboard\EntitlementVariableController::class);
             Route::resource('deduction-variables', Dashboard\DeductionVariableController::class);
+            // Reports ::
+            Route::prefix('reports')->as('reports.')->middleware(['auth:admin'])->group(function () {
+                Route::get('employees', [Reports\EmployeeReportController::class, 'index'])->name('employee-informations.index');
+                Route::get('employees/filter', [Reports\EmployeeReportController::class, 'filter'])->name('employee.filter');
+            });
         });
 
         require __DIR__ . '../../auth.php';

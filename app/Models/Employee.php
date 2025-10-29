@@ -31,6 +31,7 @@ class Employee extends Authenticatable {
         'section_id',
         'job_category_id',
         'salary_place_id',
+        'shift_type_id',
         'is_active',
         'company_id',
         'uuid',
@@ -57,9 +58,27 @@ class Employee extends Authenticatable {
             : trans('dashboard/general.in_active');
     }
 
+    public function getWorkingStatusLabelAttribute()
+    {
+        return WorkingStatus::labels()[$this->working_status->value] ?? '-';
+    }
+
     public function gender()
     {
         return $this->belongsTo(Gender::class, 'gender_id');
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(ShiftType::class, 'shift_type_id');
+    }
+
+    public function getShiftTypeAttribute()
+    {
+        if ($this->shift && $this->shift->type) {
+            return \App\Enums\ShiftType\ShiftType::label($this->shift->type);
+        }
+        return null;
     }
 
     public function nationality()

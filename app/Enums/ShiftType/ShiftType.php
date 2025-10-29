@@ -9,6 +9,7 @@ enum ShiftType: string {
 
     public static function label($value): string
     {
+        //$value = (string)$value;
         return match ($value) {
             self::MORNING => trans('dashboard/shift_types.morning'),
             self::EVENING => trans('dashboard/shift_types.evening'),
