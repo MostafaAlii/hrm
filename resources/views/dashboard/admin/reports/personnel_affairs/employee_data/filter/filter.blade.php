@@ -168,6 +168,28 @@
             </div>
         </div>
 
+        <!-- فلتر حالة التأمين -->
+        <div class="col-md-2">
+            <div class="filter-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="filter_by_insurance_checkbox" name="filter_by_insurance"
+                        value="1">
+                    <label class="form-check-label" for="filter_by_insurance_checkbox">
+                        مؤمن عليه
+                    </label>
+                </div>
+
+                <div id="insuranceFields" class="filter-fields mt-2" style="display: none;">
+                    <select name="is_insured" id="is_insured" class="form-select form-select-sm">
+                        <option value="">اختر حالة التأمين</option>
+                        @foreach(insurance_status_options() as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -201,6 +223,7 @@
         initDepartmentFilter();
         initSectionFilter();
         initWorkingStatusFilter();
+        initInsuranceFilter();
     });
 
     // دالة خاصة بفلتر كود الموظف
@@ -307,6 +330,21 @@
 
         if (workingStatusCheckbox.checked) {
             toggleFilterFields(true, workingStatusFields, workingStatusSelect);
+        }
+    }
+
+    // دالة خاصة بفلتر حالة التأمين مؤمن عليه - غير مؤمن عليه
+    function initInsuranceFilter() {
+        const insuranceCheckbox = document.getElementById('filter_by_insurance_checkbox');
+        const insuranceFields = document.getElementById('insuranceFields');
+        const insuranceSelect = document.getElementById('is_insured');
+
+        insuranceCheckbox.addEventListener('change', function () {
+            toggleFilterFields(this.checked, insuranceFields, insuranceSelect);
+        });
+
+        if (insuranceCheckbox.checked) {
+            toggleFilterFields(true, insuranceFields, insuranceSelect);
         }
     }
 

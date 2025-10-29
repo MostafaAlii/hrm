@@ -69,3 +69,21 @@ if (!function_exists('working_status_options')) {
         return \App\Enums\Employee\WorkingStatus::labels();
     }
 }
+if (!function_exists('insurance_status_options')) {
+    function insurance_status_options()
+    {
+        return [
+            1 => 'مؤمن عليه',
+            0 => 'غير مؤمن عليه',
+        ];
+    }
+}
+
+if (!function_exists('is_employee_insured')) {
+    function is_employee_insured($employeeId)
+    {
+        return \App\Models\EmployeeInsurance::where('employee_id', $employeeId)
+            ->where('is_insured', 1)
+            ->exists();
+    }
+}

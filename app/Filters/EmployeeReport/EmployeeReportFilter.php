@@ -15,6 +15,7 @@ class EmployeeReportFilter { // بيانات العاملين
         Base\DepartmentFilter::class,
         Base\SectionFilter::class,
         Base\WorkingStatusFilter::class,
+        Base\IsInsuredFilter::class,
     ];
 
     public function __construct(Request $request, Builder $query)
