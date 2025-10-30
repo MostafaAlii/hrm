@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Helpers;
+
 use App\Models\{TaxSetting, TaxBracket, EmployeeTaxCalculation};
 use Illuminate\Support\Facades\Log;
 
-class TaxHelper
+class Old2TaxHelper
 {
     private static $logged = false;
 
@@ -97,25 +98,21 @@ class TaxHelper
             // نحدد المبلغ الخاضع للضريبة في هذه الشريحة
             $amount_in_bracket = min($remaining_income, $bracket_max);
 
-            // نحسب الضريبة السنوية لهذه الشريحة
-            $annual_tax_in_bracket = $amount_in_bracket * ($bracket_percentage / 100);
+            // نحسب الضريبة لهذه الشريحة
+            $tax_in_bracket = $amount_in_bracket * ($bracket_percentage / 100);
 
-            // نحسب الضريبة الشهرية لهذه الشريحة
-            $monthly_tax_in_bracket = $annual_tax_in_bracket / 12;
-
-            $annual_tax += $annual_tax_in_bracket;
+            $annual_tax += $tax_in_bracket;
             $remaining_income -= $amount_in_bracket;
 
             $brackets_breakdown[] = [
                 'bracket_name' => $bracket->bracket_name,
                 'amount_in_bracket' => $amount_in_bracket,
                 'tax_rate' => $bracket_percentage,
-                'annual_tax_amount' => $annual_tax_in_bracket, // الضريبة السنوية للشريحة
-                'monthly_tax_amount' => $monthly_tax_in_bracket // الضريبة الشهرية للشريحة
+                'tax_amount' => $tax_in_bracket
             ];
         }
 
-        // حساب الضريبة الشهرية الإجمالية
+        // حساب الضريبة الشهرية
         $monthly_tax = $annual_tax / 12;
 
         return [
