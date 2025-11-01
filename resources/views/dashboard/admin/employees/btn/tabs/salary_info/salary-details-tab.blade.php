@@ -212,13 +212,16 @@
                                     <td><strong>إجمالي الاستقطاعات</strong></td>
                                     <td>-{{ number_format($record?->total_deductions, 2) }}</td>
                                 </tr>
-
+                                <!-- Start Tax Modal -->
                                 <tr style="background-color:#fce4ec;">
                                     <td colspan="4"></td>
                                     <td><strong>إجمالي الضرائب</strong></td>
-                                    <td>{{ number_format($record->monthly_tax, 2) }}</td>
+                                    <td>
+                                        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#taxDetailsModal{{ $record->id }}">
+                                            {{ number_format($record->monthly_tax, 2) }}
+                                        </a>
+                                    </td>
                                 </tr>
-
                                 <tr style="background-color:#e0f2f1;">
                                     <td colspan="4"></td>
                                     <td><strong>إجمالي التامين الاجتماعى</strong></td>
@@ -240,6 +243,145 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <!-- Modal for Tax Details -->
+                        <div class="modal fade" id="taxDetailsModal{{ $record->id }}" tabindex="-1"
+                            aria-labelledby="taxDetailsModalLabel{{ $record->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="taxDetailsModalLabel{{ $record->id }}">
+                                            <i class="fas fa-receipt"></i> تفاصيل حساب الضرائب - {{ $record->name_ar }}
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @php
+                                        $taxCalculation = \App\Models\EmployeeTaxCalculation::where('employee_id', $record->id)
+                                        ->latest()
+                                        ->first();
+                                        @endphp
+                        
+                                        @if($taxCalculation && !empty($taxCalculation->brackets_breakdown))
+                                        <!-- Basic Information -->
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="card border-primary">
+                                                    <div class="card-header bg-primary text-white">
+                                                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> المعلومات الأساسية</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <table class="table table-sm table-borderless">
+                                                            <tr>
+                                                                <td><strong>الراتب الشهري:</strong></td>
+                                                                <td>{{ number_format($taxCalculation->monthly_salary, 2) }} جنيه</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>الراتب السنوي:</strong></td>
+                                                                <td>{{ number_format($taxCalculation->annual_salary, 2) }} جنيه</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>المبلغ الخاضع للضريبة:</strong></td>
+                                                                <td>{{ number_format($taxCalculation->monthly_taxable_income, 2) }} جنيه / شهر
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card border-success">
+                                                    <div class="card-header bg-success text-white">
+                                                        <h6 class="mb-0"><i class="fas fa-calculator"></i> إجمالي الضرائب</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <table class="table table-sm table-borderless">
+                                                            <tr>
+                                                                <td><strong>الضريبة الشهرية:</strong></td>
+                                                                <td class="text-danger"><strong>{{ number_format($taxCalculation->monthly_tax,
+                                                                        2) }} جنيه</strong></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>الضريبة السنوية:</strong></td>
+                                                                <td class="text-danger"><strong>{{ number_format($taxCalculation->annual_tax, 2)
+                                                                        }} جنيه</strong></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <!-- Tax Brackets Breakdown -->
+                                        <div class="card border-warning">
+                                            <div class="card-header bg-warning text-dark">
+                                                <h6 class="mb-0"><i class="fas fa-layer-group"></i> تفاصيل الشرائح الضريبية</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>اسم الشريحة</th>
+                                                                <th>المبلغ في الشريحة (سنوي)</th>
+                                                                <th>نسبة الضريبة</th>
+                                                                <th>الضريبة السنوية</th>
+                                                                <th>الضريبة الشهرية</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($taxCalculation->brackets_breakdown as $index => $bracket)
+                                                            <tr>
+                                                                <td>{{ $index + 1 }}</td>
+                                                                <td>
+                                                                    <span class="badge bg-primary">شريحة {{ $bracket['bracket_name'] }}</span>
+                                                                </td>
+                                                                <td>{{ number_format($bracket['amount_in_bracket'], 2) }} جنيه</td>
+                                                                <td>
+                                                                    <span class="badge bg-info">{{ $bracket['tax_rate'] }}%</span>
+                                                                </td>
+                                                                <td class="text-danger">
+                                                                    <strong>{{ number_format($bracket['annual_tax_amount'], 2) }} جنيه</strong>
+                                                                </td>
+                                                                <td class="text-danger">
+                                                                    <strong>{{ number_format($bracket['monthly_tax_amount'], 2) }} جنيه</strong>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                        <tfoot class="table-dark">
+                                                            <tr>
+                                                                <td colspan="4" class="text-end"><strong>الإجمالي:</strong></td>
+                                                                <td><strong>{{ number_format($taxCalculation->annual_tax, 2) }} جنيه</strong>
+                                                                </td>
+                                                                <td><strong>{{ number_format($taxCalculation->monthly_tax, 2) }} جنيه</strong>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="alert alert-warning text-center">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            لا توجد بيانات ضريبية متاحة لهذا الموظف
+                                        </div>
+                                        @endif
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            <i class="fas fa-times"></i> إغلاق
+                                        </button>
+                                        <button type="button" class="btn btn-primary">
+                                            <i class="fas fa-print"></i> طباعة التقرير
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Tax Modal -->
                     </div>
                     <!-- End Salary Table -->
                 </div>

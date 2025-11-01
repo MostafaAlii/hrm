@@ -285,20 +285,67 @@ class Employee extends Authenticatable {
         $entitlements = $this->entitlements_sum ?? 0;
         return $basic + $allowances + $entitlements;
     }
+    /*public function getMonthlyTaxAttribute(): float
+    {
+        $basicSalary = (float) ($this->total_basic_salary ?? 0);
 
-    public function getMonthlyTaxAttribute() {
-        $basicSalary = $this->total_basic_salary ?? 0;
-        $companyId = $this->company_id ?? null;
-        $taxData = TaxHelper::calculateMonthlyTax($basicSalary, $companyId);
-        return $taxData['tax_amount'];
+        $taxableAmount = TaxHelper::calculateTaxableAmount($basicSalary);
+        $bracketData = TaxHelper::determineTaxBracket($basicSalary);
+
+        if (!$bracketData || empty($bracketData['percentage'])) {
+            return 0.0;
+        }
+
+        $taxAmount = TaxHelper::calculateMonthlyTaxAmount(
+            $taxableAmount,
+            $bracketData['monthly_bracket_value'],
+            $bracketData['percentage']
+        );
+
+        return (float) $taxAmount;
+    }*/
+
+    public function getMonthlyTaxAttribute()
+    {
+        $result = TaxHelper::runAll($this->total_basic_salary ?? 0, $this->id);
+        return $result['tax_calculation']['monthly_tax'] ?? 0;
+        /*try {
+            $basicSalary = (float) ($this->total_basic_salary ?? 0);
+            // 🟢 استدعاء الدالة الجديدة من TaxHelper
+            $taxResult = \App\Helpers\TaxHelper::calculateProgressiveTax($basicSalary);
+            // لو النتيجة مش صالحة أو مفيهاش monthly_tax نرجع صفر
+            if (!$taxResult || !isset($taxResult['monthly_tax'])) {
+                \Log::channel('tax')->warning('No valid tax result for employee', [
+                    'employee_id' => $this->id ?? null,
+                    'basic_salary' => $basicSalary,
+                ]);
+                return 0.0;
+            }
+
+            // 🟢 تسجيل النتيجة فى اللوج (اختياري)
+            \Log::channel('tax')->info('Monthly tax attribute calculated', [
+                'employee_id' => $this->id ?? null,
+                'monthly_tax' => $taxResult['monthly_tax'],
+                'details' => $taxResult,
+            ]);
+
+            return (float) $taxResult['monthly_tax'];
+        } catch (\Throwable $e) {
+            \Log::channel('tax')->error('Error in getMonthlyTaxAttribute', [
+                'employee_id' => $this->id ?? null,
+                'message' => $e->getMessage(),
+            ]);
+            return 0.0;
+        }*/
     }
 
-    public function getNetSalaryAfterTaxAttribute() {
+
+    /*public function getNetSalaryAfterTaxAttribute() {
         $basicSalary = $this->total_basic_salary ?? 0;
         $companyId = $this->company_id ?? null;
         $taxData = TaxHelper::calculateMonthlyTax($basicSalary, $companyId);
         return $taxData['net_salary'];
-    }
+    }*/
 
     /**
      * 🧾 إجمالي التأمين الاجتماعي
