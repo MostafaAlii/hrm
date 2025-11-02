@@ -83,6 +83,10 @@ class InsuranceHelper {
         $minInsurance = $setting->min_insurance_amount ?? 0;
         $maxInsurance = $setting->max_insurance_amount ?? INF;
         $deductionPercentage = 0.10;
+        $employeeInsurance = EmployeeInsurance::where('employee_id', $employeeId)->first(['id', 'insurance_type_id']);
+        if ($employeeInsurance && $employeeInsurance->insuranceType) {
+            $deductionPercentage = $employeeInsurance->insuranceType->employee_percentage / 100;
+        }
         $socialInsuranceSum = EmployeeSocialInsurance::where('employee_id', $employeeId)
             ->where('company_id', $companyId)
             ->sum('value');

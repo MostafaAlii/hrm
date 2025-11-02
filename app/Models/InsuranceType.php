@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Models;
-class InsuranceType extends BaseModel {
-    protected $table = "insurance_types";
+
+class InsuranceType extends BaseModel
+{
+    protected $table = "insurance_types"; // بيانات انواع التأمين
     protected $fillable = [
         'name_ar',
         'name_en',
