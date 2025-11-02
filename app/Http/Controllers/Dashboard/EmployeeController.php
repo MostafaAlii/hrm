@@ -6,23 +6,40 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Eloquents\EmployeeRepository;
 use App\DataTables\Dashboard\Admin\EmployeeDataTable;
 use Illuminate\Http\Request;
-use App\Models\{Employee, EmployeeInsurance, EmployeeQualification, EmployeeFamily,
-                 EmployeeEmergency, EmployeeTraining, EmployeeLicense,EmployeeEmploymentDocument,
-                EmployeeExperience,EmployeeBenefit, EmployeeSalaryBasic, EmployeeAllowance, EmployeeEntitlement,
-                EmployeeDeduction, EmployeeVariableInsurance, EmployeeSocialInsurance
-                };
+use App\Models\{
+    Employee,
+    EmployeeInsurance,
+    EmployeeQualification,
+    EmployeeFamily,
+    EmployeeEmergency,
+    EmployeeTraining,
+    EmployeeLicense,
+    EmployeeEmploymentDocument,
+    EmployeeExperience,
+    EmployeeBenefit,
+    EmployeeSalaryBasic,
+    EmployeeAllowance,
+    EmployeeEntitlement,
+    EmployeeDeduction,
+    EmployeeVariableInsurance,
+    EmployeeSocialInsurance
+};
 use App\Models\Concerns\UploadMedia;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\TaxHelper;
-class EmployeeController extends Controller {
+
+class EmployeeController extends Controller
+{
     use UploadMedia;
     protected $repository;
 
-    public function __construct(EmployeeRepository $repository) {
+    public function __construct(EmployeeRepository $repository)
+    {
         $this->repository = $repository;
     }
 
-    public function index(EmployeeDataTable $dataTable) {
+    public function index(EmployeeDataTable $dataTable)
+    {
         return $this->repository->index(
             $dataTable,
             'dashboard.admin.employees.index',
@@ -30,18 +47,21 @@ class EmployeeController extends Controller {
         );
     }
 
-    public function create() {
+    public function create()
+    {
         return $this->repository->create(
             'dashboard.admin.employees.btn.create',
             'إضافة موظف'
         );
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         return $this->repository->store($request);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         return $this->repository->show(
             $id,
             'dashboard.admin.employees.btn.show',
@@ -49,7 +69,8 @@ class EmployeeController extends Controller {
         );
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         return $this->repository->edit(
             $id,
             'dashboard.admin.employees.btn.edit',
@@ -57,15 +78,18 @@ class EmployeeController extends Controller {
         );
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         return $this->repository->update($request, $id);
     }
 
-    public function destroy(Employee $employee) {
+    public function destroy(Employee $employee)
+    {
         return $this->repository->destroy($employee);
     }
 
-    public function update_profile(Request $request, $id) {
+    public function update_profile(Request $request, $id)
+    {
         $validated = $request->validate([
             'identity_number'      => 'nullable|string|max:255',
             'birthday_date'        => 'nullable|date',
@@ -119,7 +143,8 @@ class EmployeeController extends Controller {
         return redirect()->back()->with('success', 'تم تحديث البيانات الشخصية بنجاح');
     }
 
-    public function update_military_service(Request $request, $id) {
+    public function update_military_service(Request $request, $id)
+    {
         $employee = Employee::findOrFail($id);
         $validated = $request->validate([
             'military_card_number' => 'nullable|string|max:255',
@@ -151,7 +176,8 @@ class EmployeeController extends Controller {
         return back()->with('success', 'تم تحديث بيانات الخدمة العسكرية بنجاح');
     }
 
-    public function contractStore(Request $request, Employee $employee) {
+    public function contractStore(Request $request, Employee $employee)
+    {
         $validated = $request->validate([
             'contract_type_id' => 'required|exists:contract_types,id',
             'start_date'       => 'required|date',
@@ -194,7 +220,8 @@ class EmployeeController extends Controller {
         }
     }
 
-    public function contractDestroy(Employee $employee, $contractId) {
+    public function contractDestroy(Employee $employee, $contractId)
+    {
         DB::beginTransaction();
         try {
             $contract = $employee->contracts()->findOrFail($contractId);
@@ -207,7 +234,8 @@ class EmployeeController extends Controller {
         }
     }
 
-    public function updateInsurance(Request $request, Employee $employee) {
+    public function updateInsurance(Request $request, Employee $employee)
+    {
         $insurance = EmployeeInsurance::updateOrCreate(
             ['employee_id' => $employee->id],
             [
@@ -232,7 +260,8 @@ class EmployeeController extends Controller {
         return redirect()->back()->with('success', 'تم تحديث بيانات التأمين بنجاح.');
     }
 
-    public function qualificationsStore(Request $request) {
+    public function qualificationsStore(Request $request)
+    {
         $validated = $request->validate([
             'employee_id'          => 'required|exists:employees,id',
             'qualification_id'     => 'nullable|exists:qualifications,id',
@@ -250,13 +279,15 @@ class EmployeeController extends Controller {
         return redirect()->back()->with('success', 'تم إضافة المؤهل بنجاح');
     }
 
-    public function qualificationsDestroy($id) {
+    public function qualificationsDestroy($id)
+    {
         $qualification = EmployeeQualification::findOrFail($id);
         $qualification->delete();
         return redirect()->back()->with('success', 'تم حذف المؤهل بنجاح');
     }
 
-    public function qualificationsUpdate(Request $request, $id) {
+    public function qualificationsUpdate(Request $request, $id)
+    {
         $qualification = EmployeeQualification::findOrFail($id);
         $data = $request->validate([
             'qualification_id' => 'required|exists:qualifications,id',
@@ -273,7 +304,8 @@ class EmployeeController extends Controller {
         return redirect()->back()->with('success', 'تم تعديل المؤهل بنجاح');
     }
 
-    public function familyStore(Request $request, Employee $employee) {
+    public function familyStore(Request $request, Employee $employee)
+    {
         $validated = $request->validate([
             'name_ar'                     => 'required|string|max:255',
             'relative_degree_id'          => 'required|exists:relative_degrees,id',
@@ -291,7 +323,8 @@ class EmployeeController extends Controller {
         return back()->with('success', 'تم إضافة بيانات العائل بنجاح ✅');
     }
 
-    public function familyUpdate(Request $request, Employee $employee, EmployeeFamily $family) {
+    public function familyUpdate(Request $request, Employee $employee, EmployeeFamily $family)
+    {
         $data = $request->validate([
             'name_ar' => 'required|string|max:255',
             'relative_degree_id' => 'required|exists:relative_degrees,id',
@@ -306,7 +339,8 @@ class EmployeeController extends Controller {
         return redirect()->back()->with('success', 'تم تحديث بيانات فرد العائلة بنجاح');
     }
 
-    public function familyDestroy(Employee $employee, EmployeeFamily $family) {
+    public function familyDestroy(Employee $employee, EmployeeFamily $family)
+    {
         $family->delete();
         return redirect()->back()->with('success', 'تم حذف فرد العائلة بنجاح');
     }
@@ -453,7 +487,8 @@ class EmployeeController extends Controller {
         return back()->with('success', 'تم تحديث الرخصة بنجاح ✅');
     }
 
-    public function licenseDestroy(Employee $employee, $license) {
+    public function licenseDestroy(Employee $employee, $license)
+    {
         $licenseRecord = EmployeeLicense::findOrFail($license);
         $licenseRecord->delete();
         return back()->with('success', 'تم حذف الرخصة بنجاح ✅');
@@ -644,7 +679,8 @@ class EmployeeController extends Controller {
         return back()->with('success', 'تم حذف الميزة بنجاح ✅');
     }
 
-    public function basicSalaryStore(Request $request, $employeeId) {
+    public function basicSalaryStore(Request $request, $employeeId)
+    {
         $request->validate([
             'allowance_variable_id' => 'required|exists:allowance_variables,id',
             'basic_salary' => 'required|numeric|min:0',
@@ -663,7 +699,8 @@ class EmployeeController extends Controller {
     }
 
 
-    public function toggleTaxStatus(Request $request, $employeeId) {
+    public function toggleTaxStatus(Request $request, $employeeId)
+    {
         $employeeSalary = EmployeeSalaryBasic::where('employee_id', $employeeId)->first();
         if (!$employeeSalary) {
             return response()->json(['success' => false, 'message' => 'لم يتم العثور على بيانات الراتب.']);
@@ -691,7 +728,8 @@ class EmployeeController extends Controller {
         ]);
     }
 
-    public function allowanceStore(Request $request, $employeeId) {
+    public function allowanceStore(Request $request, $employeeId)
+    {
         $request->validate([
             'allowance_variable_id' => 'required|exists:allowance_variables,id',
             'amount' => 'required|numeric|min:0',
@@ -708,7 +746,8 @@ class EmployeeController extends Controller {
         return response()->json(['success' => true, 'message' => 'تم حفظ العلاوة بنجاح']);
     }
 
-    public function entitlementStore(Request $request, $employeeId) {
+    public function entitlementStore(Request $request, $employeeId)
+    {
         $request->validate([
             'entitlement_variable_id' => 'required|exists:entitlement_variables,id',
             'amount' => 'required|numeric|min:0',
@@ -725,7 +764,8 @@ class EmployeeController extends Controller {
         return response()->json(['success' => true, 'message' => 'تم حفظ الاستحقاق بنجاح']);
     }
 
-    public function deductionStore(Request $request, $employeeId) {
+    public function deductionStore(Request $request, $employeeId)
+    {
         $request->validate([
             'deduction_variable_id' => 'required|exists:deduction_variables,id',
             'amount' => 'required|numeric|min:0',
@@ -743,7 +783,8 @@ class EmployeeController extends Controller {
     }
 
     // التامين الصحى الشامل
-    public function variableInsuranceStore(Request $request, $employeeId) {
+    public function variableInsuranceStore(Request $request, $employeeId)
+    {
         $request->validate([
             'type' => 'required|in:amount,percentage',
             'value' => 'required|numeric|min:0',
@@ -761,7 +802,8 @@ class EmployeeController extends Controller {
     }
 
     // التامين الاجتماعى
-    public function socialInsuranceStore(Request $request, $employeeId) {
+    public function socialInsuranceStore(Request $request, $employeeId)
+    {
         $request->validate([
             'type' => 'required|in:amount,percentage',
             'value' => 'required|numeric|min:0',

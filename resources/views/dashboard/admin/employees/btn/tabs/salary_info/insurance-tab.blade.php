@@ -55,8 +55,8 @@
 
                 <div class="col-md-6">
                     <label class="form-label fw-bold">الرقم التأميني</label>
-                    <input type="text" name="insurance_number" value="{{ $record?->latestInsurance?->insurance_number }}"
-                        class="form-control">
+                    <input type="text" name="insurance_number"
+                        value="{{ $record?->latestInsurance?->insurance_number }}" class="form-control">
                 </div>
 
                 <div class="col-md-6">
@@ -64,7 +64,8 @@
                     <select name="insurance_region_id" class="form-select">
                         <option value="">اختر</option>
                         @foreach($insuranceRegions as $region)
-                        <option value="{{ $region->id }}" {{ $record?->latestInsurance?->insurance_region_id == $region->id ?
+                        <option value="{{ $region->id }}" {{ $record?->latestInsurance?->insurance_region_id ==
+                            $region->id ?
                             'selected' : '' }}>
                             {{ $region->name_ar }}
                         </option>
@@ -77,7 +78,8 @@
                     <select name="insurance_office_id" class="form-select">
                         <option value="">اختر</option>
                         @foreach($insuranceOffices as $office)
-                        <option value="{{ $office->id }}" {{ $record?->latestInsurance?->insurance_office_id == $office->id ?
+                        <option value="{{ $office->id }}" {{ $record?->latestInsurance?->insurance_office_id ==
+                            $office->id ?
                             'selected' : '' }}>
                             {{ $office->name_ar }}
                         </option>
@@ -122,12 +124,14 @@
             <div class="card-body row g-3">
                 <div class="col-md-4">
                     <label class="form-label fw-bold">المبلغ التأميني</label>
-                    <input type="number" step="0.01" name="insurance_amount" value="{{ $record?->latestInsurance?->insurance_amount ?? 0 }}"
+                    <input type="number" step="0.01" name="insurance_amount"
+                        value="{{ $record?->latestInsurance?->insurance_amount ?? 0 }}"
                         class="form-control bg-light text-primary fw-bold" readonly>
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-bold">حصة العامل</label>
-                    <input type="number" step="0.01" name="employee_share" value="{{ $record?->latestInsurance?->employee_share ?? 0 }}"
+                    <input type="number" step="0.01" name="employee_share"
+                        value="{{ $record?->latestInsurance?->employee_share ?? 0 }}"
                         class="form-control bg-light text-success fw-bold" readonly>
                 </div>
                 <div class="col-md-4">

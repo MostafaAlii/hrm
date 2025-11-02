@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models;
+
 class EmployeeInsurance extends BaseModel
 {
     protected $fillable = [
@@ -28,16 +30,20 @@ class EmployeeInsurance extends BaseModel
         'insurance_date' => 'date:Y-m-d',
     ];
 
-    public function employee() {
+    public function employee()
+    {
         return $this->belongsTo(Employee::class);
     }
-    public function insuranceType() {
+    public function insuranceType()
+    {
         return $this->belongsTo(InsuranceType::class);
     }
-    public function insuranceRegion() {
+    public function insuranceRegion()
+    {
         return $this->belongsTo(InsuranceRegion::class);
     }
-    public function insuranceOffice() {
+    public function insuranceOffice()
+    {
         return $this->belongsTo(InsuranceOffice::class);
     }
 }
