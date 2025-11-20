@@ -122,6 +122,8 @@ Route::group(
             Route::resource('allowance-variables', Dashboard\AllowanceVariableController::class);
             Route::resource('entitlement-variables', Dashboard\EntitlementVariableController::class);
             Route::resource('deduction-variables', Dashboard\DeductionVariableController::class);
+            // Leaves الاجازات ::
+            Route::resource('leave-variables', Dashboard\LeaveVariableController::class);
             // Reports ::
             Route::prefix('reports')->as('reports.')->middleware(['auth:admin'])->group(function () {
                 Route::get('employees', [Reports\EmployeeReportController::class, 'index'])->name('employee-informations.index');

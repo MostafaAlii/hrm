@@ -59,7 +59,7 @@
                         'admin.bloodType.index', 'admin.city.index', 'admin.country.index', 'admin.governorate.index',
                         'admin.jobCategories.index', 'admin.level.index','admin.branchs.index',
                         'admin.shift-types.index','admin.departments.index','admin.section.index','admin.qualifications.index',
-                        'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
+                        'admin.nationality.index','admin.terminationTypes.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
                         'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
@@ -74,7 +74,7 @@
                         'admin.bloodType.index', 'admin.city.index', 'admin.country.index', 'admin.governorate.index',
                         'admin.jobCategories.index', 'admin.level.index','admin.branchs.index',
                         'admin.shift-types.index','admin.departments.index','admin.section.index','admin.qualifications.index',
-                        'admin.nationality.index','admin.terminationTypes.index','admin.vacations.index','admin.occasions.index',
+                        'admin.nationality.index','admin.terminationTypes.index',
                         'admin.family-jobs.index','admin.insurance-regions.index','admin.insurance-types.index','admin.contract-types.index',
                         'admin.financialYears.index','admin.religion.index','admin.relative-degrees.index','admin.insurance-regions.index',
                         'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
@@ -276,18 +276,6 @@
                                     </a>
                                 </li>
                                 <!-- End Specializations -->
-                                <!-- Start Occasions -->
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active('admin.occasions.index') }}" href="{{route('admin.occasions.index')}}">{{
-                                        trans('dashboard/sidebar.occasion_sidebar_title')
-                                        }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ is_active('admin.vacations.index') }}" href="{{route('admin.vacations.index')}}">{{
-                                        trans('dashboard/sidebar.vacation_sidebar_title')
-                                        }}</a>
-                                </li>
-                                <!-- End Occasions -->
                                 <!-- Start TerminationTypes -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ is_active('admin.terminationTypes.index') }}"
@@ -462,6 +450,51 @@
                 </li>
                 <!-- End Employees Salary Departments -->
 
+                <!-- Start Leaves Management -->
+                @php
+                $leavesRoutes = [
+                'admin.leave-variables.index', 'admin.occasions.index'
+                ];
+
+                $leaveVariablesRoutes = [
+                'admin.leave-variables.index', 'admin.occasions.index'
+                ];
+                @endphp
+                <li
+                    class="nav-item nav-hasmenu {{ in_array(Route::currentRouteName(), $leavesRoutes) ? 'custom-background nav-provoke' : '' }}">
+                    <a href="#!" class="nav-link">
+                        <span class="nav-icon"><i class="ti ti-calendar"></i></span>
+                        <span class="nav-text">الاجازات</span>
+                        <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                    </a>
+
+                    <ul class="nav-submenu">
+                        <!-- Variables Dropdown -->
+                        <li
+                            class="nav-item nav-hasmenu {{ in_array(Route::currentRouteName(), $leaveVariablesRoutes) ? 'custom-background nav-provoke' : '' }}">
+                            <a href="#!" class="nav-link">
+                                قائمه المتغيرات
+                                <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                            </a>
+                            <ul class="nav-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.leave-variables.index') }}"
+                                        href="{{ route('admin.leave-variables.index') }}">
+                                        متغيرات الاجازات
+                                    </a>
+                                </li>
+                                <!-- Start Occasions العطلات الرسميه -->
+                                <li class="nav-item">
+                                    <a class="nav-link {{ is_active('admin.occasions.index') }}" href="{{route('admin.occasions.index')}}">{{
+                                        trans('dashboard/sidebar.occasion_sidebar_title')
+                                        }}</a>
+                                </li>
+                                <!-- End Occasions -->
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Leaves Management -->
 
 
 
