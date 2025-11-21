@@ -503,6 +503,29 @@
                     </ul>
                 </li>
                 <!-- End Leaves Management -->
+                <!-- Start Time Managment اداره الوقت -->
+                @php
+                $timeManagmentRoutes = [
+                    'admin.time-managment.general-guideline.index',
+                ];
+                @endphp
+                <li
+                    class="nav-item nav-hasmenu {{ in_array(Route::currentRouteName(), $timeManagmentRoutes) ? 'custom-background nav-provoke' : '' }}">
+                    <a href="#!" class="nav-link">
+                        <span class="nav-icon"><i class="ti ti-clock"></i></span>
+                        <span class="nav-text">اداره الوقت</span>
+                        <span class="nav-arrow"><i data-feather="{{ chevron_direction() }}"></i></span>
+                    </a>
+                    <ul class="nav-submenu">
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.time-managment.general-guideline.index') }}"
+                                href="{{ route('admin.time-managment.general-guideline.index') }}">
+                                القواعد العامه
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Time Managment اداره الوقت -->
 
 
 

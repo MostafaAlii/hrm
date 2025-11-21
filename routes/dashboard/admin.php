@@ -126,6 +126,10 @@ Route::group(
             Route::resource('leave-variables', Dashboard\LeaveVariableController::class);
             //  لتخصيص اجازات الموظف
             Route::resource('employee-leave-allocation', Dashboard\EmployeeLeaveAllocationController::class);
+            // Time Managment اداره الوقت ::
+            Route::prefix('time-managment')->as('time-managment.')->middleware(['auth:admin'])->group(function () {
+                Route::resource('general-guideline', Dashboard\TimeManagmentGeneralGuidelineController::class);
+            });
             // Reports ::
             Route::prefix('reports')->as('reports.')->middleware(['auth:admin'])->group(function () {
                 Route::get('employees', [Reports\EmployeeReportController::class, 'index'])->name('employee-informations.index');
