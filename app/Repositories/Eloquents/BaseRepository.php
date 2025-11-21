@@ -24,7 +24,6 @@ abstract class BaseRepository {
 
     public function index($dataTable = null, $view = null, $title = null)
     {
-        // إذا مديليش parameters خليهم null وارجع view عادي
         if ($dataTable === null && $view === null && $title === null) {
             return view('default.index', array_merge(
                 ['title' => 'Default Title'],
@@ -32,7 +31,6 @@ abstract class BaseRepository {
             ));
         }
 
-        // إذا أول parameter هو DataTable (أي نوع من الـ DataTables)
         if (is_object($dataTable) && method_exists($dataTable, 'render')) {
             return $dataTable->render($view, array_merge(
                 ['title' => $title],
@@ -40,7 +38,6 @@ abstract class BaseRepository {
             ));
         }
 
-        // إذا أول parameter هو view (بدون DataTable)
         if (is_string($dataTable) && is_string($view)) {
             return view($dataTable, array_merge(
                 ['title' => $view],

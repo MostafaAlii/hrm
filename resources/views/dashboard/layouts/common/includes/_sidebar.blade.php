@@ -453,11 +453,11 @@
                 <!-- Start Leaves Management -->
                 @php
                 $leavesRoutes = [
-                'admin.leave-variables.index', 'admin.occasions.index'
+                'admin.leave-variables.index', 'admin.occasions.index', 'admin.employee-leave-allocation.index'
                 ];
 
                 $leaveVariablesRoutes = [
-                'admin.leave-variables.index', 'admin.occasions.index'
+                'admin.leave-variables.index', 'admin.occasions.index', 'admin.employee-leave-allocation.index'
                 ];
                 @endphp
                 <li
@@ -492,6 +492,14 @@
                                 <!-- End Occasions -->
                             </ul>
                         </li>
+                        <!-- Start Employee Leave Allocation تخصيص اجازات الموظف -->
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.employee-leave-allocation.index') }}"
+                                href="{{ route('admin.employee-leave-allocation.index') }}">
+                                تخصيص اجازات الموظف
+                            </a>
+                        </li>
+                        <!-- End Employee Leave Allocation تخصيص اجازات الموظف -->
                     </ul>
                 </li>
                 <!-- End Leaves Management -->
