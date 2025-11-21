@@ -124,6 +124,8 @@ Route::group(
             Route::resource('deduction-variables', Dashboard\DeductionVariableController::class);
             // Leaves الاجازات ::
             Route::resource('leave-variables', Dashboard\LeaveVariableController::class);
+            //  لتخصيص اجازات الموظف
+            Route::resource('employee-leave-allocation', Dashboard\EmployeeLeaveAllocationController::class);
             // Reports ::
             Route::prefix('reports')->as('reports.')->middleware(['auth:admin'])->group(function () {
                 Route::get('employees', [Reports\EmployeeReportController::class, 'index'])->name('employee-informations.index');
