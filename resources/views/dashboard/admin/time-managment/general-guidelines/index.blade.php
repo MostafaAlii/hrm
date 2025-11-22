@@ -42,7 +42,6 @@
                     القواعد العامة لإدارة الوقت
                 </div>
                 <div class="card-body">
-
                     {{-- Tabs --}}
                     <ul class="mb-4 nav nav-tabs" id="generalTabs" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -54,32 +53,26 @@
                             <button class="nav-link" id="tab-second" data-bs-toggle="tab" data-bs-target="#second" type="button"
                                 role="tab" aria-controls="second" aria-selected="false">قواعد العمل</button>
                         </li>
-
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab-third" data-bs-toggle="tab" data-bs-target="#third" type="button"
                                 role="tab" aria-controls="third" aria-selected="false">المراجعه</button>
                         </li>
                     </ul>
-
                     {{-- Tabs Content --}}
                     <div class="tab-content" id="generalTabsContent">
-
                         {{-- ===================== TAB 1 ===================== --}}
                         <div class="tab-pane fade show active" id="general" role="tabpanel">
                             @include('dashboard.admin.time-managment.general-guidelines.tabs.general_info')
                             <!-- End Form -->
                         </div>
-
                         {{-- ===================== TAB 2 ===================== --}}
                         <div class="tab-pane fade" id="second" role="tabpanel">
-                            محتوى قواعد العمل
+                            @include('dashboard.admin.time-managment.general-guidelines.tabs.work_rules')
                         </div>
-
                         {{-- ===================== TAB 3 ===================== --}}
                         <div class="tab-pane fade" id="third" role="tabpanel">
-                            محتوى المراجعه
+                            @include('dashboard.admin.time-managment.general-guidelines.tabs.review_rules')
                         </div>
-
                     </div>
                 </div>
             </div>
