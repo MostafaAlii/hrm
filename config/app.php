@@ -173,6 +173,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ObservableServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\TimeManagmentServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -188,7 +189,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Admin' => App\Models\Admin::class
+        'Admin' => App\Models\Admin::class,
+        'CustomMonth' => App\Facades\CustomMonth::class,
     ])->toArray(),
 
 ];

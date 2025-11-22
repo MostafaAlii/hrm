@@ -1,7 +1,6 @@
 <!-- Start Form -->
 <form action="{{ route('admin.time-managment.general-guideline.store') }}" method="POST">
     @csrf
-
     <div class="row">
         {{-- =================== Box 1: الورديات الممتدة =================== --}}
         <div class="col-md-4">
@@ -69,7 +68,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         {{-- =================== Box 3: معالجة الوقت الإضافي =================== --}}
         <div class="col-md-4">
@@ -143,7 +141,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         {{-- =================== Box الورديات =================== --}}
         <div class="col-md-12">
@@ -177,7 +174,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         {{-- =================== Box الحضور =================== --}}
         <div class="col-md-12">
@@ -216,7 +212,6 @@
             </div>
         </div>
     </div>
-
     <button type="submit" class="btn btn-primary">حفظ</button>
 </form>
 <!-- End Form -->
