@@ -42,6 +42,58 @@
                     القواعد العامة لإدارة الوقت
                 </div>
                 <div class="card-body">
+                    @php
+                    $weekDays = \App\Facades\CustomMonth::getWeekDaysArabicWithColor(); // أيام الأسبوع مع اللون
+                    $monthsWithDays = \App\Facades\CustomMonth::getMonthsWithDays(); // الشهور مع الأيام
+                    $weekDayMap = [];
+                    foreach($weekDays as $w){
+                    $weekDayMap[$w['dayOfWeek']] = $w['color'];
+                    }
+                    @endphp
+                    <!-- سطر أيام الأسبوع -->
+                    <div class="mb-3 d-flex">
+                        @foreach($weekDays as $day)
+                        <div class="p-2 text-center me-1" style="background: {{ $day['color'] }}; color:black; flex:1; border-radius:5px;">
+                            {{ $day['name'] }}
+                        </div>
+                        @endforeach
+                    </div>
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs" id="monthTabs" role="tablist">
+                        @foreach($monthsWithDays as $month => $days)
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @if($loop->first) active @endif" id="tab-{{ $loop->index }}" data-bs-toggle="tab"
+                                data-bs-target="#month-{{ $loop->index }}" type="button" role="tab">
+                                {{ $month }}
+                            </button>
+                        </li>
+                        @endforeach
+                    </ul>
+
+                    <!-- Tab content -->
+                    <div class="mt-3 tab-content" id="monthTabsContent">
+                        @foreach($monthsWithDays as $month => $days)
+                        <div class="tab-pane fade @if($loop->first) show active @endif" id="month-{{ $loop->index }}" role="tabpanel">
+                            <div class="flex-wrap d-flex">
+                                @php
+                                $startDate = \Carbon\Carbon::createFromFormat('Y-m-d',
+                                \App\Facades\CustomMonth::getCurrentMonthRange()['start'])->startOfMonth();
+                                @endphp
+                                @foreach($days as $day)
+                                @php
+                                $date = $startDate->copy()->addDays($day - 1);
+                                $dayOfWeek = $date->dayOfWeek; // 0 = الأحد ... 6 = السبت
+                                $color = $weekDayMap[$dayOfWeek] ?? '#fff';
+                                @endphp
+                                <div class="p-2 m-1 text-center"
+                                    style="background: {{ $color }}; color:black; width:40px; border-radius:5px;">
+                                    {{ $day }}
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                     {{-- Tabs --}}
                     <ul class="mb-4 nav nav-tabs" id="generalTabs" role="tablist">
                         <li class="nav-item" role="presentation">

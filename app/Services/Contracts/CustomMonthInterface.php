@@ -14,6 +14,10 @@ interface CustomMonthInterface {
     /** اسم الشهر الحالي عربي بالنظام الخاص */
     public function getCurrentMonthNameArabic(): string;
     /** بداية ونهاية الشهر الحالي بالنظام الخاص */
-    public function getCurrentMonthRange(): array;
+    public function getCurrentMonthRange(?int $year = null): array;
     public function getCustomMonthDays(?Carbon $date = null): array;
+    public function getWeekDaysArabic(?string $startWeek = null): array;
+    /** الشهور مع الأيام حسب start_day */
+    public function getMonthsWithDays(?int $year = null): array;
+    public function getWeekDaysArabicWithColor(?string $startWeek = null): array;
 }
