@@ -1,12 +1,12 @@
 <?php
 namespace App\Services;
-use App\Models\TimeManagmentGeneralGuideline;
+use App\Models\TimeManagmentGeneralguideline;
 use App\Services\Contracts\CustomMonthInterface;
 use Carbon\Carbon;
 class CustomMonthService implements CustomMonthInterface {
     protected int $startDay;
     public function __construct() {
-        $this->startDay = TimeManagmentGeneralGuideline::where('company_id', get_user_data()->company_id)->value('starts_month') ?? 1;
+        $this->startDay = TimeManagmentGeneralguideline::where('company_id', get_user_data()->company_id)->value('starts_month') ?? 1;
     }
 
     public function getMonthStart(int $month, ?int $year = null): string {
