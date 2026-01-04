@@ -130,6 +130,10 @@ Route::group(
             Route::prefix('time-managment')->as('time-managment.')->middleware(['auth:admin'])->group(function () {
                 Route::resource('general-guideline', Dashboard\TimeManagmentGeneralGuidelineController::class);
             });
+            // تعديلات حالة الموظفين ::
+            Route::get('employees-status', Dashboard\EmployeeStatusController::class)->name('employees.status');
+            Route::get('employees-status/{employee}',[Dashboard\EmployeeStatusController::class, 'show'])->name('employees.status.show');
+            Route::post('employees-status/{employee}', [Dashboard\EmployeeStatusController::class, 'store'])->name('employees.status.store');
             // Reports ::
             Route::prefix('reports')->as('reports.')->middleware(['auth:admin'])->group(function () {
                 Route::get('employees', [Reports\EmployeeReportController::class, 'index'])->name('employee-informations.index');

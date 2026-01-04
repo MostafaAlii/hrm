@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
             \App\Listeners\SyncEmployeeProfile::class,
             \App\Listeners\SyncEmployeeMilitaryService::class,
         ],
+        \App\Events\EmployeeStatusChanged::class => [
+            \App\Listeners\UpdateEmployeeField::class,
+        ],
     ];
 
     /**

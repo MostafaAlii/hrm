@@ -240,6 +240,11 @@ class Employee extends Authenticatable {
         return $this->hasMany(EmployeeDeduction::class);
     }
 
+    public function statuses() {
+        return $this->morphMany(EmployeeStatus::class, 'employee')->latest();
+    }
+
+
     // التامين الصحى الشامل
     public function variableInsurances()
     {

@@ -81,6 +81,7 @@ return [
 
     'admin_employee_sidebar_title' => 'شئون العاملين',
     'employee_sidebar_title' => 'بيانات العاملين',
+    'employee_status_title' => 'تعديل حالة العاملين',
     'employee_page_title' => 'بيانات العاملين',
 
     'admin_relative_degree_sidebar_title' => 'درجات القرابة',
@@ -108,4 +109,5 @@ return [
     'family_job_page_title' => 'بيانات  وظائف العوائل',
 
     'variables_sidebar_title' => 'قائمة المتغيرات',
+    'salary_place_sidebar_title' => 'مكان استلام المرتب',
 ];

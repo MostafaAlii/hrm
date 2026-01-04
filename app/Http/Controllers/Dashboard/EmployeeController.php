@@ -43,7 +43,7 @@ class EmployeeController extends Controller
         return $this->repository->index(
             $dataTable,
             'dashboard.admin.employees.index',
-            'الموظفين '
+            'الموظفين'
         );
     }
 

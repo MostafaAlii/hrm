@@ -65,6 +65,7 @@
                         'admin.educational-degrees.index', 'admin.grades.index', 'admin.universities.index', 'admin.specializations.index',
                         'admin.penalty-types.index', 'admin.cost-centers.index', 'admin.salary-cards.index', 'admin.performance-report-items.index',
                         'admin.license-variables.index', 'admin.employment-documents.index',
+                        'admin.employees.status',
                         // Reports ::
                         'admin.reports.employee-informations'
                     ];
@@ -97,6 +98,12 @@
                         <li class="nav-item">
                             <a class="nav-link {{ is_active('admin.employee.index') }}" href="{{ route('admin.employee.index') }}">
                                 {{ trans('dashboard/sidebar.employee_sidebar_title') }}
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ is_active('admin.employees.status') }}" href="{{ route('admin.employees.status') }}">
+                                {{ trans('dashboard/sidebar.employee_status_title') }}
                             </a>
                         </li>
 
